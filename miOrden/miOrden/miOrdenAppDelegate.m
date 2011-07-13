@@ -7,7 +7,7 @@
 //
 
 #import "miOrdenAppDelegate.h"
-
+#import "VistaInicioSesion.h"
 @implementation miOrdenAppDelegate
 
 
@@ -16,6 +16,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    VistaInicioSesion *vistaInicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vistaInicio];
+    [self.window addSubview:nav.view];
+    [vistaInicio release];
     [self.window makeKeyAndVisible];
     return YES;
 }

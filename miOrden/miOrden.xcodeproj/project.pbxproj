@@ -23,6 +23,17 @@
 		E8CFDF0413CDF09700F06E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDF0213CDF09700F06E73 /* InfoPlist.strings */; };
 		E8CFDF0713CDF09700F06E73 /* miOrdenTests.h in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDF0613CDF09700F06E73 /* miOrdenTests.h */; };
 		E8CFDF0913CDF09700F06E73 /* miOrdenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF0813CDF09700F06E73 /* miOrdenTests.m */; };
+		E8CFDF1D13CDF1AF00F06E73 /* VistaInicioSesion.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF1C13CDF1AF00F06E73 /* VistaInicioSesion.m */; };
+		E8CFDF3313CDF38400F06E73 /* SCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2213CDF38400F06E73 /* SCBadgeView.m */; };
+		E8CFDF3413CDF38400F06E73 /* SCClassDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2413CDF38400F06E73 /* SCClassDefinition.m */; };
+		E8CFDF3513CDF38400F06E73 /* SCGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2613CDF38400F06E73 /* SCGlobals.m */; };
+		E8CFDF3613CDF38400F06E73 /* SCPropertyAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2813CDF38400F06E73 /* SCPropertyAttributes.m */; };
+		E8CFDF3713CDF38400F06E73 /* SCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2A13CDF38400F06E73 /* SCTableViewCell.m */; };
+		E8CFDF3813CDF38400F06E73 /* SCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2C13CDF38400F06E73 /* SCTableViewController.m */; };
+		E8CFDF3913CDF38400F06E73 /* SCTableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF2E13CDF38400F06E73 /* SCTableViewModel.m */; };
+		E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */; };
+		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
+		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +69,28 @@
 		E8CFDF0513CDF09700F06E73 /* miOrdenTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "miOrdenTests-Prefix.pch"; sourceTree = "<group>"; };
 		E8CFDF0613CDF09700F06E73 /* miOrdenTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = miOrdenTests.h; sourceTree = "<group>"; };
 		E8CFDF0813CDF09700F06E73 /* miOrdenTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = miOrdenTests.m; sourceTree = "<group>"; };
+		E8CFDF1B13CDF1AF00F06E73 /* VistaInicioSesion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaInicioSesion.h; sourceTree = "<group>"; };
+		E8CFDF1C13CDF1AF00F06E73 /* VistaInicioSesion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaInicioSesion.m; sourceTree = "<group>"; };
+		E8CFDF2113CDF38400F06E73 /* SCBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBadgeView.h; sourceTree = "<group>"; };
+		E8CFDF2213CDF38400F06E73 /* SCBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBadgeView.m; sourceTree = "<group>"; };
+		E8CFDF2313CDF38400F06E73 /* SCClassDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCClassDefinition.h; sourceTree = "<group>"; };
+		E8CFDF2413CDF38400F06E73 /* SCClassDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCClassDefinition.m; sourceTree = "<group>"; };
+		E8CFDF2513CDF38400F06E73 /* SCGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGlobals.h; sourceTree = "<group>"; };
+		E8CFDF2613CDF38400F06E73 /* SCGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGlobals.m; sourceTree = "<group>"; };
+		E8CFDF2713CDF38400F06E73 /* SCPropertyAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPropertyAttributes.h; sourceTree = "<group>"; };
+		E8CFDF2813CDF38400F06E73 /* SCPropertyAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPropertyAttributes.m; sourceTree = "<group>"; };
+		E8CFDF2913CDF38400F06E73 /* SCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewCell.h; sourceTree = "<group>"; };
+		E8CFDF2A13CDF38400F06E73 /* SCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewCell.m; sourceTree = "<group>"; };
+		E8CFDF2B13CDF38400F06E73 /* SCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewController.h; sourceTree = "<group>"; };
+		E8CFDF2C13CDF38400F06E73 /* SCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewController.m; sourceTree = "<group>"; };
+		E8CFDF2D13CDF38400F06E73 /* SCTableViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewModel.h; sourceTree = "<group>"; };
+		E8CFDF2E13CDF38400F06E73 /* SCTableViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewModel.m; sourceTree = "<group>"; };
+		E8CFDF2F13CDF38400F06E73 /* SCTableViewSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewSection.h; sourceTree = "<group>"; };
+		E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewSection.m; sourceTree = "<group>"; };
+		E8CFDF3113CDF38400F06E73 /* SCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCViewController.h; sourceTree = "<group>"; };
+		E8CFDF3213CDF38400F06E73 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
+		E8CFDF4913CE000300F06E73 /* VistaRegistro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaRegistro.h; sourceTree = "<group>"; };
+		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,8 +149,9 @@
 		E8CFDEDA13CDF09700F06E73 /* miOrden */ = {
 			isa = PBXGroup;
 			children = (
-				E8CFDEE313CDF09700F06E73 /* miOrdenAppDelegate.h */,
-				E8CFDEE413CDF09700F06E73 /* miOrdenAppDelegate.m */,
+				E8CFDF1F13CDF35600F06E73 /* Support Classes */,
+				E8CFDF1E13CDF1BA00F06E73 /* Vista Inicio Sesion */,
+				E8CFDF1A13CDF18400F06E73 /* Delegado */,
 				E8CFDEE613CDF09700F06E73 /* iPhone */,
 				E8CFDEED13CDF09700F06E73 /* iPad */,
 				E8CFDEDB13CDF09700F06E73 /* Supporting Files */,
@@ -174,6 +208,59 @@
 				E8CFDF0513CDF09700F06E73 /* miOrdenTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E8CFDF1A13CDF18400F06E73 /* Delegado */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDEE313CDF09700F06E73 /* miOrdenAppDelegate.h */,
+				E8CFDEE413CDF09700F06E73 /* miOrdenAppDelegate.m */,
+			);
+			name = Delegado;
+			sourceTree = "<group>";
+		};
+		E8CFDF1E13CDF1BA00F06E73 /* Vista Inicio Sesion */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDF1B13CDF1AF00F06E73 /* VistaInicioSesion.h */,
+				E8CFDF1C13CDF1AF00F06E73 /* VistaInicioSesion.m */,
+				E8CFDF4913CE000300F06E73 /* VistaRegistro.h */,
+				E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */,
+			);
+			name = "Vista Inicio Sesion";
+			sourceTree = "<group>";
+		};
+		E8CFDF1F13CDF35600F06E73 /* Support Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDF2013CDF36F00F06E73 /* SensibleTableView */,
+			);
+			name = "Support Classes";
+			sourceTree = "<group>";
+		};
+		E8CFDF2013CDF36F00F06E73 /* SensibleTableView */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDF2113CDF38400F06E73 /* SCBadgeView.h */,
+				E8CFDF2213CDF38400F06E73 /* SCBadgeView.m */,
+				E8CFDF2313CDF38400F06E73 /* SCClassDefinition.h */,
+				E8CFDF2413CDF38400F06E73 /* SCClassDefinition.m */,
+				E8CFDF2513CDF38400F06E73 /* SCGlobals.h */,
+				E8CFDF2613CDF38400F06E73 /* SCGlobals.m */,
+				E8CFDF2713CDF38400F06E73 /* SCPropertyAttributes.h */,
+				E8CFDF2813CDF38400F06E73 /* SCPropertyAttributes.m */,
+				E8CFDF2913CDF38400F06E73 /* SCTableViewCell.h */,
+				E8CFDF2A13CDF38400F06E73 /* SCTableViewCell.m */,
+				E8CFDF2B13CDF38400F06E73 /* SCTableViewController.h */,
+				E8CFDF2C13CDF38400F06E73 /* SCTableViewController.m */,
+				E8CFDF2D13CDF38400F06E73 /* SCTableViewModel.h */,
+				E8CFDF2E13CDF38400F06E73 /* SCTableViewModel.m */,
+				E8CFDF2F13CDF38400F06E73 /* SCTableViewSection.h */,
+				E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */,
+				E8CFDF3113CDF38400F06E73 /* SCViewController.h */,
+				E8CFDF3213CDF38400F06E73 /* SCViewController.m */,
+			);
+			name = SensibleTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +375,17 @@
 				E8CFDEE513CDF09700F06E73 /* miOrdenAppDelegate.m in Sources */,
 				E8CFDEE913CDF09700F06E73 /* miOrdenAppDelegate_iPhone.m in Sources */,
 				E8CFDEF013CDF09700F06E73 /* miOrdenAppDelegate_iPad.m in Sources */,
+				E8CFDF1D13CDF1AF00F06E73 /* VistaInicioSesion.m in Sources */,
+				E8CFDF3313CDF38400F06E73 /* SCBadgeView.m in Sources */,
+				E8CFDF3413CDF38400F06E73 /* SCClassDefinition.m in Sources */,
+				E8CFDF3513CDF38400F06E73 /* SCGlobals.m in Sources */,
+				E8CFDF3613CDF38400F06E73 /* SCPropertyAttributes.m in Sources */,
+				E8CFDF3713CDF38400F06E73 /* SCTableViewCell.m in Sources */,
+				E8CFDF3813CDF38400F06E73 /* SCTableViewController.m in Sources */,
+				E8CFDF3913CDF38400F06E73 /* SCTableViewModel.m in Sources */,
+				E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */,
+				E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */,
+				E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
