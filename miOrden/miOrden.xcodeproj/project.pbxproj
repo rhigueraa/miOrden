@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED413CDF09700F06E73 /* UIKit.framework */; };
+		E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED613CDF09700F06E73 /* Foundation.framework */; };
+		E8CFDED913CDF09700F06E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */; };
+		E8CFDEDF13CDF09700F06E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDEDD13CDF09700F06E73 /* InfoPlist.strings */; };
+		E8CFDEE213CDF09700F06E73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDEE113CDF09700F06E73 /* main.m */; };
+		E8CFDEE513CDF09700F06E73 /* miOrdenAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDEE413CDF09700F06E73 /* miOrdenAppDelegate.m */; };
+		E8CFDEE913CDF09700F06E73 /* miOrdenAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDEE813CDF09700F06E73 /* miOrdenAppDelegate_iPhone.m */; };
+		E8CFDEEC13CDF09700F06E73 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDEEA13CDF09700F06E73 /* MainWindow_iPhone.xib */; };
+		E8CFDEF013CDF09700F06E73 /* miOrdenAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDEEF13CDF09700F06E73 /* miOrdenAppDelegate_iPad.m */; };
+		E8CFDEF313CDF09700F06E73 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDEF113CDF09700F06E73 /* MainWindow_iPad.xib */; };
+		E8CFDEFA13CDF09700F06E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED413CDF09700F06E73 /* UIKit.framework */; };
+		E8CFDEFB13CDF09700F06E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED613CDF09700F06E73 /* Foundation.framework */; };
+		E8CFDEFC13CDF09700F06E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */; };
+		E8CFDF0413CDF09700F06E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDF0213CDF09700F06E73 /* InfoPlist.strings */; };
+		E8CFDF0713CDF09700F06E73 /* miOrdenTests.h in Resources */ = {isa = PBXBuildFile; fileRef = E8CFDF0613CDF09700F06E73 /* miOrdenTests.h */; };
+		E8CFDF0913CDF09700F06E73 /* miOrdenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF0813CDF09700F06E73 /* miOrdenTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E8CFDEFD13CDF09700F06E73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8CFDEC713CDF09700F06E73 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E8CFDECF13CDF09700F06E73;
+			remoteInfo = miOrden;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E8CFDED013CDF09700F06E73 /* miOrden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miOrden.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8CFDED413CDF09700F06E73 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E8CFDED613CDF09700F06E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E8CFDEDC13CDF09700F06E73 /* miOrden-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "miOrden-Info.plist"; sourceTree = "<group>"; };
+		E8CFDEDE13CDF09700F06E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E8CFDEE013CDF09700F06E73 /* miOrden-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "miOrden-Prefix.pch"; sourceTree = "<group>"; };
+		E8CFDEE113CDF09700F06E73 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E8CFDEE313CDF09700F06E73 /* miOrdenAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = miOrdenAppDelegate.h; sourceTree = "<group>"; };
+		E8CFDEE413CDF09700F06E73 /* miOrdenAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = miOrdenAppDelegate.m; sourceTree = "<group>"; };
+		E8CFDEE713CDF09700F06E73 /* miOrdenAppDelegate_iPhone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = miOrdenAppDelegate_iPhone.h; path = iPhone/miOrdenAppDelegate_iPhone.h; sourceTree = "<group>"; };
+		E8CFDEE813CDF09700F06E73 /* miOrdenAppDelegate_iPhone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = miOrdenAppDelegate_iPhone.m; path = iPhone/miOrdenAppDelegate_iPhone.m; sourceTree = "<group>"; };
+		E8CFDEEB13CDF09700F06E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPhone/en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		E8CFDEEE13CDF09700F06E73 /* miOrdenAppDelegate_iPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = miOrdenAppDelegate_iPad.h; path = iPad/miOrdenAppDelegate_iPad.h; sourceTree = "<group>"; };
+		E8CFDEEF13CDF09700F06E73 /* miOrdenAppDelegate_iPad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = miOrdenAppDelegate_iPad.m; path = iPad/miOrdenAppDelegate_iPad.m; sourceTree = "<group>"; };
+		E8CFDEF213CDF09700F06E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
+		E8CFDEF913CDF09700F06E73 /* miOrdenTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = miOrdenTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8CFDF0113CDF09700F06E73 /* miOrdenTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "miOrdenTests-Info.plist"; sourceTree = "<group>"; };
+		E8CFDF0313CDF09700F06E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E8CFDF0513CDF09700F06E73 /* miOrdenTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "miOrdenTests-Prefix.pch"; sourceTree = "<group>"; };
+		E8CFDF0613CDF09700F06E73 /* miOrdenTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = miOrdenTests.h; sourceTree = "<group>"; };
+		E8CFDF0813CDF09700F06E73 /* miOrdenTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = miOrdenTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E8CFDECD13CDF09700F06E73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */,
+				E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */,
+				E8CFDED913CDF09700F06E73 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8CFDEF513CDF09700F06E73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8CFDEFA13CDF09700F06E73 /* UIKit.framework in Frameworks */,
+				E8CFDEFB13CDF09700F06E73 /* Foundation.framework in Frameworks */,
+				E8CFDEFC13CDF09700F06E73 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E8CFDEC513CDF09700F06E73 = {
+			isa = PBXGroup;
+			children = (
+				E8CFDEDA13CDF09700F06E73 /* miOrden */,
+				E8CFDEFF13CDF09700F06E73 /* miOrdenTests */,
+				E8CFDED313CDF09700F06E73 /* Frameworks */,
+				E8CFDED113CDF09700F06E73 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E8CFDED113CDF09700F06E73 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDED013CDF09700F06E73 /* miOrden.app */,
+				E8CFDEF913CDF09700F06E73 /* miOrdenTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E8CFDED313CDF09700F06E73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDED413CDF09700F06E73 /* UIKit.framework */,
+				E8CFDED613CDF09700F06E73 /* Foundation.framework */,
+				E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E8CFDEDA13CDF09700F06E73 /* miOrden */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDEE313CDF09700F06E73 /* miOrdenAppDelegate.h */,
+				E8CFDEE413CDF09700F06E73 /* miOrdenAppDelegate.m */,
+				E8CFDEE613CDF09700F06E73 /* iPhone */,
+				E8CFDEED13CDF09700F06E73 /* iPad */,
+				E8CFDEDB13CDF09700F06E73 /* Supporting Files */,
+			);
+			path = miOrden;
+			sourceTree = "<group>";
+		};
+		E8CFDEDB13CDF09700F06E73 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDEDC13CDF09700F06E73 /* miOrden-Info.plist */,
+				E8CFDEDD13CDF09700F06E73 /* InfoPlist.strings */,
+				E8CFDEE013CDF09700F06E73 /* miOrden-Prefix.pch */,
+				E8CFDEE113CDF09700F06E73 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E8CFDEE613CDF09700F06E73 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDEE713CDF09700F06E73 /* miOrdenAppDelegate_iPhone.h */,
+				E8CFDEE813CDF09700F06E73 /* miOrdenAppDelegate_iPhone.m */,
+				E8CFDEEA13CDF09700F06E73 /* MainWindow_iPhone.xib */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		E8CFDEED13CDF09700F06E73 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDEEE13CDF09700F06E73 /* miOrdenAppDelegate_iPad.h */,
+				E8CFDEEF13CDF09700F06E73 /* miOrdenAppDelegate_iPad.m */,
+				E8CFDEF113CDF09700F06E73 /* MainWindow_iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+		E8CFDEFF13CDF09700F06E73 /* miOrdenTests */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDF0613CDF09700F06E73 /* miOrdenTests.h */,
+				E8CFDF0813CDF09700F06E73 /* miOrdenTests.m */,
+				E8CFDF0013CDF09700F06E73 /* Supporting Files */,
+			);
+			path = miOrdenTests;
+			sourceTree = "<group>";
+		};
+		E8CFDF0013CDF09700F06E73 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDF0113CDF09700F06E73 /* miOrdenTests-Info.plist */,
+				E8CFDF0213CDF09700F06E73 /* InfoPlist.strings */,
+				E8CFDF0513CDF09700F06E73 /* miOrdenTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E8CFDECF13CDF09700F06E73 /* miOrden */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8CFDF0C13CDF09700F06E73 /* Build configuration list for PBXNativeTarget "miOrden" */;
+			buildPhases = (
+				E8CFDECC13CDF09700F06E73 /* Sources */,
+				E8CFDECD13CDF09700F06E73 /* Frameworks */,
+				E8CFDECE13CDF09700F06E73 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = miOrden;
+			productName = miOrden;
+			productReference = E8CFDED013CDF09700F06E73 /* miOrden.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E8CFDEF813CDF09700F06E73 /* miOrdenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8CFDF0F13CDF09700F06E73 /* Build configuration list for PBXNativeTarget "miOrdenTests" */;
+			buildPhases = (
+				E8CFDEF413CDF09700F06E73 /* Sources */,
+				E8CFDEF513CDF09700F06E73 /* Frameworks */,
+				E8CFDEF613CDF09700F06E73 /* Resources */,
+				E8CFDEF713CDF09700F06E73 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E8CFDEFE13CDF09700F06E73 /* PBXTargetDependency */,
+			);
+			name = miOrdenTests;
+			productName = miOrdenTests;
+			productReference = E8CFDEF913CDF09700F06E73 /* miOrdenTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E8CFDEC713CDF09700F06E73 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = ITAM;
+			};
+			buildConfigurationList = E8CFDECA13CDF09700F06E73 /* Build configuration list for PBXProject "miOrden" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E8CFDEC513CDF09700F06E73;
+			productRefGroup = E8CFDED113CDF09700F06E73 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E8CFDECF13CDF09700F06E73 /* miOrden */,
+				E8CFDEF813CDF09700F06E73 /* miOrdenTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E8CFDECE13CDF09700F06E73 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8CFDEDF13CDF09700F06E73 /* InfoPlist.strings in Resources */,
+				E8CFDEEC13CDF09700F06E73 /* MainWindow_iPhone.xib in Resources */,
+				E8CFDEF313CDF09700F06E73 /* MainWindow_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8CFDEF613CDF09700F06E73 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8CFDF0413CDF09700F06E73 /* InfoPlist.strings in Resources */,
+				E8CFDF0713CDF09700F06E73 /* miOrdenTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E8CFDEF713CDF09700F06E73 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E8CFDECC13CDF09700F06E73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8CFDEE213CDF09700F06E73 /* main.m in Sources */,
+				E8CFDEE513CDF09700F06E73 /* miOrdenAppDelegate.m in Sources */,
+				E8CFDEE913CDF09700F06E73 /* miOrdenAppDelegate_iPhone.m in Sources */,
+				E8CFDEF013CDF09700F06E73 /* miOrdenAppDelegate_iPad.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8CFDEF413CDF09700F06E73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8CFDF0913CDF09700F06E73 /* miOrdenTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E8CFDEFE13CDF09700F06E73 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E8CFDECF13CDF09700F06E73 /* miOrden */;
+			targetProxy = E8CFDEFD13CDF09700F06E73 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E8CFDEDD13CDF09700F06E73 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8CFDEDE13CDF09700F06E73 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E8CFDEEA13CDF09700F06E73 /* MainWindow_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8CFDEEB13CDF09700F06E73 /* en */,
+			);
+			name = MainWindow_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		E8CFDEF113CDF09700F06E73 /* MainWindow_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8CFDEF213CDF09700F06E73 /* en */,
+			);
+			name = MainWindow_iPad.xib;
+			sourceTree = "<group>";
+		};
+		E8CFDF0213CDF09700F06E73 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8CFDF0313CDF09700F06E73 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E8CFDF0A13CDF09700F06E73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E8CFDF0B13CDF09700F06E73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E8CFDF0D13CDF09700F06E73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "miOrden/miOrden-Prefix.pch";
+				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E8CFDF0E13CDF09700F06E73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "miOrden/miOrden-Prefix.pch";
+				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E8CFDF1013CDF09700F06E73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/miOrden.app/miOrden";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "miOrdenTests/miOrdenTests-Prefix.pch";
+				INFOPLIST_FILE = "miOrdenTests/miOrdenTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		E8CFDF1113CDF09700F06E73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/miOrden.app/miOrden";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "miOrdenTests/miOrdenTests-Prefix.pch";
+				INFOPLIST_FILE = "miOrdenTests/miOrdenTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E8CFDECA13CDF09700F06E73 /* Build configuration list for PBXProject "miOrden" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8CFDF0A13CDF09700F06E73 /* Debug */,
+				E8CFDF0B13CDF09700F06E73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E8CFDF0C13CDF09700F06E73 /* Build configuration list for PBXNativeTarget "miOrden" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8CFDF0D13CDF09700F06E73 /* Debug */,
+				E8CFDF0E13CDF09700F06E73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E8CFDF0F13CDF09700F06E73 /* Build configuration list for PBXNativeTarget "miOrdenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8CFDF1013CDF09700F06E73 /* Debug */,
+				E8CFDF1113CDF09700F06E73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E8CFDEC713CDF09700F06E73 /* Project object */;
+}
