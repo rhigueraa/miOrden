@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BCD60D8513CE96EC00DF55A6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD60D8413CE96EC00DF55A6 /* MapKit.framework */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
 		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
 		E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCuentaPerfil.m; sourceTree = "<group>"; };
 		E805A98C13CE24E500A96038 /* VistaUnoOrden.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaUnoOrden.h; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCD60D8513CE96EC00DF55A6 /* MapKit.framework in Frameworks */,
 				E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */,
 				E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */,
 				E8CFDED913CDF09700F06E73 /* CoreGraphics.framework in Frameworks */,
@@ -228,6 +231,7 @@
 		E8CFDED313CDF09700F06E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BCD60D8413CE96EC00DF55A6 /* MapKit.framework */,
 				E8CFDED413CDF09700F06E73 /* UIKit.framework */,
 				E8CFDED613CDF09700F06E73 /* Foundation.framework */,
 				E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */,
