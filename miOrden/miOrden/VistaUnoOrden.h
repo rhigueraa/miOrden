@@ -10,12 +10,14 @@
 
 
 @interface VistaUnoOrden : UITableViewController {
-    UISegmentedControl *control;
+    
     NSArray *direcciones;
     NSArray *zonas;
+       
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *table;
 
+@property (nonatomic, retain) IBOutlet UITableView *table;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *control;
 
 @end
