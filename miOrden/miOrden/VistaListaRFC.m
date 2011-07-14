@@ -1,15 +1,15 @@
 //
-//  VistaRegistro.m
+//  VistaListaRFC.m
 //  miOrden
 //
 //  Created by Rodrigo Higuera on 7/13/11.
 //  Copyright 2011 ITAM. All rights reserved.
 //
 
-#import "VistaRegistro.h"
+#import "VistaListaRFC.h"
 
 
-@implementation VistaRegistro
+@implementation VistaListaRFC
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -22,6 +22,7 @@
 
 - (void)dealloc
 {
+    [rfc release];
     [super dealloc];
 }
 
@@ -33,45 +34,17 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
--(void)confirmar{
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
-    [alerta show];
-    [alerta release];
-    
-}
-
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title =@"Resgitro";
-    UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Registrar" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmar)];
-    self.navigationItem.rightBarButtonItem = confirm;
-    tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
-    SCTableViewSection *section = [SCTableViewSection sectionWithHeaderTitle:@"Datos del Registro"];
-    [tableModel addSection:section];
-    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"enter name" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
-    SCNumericTextFieldCell *celular = [[SCNumericTextFieldCell alloc] initWithText:@"Celular" withPlaceholder:@"enter phone" withBoundKey:@"phoneKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
-    SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
-    NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
-    SCSegmentedCell *sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
-    SCSwitchCell *terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
-     SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
-                                                                           
-    [section addCell:nombre];
-    [section addCell:apellido];
-    [section addCell:celular];
-    [section addCell:email];
-    [section addCell:pass];
-    [section addCell:fechaNacimiento];
-    [section addCell:sexo];
-    [section addCell:terminos];
-    [section addCell:news];
+    self.title = @"RFC's";
+    NSDictionary *rfc1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC1",@"Nombre",@"fgh12gh1234hj",@"RFC", nil];
+    NSDictionary *rfc2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC2",@"Nombre",@"asdfgh1234hj",@"RFC", nil];
+    NSDictionary *rfc3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC3",@"Nombre",@"fgaahj",@"RFC", nil];
+
+    rfc = [[NSArray alloc] initWithObjects:rfc1,rfc2,rfc3, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -116,12 +89,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [rfc count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,9 +103,10 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+    cell.textLabel.text = [[rfc objectAtIndex:indexPath.row] objectForKey:@"Nombre"];
+    cell.detailTextLabel.text = [[rfc objectAtIndex:indexPath.row] objectForKey:@"RFC"];
     // Configure the cell...
     
     return cell;

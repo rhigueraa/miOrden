@@ -8,18 +8,50 @@
 
 #import "miOrdenAppDelegate.h"
 #import "VistaInicioSesion.h"
+
+#import "VistaUnoOrden.h"
 @implementation miOrdenAppDelegate
 
 
 @synthesize window=_window;
 
+- (void)addAsTabBar{
+    UITabBarController *tabController = [[UITabBarController alloc] init];
+    NSMutableArray *viewControllers = [NSMutableArray array];
+    
+    VistaInicioSesion  *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
+    inicio.title = @"Perfil";
+    //reservacionesVC.tabBarItem.image = [UIImage imageNamed:@"73-radar.png"];
+    [viewControllers addObject:inicio];
+    [inicio release];
+    
+    VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithStyle:UITableViewStyleGrouped];
+    orden.title = @"Nueva Orden";
+    //serviciosVC.tabBarItem.image = [UIImage imageNamed:@"112-group.png"];
+    [viewControllers addObject:orden];
+    [orden release];
+    
+    NSMutableArray *navegadores = [NSMutableArray array];
+    
+    UINavigationController *navCont;
+    
+    for (UIViewController *vc in viewControllers) {
+        navCont = [[UINavigationController alloc] initWithRootViewController:vc];
+        //navCont.navigationBar.tintColor = [UIColor colorWithRed:4/255.0 green:81/255.0 blue:150/255.0 alpha:1.0];
+        [navegadores addObject:navCont];
+    }
+    
+    tabController.viewControllers = [NSArray arrayWithArray:navegadores];
+    
+    [self.window setRootViewController:tabController];
+    
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    VistaInicioSesion *vistaInicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vistaInicio];
-    [self.window addSubview:nav.view];
-    [vistaInicio release];
+    [self addAsTabBar];
     [self.window makeKeyAndVisible];
     return YES;
 }

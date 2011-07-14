@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
+		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
+		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
+		E805A99313CE36E300A96038 /* VistaListaRestaurants.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A99213CE36E300A96038 /* VistaListaRestaurants.m */; };
+		E805A9A113CE3F1100A96038 /* VistaDetalleRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */; };
+		E805A9A213CE3F1100A96038 /* VistaDetalleRestaurant.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */; };
+		E805A9A613CE478500A96038 /* VistaUbicacionRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9A413CE478500A96038 /* VistaUbicacionRestaurant.m */; };
+		E805A9A713CE478500A96038 /* VistaUbicacionRestaurant.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A9A513CE478500A96038 /* VistaUbicacionRestaurant.xib */; };
+		E805A9AA13CE4B2400A96038 /* VistaListaDirecciones.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9A913CE4B2400A96038 /* VistaListaDirecciones.m */; };
+		E805A9AD13CE4C9100A96038 /* VistaListaRFC.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9AC13CE4C9100A96038 /* VistaListaRFC.m */; };
+		E805A9B313CE505F00A96038 /* VistaNuevaDir.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9B213CE505E00A96038 /* VistaNuevaDir.m */; };
+		E805A9B613CE540900A96038 /* VistaNuevoRFC.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9B513CE540900A96038 /* VistaNuevoRFC.m */; };
 		E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED413CDF09700F06E73 /* UIKit.framework */; };
 		E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED613CDF09700F06E73 /* Foundation.framework */; };
 		E8CFDED913CDF09700F06E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */; };
@@ -47,6 +59,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
+		E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCuentaPerfil.m; sourceTree = "<group>"; };
+		E805A98C13CE24E500A96038 /* VistaUnoOrden.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaUnoOrden.h; sourceTree = "<group>"; };
+		E805A98D13CE24E500A96038 /* VistaUnoOrden.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaUnoOrden.m; sourceTree = "<group>"; };
+		E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaUnoOrden.xib; sourceTree = "<group>"; };
+		E805A99113CE36E300A96038 /* VistaListaRestaurants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListaRestaurants.h; sourceTree = "<group>"; };
+		E805A99213CE36E300A96038 /* VistaListaRestaurants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaListaRestaurants.m; sourceTree = "<group>"; };
+		E805A99E13CE3F1100A96038 /* VistaDetalleRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaDetalleRestaurant.h; sourceTree = "<group>"; };
+		E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaDetalleRestaurant.m; sourceTree = "<group>"; };
+		E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaDetalleRestaurant.xib; sourceTree = "<group>"; };
+		E805A9A313CE478400A96038 /* VistaUbicacionRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaUbicacionRestaurant.h; sourceTree = "<group>"; };
+		E805A9A413CE478500A96038 /* VistaUbicacionRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaUbicacionRestaurant.m; sourceTree = "<group>"; };
+		E805A9A513CE478500A96038 /* VistaUbicacionRestaurant.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaUbicacionRestaurant.xib; sourceTree = "<group>"; };
+		E805A9A813CE4B2400A96038 /* VistaListaDirecciones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListaDirecciones.h; sourceTree = "<group>"; };
+		E805A9A913CE4B2400A96038 /* VistaListaDirecciones.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaListaDirecciones.m; sourceTree = "<group>"; };
+		E805A9AB13CE4C9100A96038 /* VistaListaRFC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListaRFC.h; sourceTree = "<group>"; };
+		E805A9AC13CE4C9100A96038 /* VistaListaRFC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaListaRFC.m; sourceTree = "<group>"; };
+		E805A9B113CE505E00A96038 /* VistaNuevaDir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevaDir.h; sourceTree = "<group>"; };
+		E805A9B213CE505E00A96038 /* VistaNuevaDir.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevaDir.m; sourceTree = "<group>"; };
+		E805A9B413CE540900A96038 /* VistaNuevoRFC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevoRFC.h; sourceTree = "<group>"; };
+		E805A9B513CE540900A96038 /* VistaNuevoRFC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevoRFC.m; sourceTree = "<group>"; };
 		E8CFDED013CDF09700F06E73 /* miOrden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miOrden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8CFDED413CDF09700F06E73 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E8CFDED613CDF09700F06E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -117,6 +150,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E805A98413CE245D00A96038 /* Shared Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E805A98813CE249000A96038 /* Orden */,
+				E805A98713CE248000A96038 /* Perfil y Cuenta */,
+				E805A98613CE246900A96038 /* Vista Inicio Sesion */,
+			);
+			name = "Shared Classes";
+			sourceTree = "<group>";
+		};
+		E805A98613CE246900A96038 /* Vista Inicio Sesion */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFDF1B13CDF1AF00F06E73 /* VistaInicioSesion.h */,
+				E8CFDF1C13CDF1AF00F06E73 /* VistaInicioSesion.m */,
+				E8CFDF4913CE000300F06E73 /* VistaRegistro.h */,
+				E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */,
+			);
+			name = "Vista Inicio Sesion";
+			sourceTree = "<group>";
+		};
+		E805A98713CE248000A96038 /* Perfil y Cuenta */ = {
+			isa = PBXGroup;
+			children = (
+				E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */,
+				E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */,
+				E805A9A813CE4B2400A96038 /* VistaListaDirecciones.h */,
+				E805A9A913CE4B2400A96038 /* VistaListaDirecciones.m */,
+				E805A9AB13CE4C9100A96038 /* VistaListaRFC.h */,
+				E805A9AC13CE4C9100A96038 /* VistaListaRFC.m */,
+				E805A9B113CE505E00A96038 /* VistaNuevaDir.h */,
+				E805A9B213CE505E00A96038 /* VistaNuevaDir.m */,
+				E805A9B413CE540900A96038 /* VistaNuevoRFC.h */,
+				E805A9B513CE540900A96038 /* VistaNuevoRFC.m */,
+			);
+			name = "Perfil y Cuenta";
+			sourceTree = "<group>";
+		};
+		E805A98813CE249000A96038 /* Orden */ = {
+			isa = PBXGroup;
+			children = (
+				E805A98C13CE24E500A96038 /* VistaUnoOrden.h */,
+				E805A98D13CE24E500A96038 /* VistaUnoOrden.m */,
+				E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */,
+				E805A99113CE36E300A96038 /* VistaListaRestaurants.h */,
+				E805A99213CE36E300A96038 /* VistaListaRestaurants.m */,
+				E805A99E13CE3F1100A96038 /* VistaDetalleRestaurant.h */,
+				E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */,
+				E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */,
+				E805A9A313CE478400A96038 /* VistaUbicacionRestaurant.h */,
+				E805A9A413CE478500A96038 /* VistaUbicacionRestaurant.m */,
+				E805A9A513CE478500A96038 /* VistaUbicacionRestaurant.xib */,
+			);
+			name = Orden;
+			sourceTree = "<group>";
+		};
 		E8CFDEC513CDF09700F06E73 = {
 			isa = PBXGroup;
 			children = (
@@ -149,8 +238,8 @@
 		E8CFDEDA13CDF09700F06E73 /* miOrden */ = {
 			isa = PBXGroup;
 			children = (
+				E805A98413CE245D00A96038 /* Shared Classes */,
 				E8CFDF1F13CDF35600F06E73 /* Support Classes */,
-				E8CFDF1E13CDF1BA00F06E73 /* Vista Inicio Sesion */,
 				E8CFDF1A13CDF18400F06E73 /* Delegado */,
 				E8CFDEE613CDF09700F06E73 /* iPhone */,
 				E8CFDEED13CDF09700F06E73 /* iPad */,
@@ -217,17 +306,6 @@
 				E8CFDEE413CDF09700F06E73 /* miOrdenAppDelegate.m */,
 			);
 			name = Delegado;
-			sourceTree = "<group>";
-		};
-		E8CFDF1E13CDF1BA00F06E73 /* Vista Inicio Sesion */ = {
-			isa = PBXGroup;
-			children = (
-				E8CFDF1B13CDF1AF00F06E73 /* VistaInicioSesion.h */,
-				E8CFDF1C13CDF1AF00F06E73 /* VistaInicioSesion.m */,
-				E8CFDF4913CE000300F06E73 /* VistaRegistro.h */,
-				E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */,
-			);
-			name = "Vista Inicio Sesion";
 			sourceTree = "<group>";
 		};
 		E8CFDF1F13CDF35600F06E73 /* Support Classes */ = {
@@ -336,6 +414,9 @@
 				E8CFDEDF13CDF09700F06E73 /* InfoPlist.strings in Resources */,
 				E8CFDEEC13CDF09700F06E73 /* MainWindow_iPhone.xib in Resources */,
 				E8CFDEF313CDF09700F06E73 /* MainWindow_iPad.xib in Resources */,
+				E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */,
+				E805A9A213CE3F1100A96038 /* VistaDetalleRestaurant.xib in Resources */,
+				E805A9A713CE478500A96038 /* VistaUbicacionRestaurant.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +467,15 @@
 				E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */,
 				E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */,
 				E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */,
+				E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */,
+				E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */,
+				E805A99313CE36E300A96038 /* VistaListaRestaurants.m in Sources */,
+				E805A9A113CE3F1100A96038 /* VistaDetalleRestaurant.m in Sources */,
+				E805A9A613CE478500A96038 /* VistaUbicacionRestaurant.m in Sources */,
+				E805A9AA13CE4B2400A96038 /* VistaListaDirecciones.m in Sources */,
+				E805A9AD13CE4C9100A96038 /* VistaListaRFC.m in Sources */,
+				E805A9B313CE505F00A96038 /* VistaNuevaDir.m in Sources */,
+				E805A9B613CE540900A96038 /* VistaNuevoRFC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +658,7 @@
 				E8CFDF0E13CDF09700F06E73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E8CFDF0F13CDF09700F06E73 /* Build configuration list for PBXNativeTarget "miOrdenTests" */ = {
 			isa = XCConfigurationList;
@@ -576,6 +667,7 @@
 				E8CFDF1113CDF09700F06E73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

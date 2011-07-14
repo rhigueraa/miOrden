@@ -1,15 +1,16 @@
 //
-//  VistaRegistro.m
+//  VistaUnoOrden.m
 //  miOrden
 //
 //  Created by Rodrigo Higuera on 7/13/11.
 //  Copyright 2011 ITAM. All rights reserved.
 //
 
-#import "VistaRegistro.h"
+#import "VistaUnoOrden.h"
+#import "VistaListaRestaurants.h"
 
-
-@implementation VistaRegistro
+@implementation VistaUnoOrden
+@synthesize table;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -22,6 +23,9 @@
 
 - (void)dealloc
 {
+    [direcciones release];
+    [zonas release];
+    
     [super dealloc];
 }
 
@@ -32,46 +36,36 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+-(void) segmentAction:(UISegmentedControl*)segmented{
 
--(void)confirmar{
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
-    [alerta show];
-    [alerta release];
-    
+    [self.table reloadData];
 }
 
 
 #pragma mark - View lifecycle
-
+- (void)addSegmented{
+    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"a Domicilio",@"a Recoger",nil]];
+	segmentedControl.selectedSegmentIndex = 0;
+	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+	self.navigationItem.titleView = segmentedControl;
+    control = segmentedControl;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title =@"Resgitro";
-    UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Registrar" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmar)];
-    self.navigationItem.rightBarButtonItem = confirm;
-    tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
-    SCTableViewSection *section = [SCTableViewSection sectionWithHeaderTitle:@"Datos del Registro"];
-    [tableModel addSection:section];
-    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"enter name" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
-    SCNumericTextFieldCell *celular = [[SCNumericTextFieldCell alloc] initWithText:@"Celular" withPlaceholder:@"enter phone" withBoundKey:@"phoneKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
-    SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
-    NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
-    SCSegmentedCell *sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
-    SCSwitchCell *terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
-     SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
-                                                                           
-    [section addCell:nombre];
-    [section addCell:apellido];
-    [section addCell:celular];
-    [section addCell:email];
-    [section addCell:pass];
-    [section addCell:fechaNacimiento];
-    [section addCell:sexo];
-    [section addCell:terminos];
-    [section addCell:news];
+    [self addSegmented];
+    NSDictionary *dir1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 1",@"Nombre", nil];
+    NSDictionary *dir2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 2",@"Nombre", nil];
+    
+    NSDictionary *zona1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"zona 1",@"Nombre", nil];
+    
+    direcciones = [[NSArray alloc] initWithObjects:dir1,dir2, nil];
+    zonas = [[NSArray alloc] initWithObjects:zona1, nil];
+    
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -85,6 +79,11 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
+
+
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -116,12 +115,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
-}
+    return 1;
+    }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    if(control.selectedSegmentIndex == 0) return [direcciones count];
+    else return [zonas count];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,7 +135,12 @@
     }
     
     // Configure the cell...
-    
+    if(control.selectedSegmentIndex == 0){
+        cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
+        
+    }else{
+        cell.textLabel.text = [[zonas objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
+    }
     return cell;
 }
 
@@ -181,6 +187,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:lista animated:YES];
+    [lista release];
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

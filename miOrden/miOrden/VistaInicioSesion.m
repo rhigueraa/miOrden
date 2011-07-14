@@ -8,7 +8,7 @@
 
 #import "VistaInicioSesion.h"
 #import "VistaRegistro.h"
-
+#import "VistaCuentaPerfil.h"
 @implementation VistaInicioSesion
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Mi Orden";
+    self.title = @"Inicio de Sesión";
     
     
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
@@ -189,6 +189,11 @@
             [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryNone];
         else
             [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }else if(indexPath.section == 2){
+        VistaCuentaPerfil *cuenta = [[VistaCuentaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
+        [self.navigationController pushViewController:cuenta animated:YES];
+        [cuenta release];
+        
     }
     
     // Navigation logic may go here. Create and push another view controller.
