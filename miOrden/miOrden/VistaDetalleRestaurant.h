@@ -10,7 +10,7 @@
 
 
 @interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate> {
-    IBOutlet UITableViewController  *table;
+    UITableView  *table;
     IBOutlet UIImage *image;
     IBOutlet UITextView *text;
    
@@ -18,6 +18,6 @@
 
 
 -(IBAction) enviarPressed: (UIButton *) sender;
-
+@property(nonatomic,retain) IBOutlet UITableView *table;
 
 @end

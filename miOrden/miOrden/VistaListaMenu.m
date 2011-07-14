@@ -1,16 +1,15 @@
 //
-//  VistaUnoOrden.m
+//  VistaListaMenu.m
 //  miOrden
 //
-//  Created by Rodrigo Higuera on 7/13/11.
+//  Created by Rodrigo Higuera on 7/14/11.
 //  Copyright 2011 ITAM. All rights reserved.
 //
 
-#import "VistaUnoOrden.h"
-#import "VistaListaRestaurants.h"
+#import "VistaListaMenu.h"
 
-@implementation VistaUnoOrden
-@synthesize table, control;
+
+@implementation VistaListaMenu
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -23,9 +22,7 @@
 
 - (void)dealloc
 {
-    [direcciones release];
-    [zonas release];
-    
+    [menu release];
     [super dealloc];
 }
 
@@ -36,40 +33,12 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
--(void) segmentAction:(UISegmentedControl*)segmented{
-
-    [self.table reloadData];
-}
-
-
-
 
 #pragma mark - View lifecycle
-- (void)addSegmented{
-    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"a Domicilio",@"a Recoger",nil]];
-	segmentedControl.selectedSegmentIndex = 0;
-	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	self.navigationItem.titleView = segmentedControl;
-    control = segmentedControl;
-    
-    
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self addSegmented];
-    
-    NSDictionary *dir1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 1",@"Nombre", nil];
-    NSDictionary *dir2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 2",@"Nombre", nil];
-    
-    NSDictionary *zona1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"zona 1",@"Nombre", nil];
-    
-    direcciones = [[NSArray alloc] initWithObjects:dir1,dir2, nil];
-    zonas = [[NSArray alloc] initWithObjects:zona1, nil];
-    
-    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -84,12 +53,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
-
-
-
-
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -122,13 +85,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
-    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(control.selectedSegmentIndex == 0) return [direcciones count];
-    else return [zonas count];
-
+    return [menu count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -141,12 +102,7 @@
     }
     
     // Configure the cell...
-    if(control.selectedSegmentIndex == 0){
-        cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
-        
-    }else{
-        cell.textLabel.text = [[zonas objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
-    }
+    
     return cell;
 }
 
@@ -193,9 +149,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:lista animated:YES];
-    [lista release];
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

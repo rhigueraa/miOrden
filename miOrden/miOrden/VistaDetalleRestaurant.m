@@ -8,9 +8,9 @@
 
 #import "VistaDetalleRestaurant.h"
 #import "VistaUbicacionRestaurant.h"
-
+#import "VistaMenu.h"
 @implementation VistaDetalleRestaurant
-
+@synthesize table;
 -(IBAction) enviarPressed: (UIButton *) sender{
     VistaUbicacionRestaurant *mapa = [[VistaUbicacionRestaurant alloc] init];
     [self.navigationController pushViewController:mapa animated:YES];
@@ -42,6 +42,9 @@
 
 - (void)viewDidLoad
 {
+    [text release];
+    [image   release];
+    [table   release];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -98,6 +101,23 @@
     }
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1)
+        if(indexPath.row == 1){
+          VistaMenu *menu = [[VistaMenu alloc] init];
+          [self.navigationController pushViewController:menu animated:YES];
+          [menu release];
+        }
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     [detailViewController release];
+     */
 }
 
 
