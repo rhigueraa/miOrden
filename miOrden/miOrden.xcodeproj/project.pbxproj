@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BCD60D8513CE96EC00DF55A6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD60D8413CE96EC00DF55A6 /* MapKit.framework */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
 		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
@@ -629,6 +628,7 @@
 				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -643,6 +643,7 @@
 				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

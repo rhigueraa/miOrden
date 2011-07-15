@@ -8,7 +8,7 @@
 
 #import "miOrdenAppDelegate.h"
 #import "VistaInicioSesion.h"
-
+#import "VistaCuentaPerfil.h"
 #import "VistaUnoOrden.h"
 @implementation miOrdenAppDelegate
 
@@ -19,11 +19,11 @@
     UITabBarController *tabController = [[UITabBarController alloc] init];
     NSMutableArray *viewControllers = [NSMutableArray array];
     
-    VistaInicioSesion  *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
-    inicio.title = @"Perfil";
+    VistaCuentaPerfil  *cuenta = [[VistaCuentaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
+    cuenta.title = @"Perfil";
     //reservacionesVC.tabBarItem.image = [UIImage imageNamed:@"73-radar.png"];
-    [viewControllers addObject:inicio];
-    [inicio release];
+    [viewControllers addObject:cuenta];
+    [cuenta release];
     
     VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithStyle:UITableViewStyleGrouped];
     orden.title = @"Nueva Orden";
@@ -42,9 +42,14 @@
     }
     
     tabController.viewControllers = [NSArray arrayWithArray:navegadores];
+    [self.window addSubview:tabController.view];
     
-    [self.window setRootViewController:tabController];
-    
+    VistaInicioSesion *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
+    inicio.title =@"Inicio de Sesión";
+    UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
+    [tabController presentModalViewController:temp animated:NO];
+    [inicio release];
+    [temp release];
 }
 
 
@@ -52,6 +57,7 @@
 {
     // Override point for customization after application launch.
     [self addAsTabBar];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -208,8 +208,8 @@
         [alerta show];
         [alerta release];
         VistaInicioSesion  *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
-        inicio.title = @"Perfil";
-        [self.navigationController pushViewController:inicio animated:YES];
+        inicio.title = @"Iniciar Sesión";
+        [self presentModalViewController:inicio animated:YES];
         [inicio release];
     }
     

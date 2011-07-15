@@ -190,10 +190,7 @@
         else
             [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryCheckmark];
     }else if(indexPath.section == 2){
-        VistaCuentaPerfil *cuenta = [[VistaCuentaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
-        [self.navigationController pushViewController:cuenta animated:YES];
-        [cuenta release];
-        
+        [self dismissModalViewControllerAnimated:YES];
     }
     
     // Navigation logic may go here. Create and push another view controller.
