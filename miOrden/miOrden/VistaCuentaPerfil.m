@@ -187,13 +187,13 @@
     if(indexPath.section == 0){
         if(indexPath.row == 0){
             VistaListaDirecciones *dirs = [[VistaListaDirecciones alloc] initWithStyle:UITableViewStyleGrouped];
-            UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithTitle:@"+" style:UIBarButtonItemStyleBordered target:self action:@selector(nuevaDir)];
+            UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevaDir)];
             dirs.navigationItem.rightBarButtonItem = nueva;
             [self.navigationController pushViewController:dirs animated:YES];
             [dirs release];
         }else{
             VistaListaRFC *rfcs = [[VistaListaRFC alloc] initWithStyle:UITableViewStyleGrouped];
-            UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithTitle:@"+" style:UIBarButtonItemStyleBordered target:self action:@selector(nuevoRFC)];
+            UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevoRFC)];
             rfcs.navigationItem.rightBarButtonItem = nueva;
 
             [self.navigationController pushViewController:rfcs animated:YES];
