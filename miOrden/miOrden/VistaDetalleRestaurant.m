@@ -13,8 +13,11 @@
 
 @implementation VistaDetalleRestaurant
 
+@synthesize restaruantImageView;
+@synthesize restaruanExtraDetailView;
 @synthesize table;
 @synthesize pagedView;
+@synthesize table2;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,6 +32,9 @@
 - (void)dealloc
 {
     [pagedView release];
+    [restaruanExtraDetailView release];
+    [table2 release];
+    [restaruantImageView release];
     [super dealloc];
 }
 
@@ -66,6 +72,9 @@
 {
     [self setPagedView:nil];
     [table   release];
+    [self setRestaruanExtraDetailView:nil];
+    [self setTable2:nil];
+    [self setRestaruantImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -86,7 +95,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    if (tableView == table) {
+        return 2;
+    }
+    else{
+        return 3;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,11 +112,20 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
-    if(indexPath.row == 0)
-        cell.textLabel.text = @"Reseñas";
-    else
-        cell.textLabel.text = @"Ver menú";
+    if (tableView == table){
+        if(indexPath.row == 0)
+            cell.textLabel.text = @"Reseñas";
+        else
+            cell.textLabel.text = @"Ver menú"; 
+    }
+    else{
+        if(indexPath.row == 0)
+            cell.textLabel.text = @"Orden mínima";
+        else if(indexPath.row == 1 )
+            cell.textLabel.text = @"Costo de envío";
+        else
+            cell.textLabel.text = @"Pago";
+    }
     
     /*
     switch (indexPath.section) {
@@ -144,12 +167,9 @@
 - (UIView *)viewForPageInPagingView:(ATPagingView *)pagingView atIndex:(NSInteger)index{
     
     switch (index) {
-        case 0:{
+        case 0:
             //Details
-            UIView *detailVIew = [[UIView alloc] initWithFrame:pagedView.bounds];
-            detailVIew.backgroundColor = [UIColor redColor];
-            return detailVIew;
-        }
+            return restaruanExtraDetailView;
             break;
         case 1:
             //Map
