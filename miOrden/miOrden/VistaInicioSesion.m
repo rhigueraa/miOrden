@@ -52,9 +52,8 @@
     [section1 addCell:pass];
     
     SCTableViewSection *section2 = [SCTableViewSection sectionWithHeaderTitle:nil];
-    SCTableViewCell *recordar = [[SCTableViewCell alloc]initWithText:@"Recordarme?"];
+    SCSwitchCell *recordar = [[SCSwitchCell alloc]initWithText:@"Recordarme?"];
     recordar.selectionStyle = UITableViewCellSelectionStyleNone;
-    recordar.accessoryType = UITableViewCellAccessoryCheckmark;
     [section2 addCell:recordar];
     
     SCTableViewSection *section3 = [SCTableViewSection section];
