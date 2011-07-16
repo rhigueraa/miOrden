@@ -1,15 +1,15 @@
 //
-//  VistaInicioSesion.m
+//  VistaFormaCheckOut.m
 //  miOrden
 //
-//  Created by Rodrigo Higuera on 7/13/11.
+//  Created by Rodrigo Higuera on 7/15/11.
 //  Copyright 2011 ITAM. All rights reserved.
 //
 
-#import "VistaInicioSesion.h"
-#import "VistaRegistro.h"
-#import "VistaCuentaPerfil.h"
-@implementation VistaInicioSesion
+#import "VistaFormaCheckOut.h"
+
+
+@implementation VistaFormaCheckOut
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -22,7 +22,6 @@
 
 - (void)dealloc
 {
-    [tableModel  release];
     [super dealloc];
 }
 
@@ -35,41 +34,22 @@
 }
 
 #pragma mark - View lifecycle
-
-
+-(void)send{
+    
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Inicio de Sesión";
-    
-    
+    self.title = @"Check-Out";
+    UIBarButtonItem *enviar = [[UIBarButtonItem alloc] initWithTitle:@"Enviar" style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
+    self.navigationItem.rightBarButtonItem = enviar;
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
-    SCTableViewSection *section1 = [SCTableViewSection sectionWithHeaderTitle:@"Inicio de Sesión"];
-    SCTextFieldCell *email = [SCTextFieldCell cellWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
-    SCTextFieldCell *pass = [SCTextFieldCell cellWithText:@"Password" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
-    [tableModel addSection:section1];
-    [section1 addCell:email];
-    [section1 addCell:pass];
+    SCTableViewSection *section = [SCTableViewSection sectionWithHeaderTitle:@"Datos del Registro"];
+    [tableModel addSection:section];
     
-    SCTableViewSection *section2 = [SCTableViewSection sectionWithHeaderTitle:nil];
-    SCTableViewCell *recordar = [[SCTableViewCell alloc]initWithText:@"Recordarme?"];
-    recordar.selectionStyle = UITableViewCellSelectionStyleNone;
-    recordar.accessoryType = UITableViewCellAccessoryCheckmark;
-    [section2 addCell:recordar];
-    
-    SCTableViewSection *section3 = [SCTableViewSection section];
-    SCTableViewCell *iniciar = [[SCTableViewCell alloc]initWithText:@"Iniciar Sesión"];
-    iniciar.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [section3 addCell:iniciar];
-    
-    SCTableViewSection *section4 = [SCTableViewSection section];
-    SCTableViewCell *registro = [[SCTableViewCell alloc]initWithText:@"¡Registrarme!"];
-    registro.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [section4 addCell:registro];
-    
-    [tableModel addSection:section2];
-    [tableModel addSection:section3];
-    [tableModel addSection:section4];
+    SCNumericTextFieldCell *personas = [[SCNumericTextFieldCell alloc] initWithText:@"Personas" withPlaceholder:@"# de Personas" withBoundKey:@"personasKey" withTextFieldTextValue:nil];
+    //SCSegmentedCell *tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-//1] withSegmentTitlesArray:
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -115,24 +95,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 9;
+    
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
-
     
     return cell;
 }
@@ -178,24 +159,11 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableViewModel:(SCTableViewModel *)tableViewModel didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 3){
-        VistaRegistro *registro = [[VistaRegistro alloc] initWithStyle:UITableViewStyleGrouped];
-        [self.navigationController pushViewController:registro animated:YES];
-        [registro release];
-    }else if(indexPath.section == 1){
-        UITableViewCell *cell = [tableViewModel cellAtIndexPath:indexPath];
-        if(cell.accessoryType == UITableViewCellAccessoryCheckmark)
-            [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryNone];
-        else
-            [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryCheckmark];
-    }else if(indexPath.section == 2){
-        [self dismissModalViewControllerAnimated:YES];
-    }
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     // Navigation logic may go here. Create and push another view controller.
     /*
-      *detailViewController = [ alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];

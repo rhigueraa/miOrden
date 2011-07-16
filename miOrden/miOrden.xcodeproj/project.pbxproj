@@ -25,6 +25,9 @@
 		E890A7FD13CF6F96001B9291 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E890A7FC13CF6F96001B9291 /* MapKit.framework */; };
 		E890A80213CF7386001B9291 /* VistaResumen.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80113CF7386001B9291 /* VistaResumen.m */; };
 		E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80413CF75F9001B9291 /* VistaTicket.m */; };
+		E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8107D13D109A600BF03B8 /* VistaCarrito.m */; };
+		E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */; };
+		E8B8108613D10E3800BF03B8 /* VistaFormaCheckOut.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */; };
 		E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED413CDF09700F06E73 /* UIKit.framework */; };
 		E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED613CDF09700F06E73 /* Foundation.framework */; };
 		E8CFDED913CDF09700F06E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */; };
@@ -97,6 +100,11 @@
 		E890A80113CF7386001B9291 /* VistaResumen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaResumen.m; sourceTree = "<group>"; };
 		E890A80313CF75F9001B9291 /* VistaTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaTicket.h; sourceTree = "<group>"; };
 		E890A80413CF75F9001B9291 /* VistaTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaTicket.m; sourceTree = "<group>"; };
+		E8B8107C13D109A600BF03B8 /* VistaCarrito.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCarrito.h; sourceTree = "<group>"; };
+		E8B8107D13D109A600BF03B8 /* VistaCarrito.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCarrito.m; sourceTree = "<group>"; };
+		E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaCarrito.xib; sourceTree = "<group>"; };
+		E8B8108413D10E3800BF03B8 /* VistaFormaCheckOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaFormaCheckOut.h; sourceTree = "<group>"; };
+		E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaFormaCheckOut.m; sourceTree = "<group>"; };
 		E8CFDED013CDF09700F06E73 /* miOrden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miOrden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8CFDED413CDF09700F06E73 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E8CFDED613CDF09700F06E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -171,6 +179,7 @@
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E8B8107513D1095700BF03B8 /* Carrito */,
 				E890A7FF13CF7343001B9291 /* Resumen */,
 				E805A98813CE249000A96038 /* Orden */,
 				E805A98713CE248000A96038 /* Perfil y Cuenta */,
@@ -247,6 +256,18 @@
 				E890A80413CF75F9001B9291 /* VistaTicket.m */,
 			);
 			name = Resumen;
+			sourceTree = "<group>";
+		};
+		E8B8107513D1095700BF03B8 /* Carrito */ = {
+			isa = PBXGroup;
+			children = (
+				E8B8107C13D109A600BF03B8 /* VistaCarrito.h */,
+				E8B8107D13D109A600BF03B8 /* VistaCarrito.m */,
+				E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */,
+				E8B8108413D10E3800BF03B8 /* VistaFormaCheckOut.h */,
+				E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */,
+			);
+			name = Carrito;
 			sourceTree = "<group>";
 		};
 		E8CFDEC513CDF09700F06E73 = {
@@ -463,6 +484,7 @@
 				E805A9A213CE3F1100A96038 /* VistaDetalleRestaurant.xib in Resources */,
 				E805A9A713CE478500A96038 /* VistaUbicacionRestaurant.xib in Resources */,
 				E861897A13CF414E003BA7AE /* VistaMenu.xib in Resources */,
+				E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +548,8 @@
 				E861898513CF435B003BA7AE /* VistaListaMenu.m in Sources */,
 				E890A80213CF7386001B9291 /* VistaResumen.m in Sources */,
 				E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */,
+				E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */,
+				E8B8108613D10E3800BF03B8 /* VistaFormaCheckOut.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +652,7 @@
 				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -642,6 +667,7 @@
 				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
