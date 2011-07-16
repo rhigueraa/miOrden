@@ -19,9 +19,12 @@
     UIPageControl *pageControl;
     UIView *restaruanExtraDetailView;
     UIImageView *restaruantImageView;
+    
+    NSDictionary *currentRestaurant;
+    
 }
 @property (nonatomic, retain) IBOutlet UIImageView *restaruantImageView;
-
+@property (nonatomic, assign) NSDictionary *currentRestaurant;
 @property (nonatomic, retain) IBOutlet UIView *restaruanExtraDetailView;
 @property(nonatomic,retain) IBOutlet UITableView *table;
 @property (nonatomic, retain) IBOutlet UIView *pagedView;

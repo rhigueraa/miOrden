@@ -18,6 +18,7 @@
 @synthesize table;
 @synthesize pagedView;
 @synthesize table2;
+@synthesize currentRestaurant;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -54,10 +55,10 @@
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
     pagedVIew.delegate = self;
     [pagedView addSubview:pagedVIew];
-    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 223, 38, 36)];
+    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244, 38, 36)];
     pageControl.numberOfPages = 3;
     [pageControl addTarget:self action:@selector(pagedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
-    [pagedView addSubview:pageControl];
+    [self.view addSubview:pageControl];
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -105,14 +106,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Cell1";
+    static NSString *CellIdentifier2 = @"Cell2";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell;
+    
+    if (tableView == table)
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    else
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2];
+    
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        if (tableView == table)
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        else
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier2] autorelease];
+    }
+    else{
+        cell.textLabel.textAlignment = UITextAlignmentLeft;
     }
     
     if (tableView == table){
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
         if(indexPath.row == 0)
             cell.textLabel.text = @"Reseñas";
         else
