@@ -22,18 +22,20 @@
     
     VistaCuentaPerfil  *cuenta = [[VistaCuentaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
     cuenta.title = @"Perfil";
-    //reservacionesVC.tabBarItem.image = [UIImage imageNamed:@"73-radar.png"];
+    cuenta.tabBarItem.image = [UIImage imageNamed:@"111-user.png"];
     [viewControllers addObject:cuenta];
     [cuenta release];
     
     VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithNibName:@"VistaUnoOrden" bundle:nil];
     orden.title = @"Nueva Orden";
-    //serviciosVC.tabBarItem.image = [UIImage imageNamed:@"112-group.png"];
+    orden.tabBarItem.title = @"Buscar";
+    orden.tabBarItem.image = [UIImage imageNamed:@"06-magnify.png"];
     [viewControllers addObject:orden];
     [orden release];
     
     VistaCarrito *carrito = [[VistaCarrito alloc] initWithStyle:UITableViewStyleGrouped];
     carrito.title = @"Carrito";
+    carrito.tabBarItem.image = [UIImage imageNamed:@"80-shopping-cart.png"];
     [viewControllers addObject:carrito];
     [carrito release];
     
