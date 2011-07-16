@@ -51,8 +51,9 @@
     [self.window addSubview:tabController.view];
     
     VistaInicioSesion *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
-    inicio.title =@"Inicio de Sesión";
+    inicio.title =@"Mi Orden";
     UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
+    temp.navigationBar.tintColor = [UIColor redColor];
     [tabController presentModalViewController:temp animated:NO];
     [inicio release];
     [temp release];
