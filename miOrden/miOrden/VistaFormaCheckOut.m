@@ -7,7 +7,7 @@
 //
 
 #import "VistaFormaCheckOut.h"
-
+#import "VistaUnoOrden.h"
 
 @implementation VistaFormaCheckOut
 
@@ -35,8 +35,14 @@
 
 #pragma mark - View lifecycle
 -(void)send{
+    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Alerta" message:@"Tu pedido va en camino, 5 minutos para confirmación" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+    [alerta show];
+    [alerta release];
+    VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController pushViewController:orden animated:YES];
     
-    
+    [orden release];
 }
 - (void)viewDidLoad
 {
@@ -53,6 +59,25 @@
     SCSegmentedCell *tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:temp];
     [temp release];
     SCDateCell *fecha =  [[SCDateCell alloc] initWithText:@"Fecha" withBoundKey:@"fechaKey" withDateValue:nil];
+    //agregar tipo de pago
+    SCNumericTextFieldCell *cambio = [[SCNumericTextFieldCell alloc] initWithText:@"Cambio de" withPlaceholder:@"billete del que desea cambio" withBoundKey:@"cambioKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *comentario = [[SCTextFieldCell alloc] initWithText:@"Comentario" withPlaceholder:@"introduzca un comentario" withBoundKey:@"comentarioKey" withTextFieldTextValue:nil];
+    SCTableViewCell *favs = [[SCTableViewCell alloc] initWithText:@"¿Favoritos?" withBoundKey:@"favoritosKey" withValue:nil];
+    favs.accessoryType = UITableViewCellAccessoryCheckmark;
+    favs.selectionStyle = UITableViewCellSelectionStyleNone;
+    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"introduzca el nombre" withBoundKey:@"nombreKey" withTextFieldTextValue:nil];
+    //agregar factura
+    
+    [section addCell:personas];
+    [section addCell:tipo];
+    [section addCell:fecha];
+    //[section addCell:tipo de pago];
+    [section addCell:cambio];
+    [section addCell:comentario];
+    [section addCell:favs];
+    [section addCell:nombre];
+    //[section addCell:factura];
+    
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -163,16 +188,17 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+- (void)tableViewModel:(SCTableViewModel *)tableViewModel didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 5){
+        UITableViewCell *cell = [tableViewModel cellAtIndexPath:indexPath];
+        if(cell.accessoryType == UITableViewCellAccessoryCheckmark)
+            [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryNone];
+        else
+            [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }
+    
+    
+    
 }
 
 @end

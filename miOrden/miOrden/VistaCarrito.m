@@ -7,7 +7,7 @@
 //
 
 #import "VistaCarrito.h"
-
+#import "VistaFormaCheckOut.h"
 
 @implementation VistaCarrito
 
@@ -36,9 +36,9 @@
 #pragma mark - View lifecycle
 
 -(void)comprar{
-    
-    
-    
+    VistaFormaCheckOut *check = [[VistaFormaCheckOut alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:check animated:YES];
+    [check release];
 }
 
 
