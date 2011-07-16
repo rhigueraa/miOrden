@@ -134,12 +134,17 @@
             cell.textLabel.text = @"Ver menú"; 
     }
     else{
-        if(indexPath.row == 0)
+        if(indexPath.row == 0){
             cell.textLabel.text = @"Orden mínima";
-        else if(indexPath.row == 1 )
+            cell.detailTextLabel.text = @"$500.00";
+        }
+        else if(indexPath.row == 1 ){
             cell.textLabel.text = @"Costo de envío";
-        else
+            cell.detailTextLabel.text = @"$70.00";
+        }
+        else{
             cell.textLabel.text = @"Pago";
+        }
     }
     
     /*
