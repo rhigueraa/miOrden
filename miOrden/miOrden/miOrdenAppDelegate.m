@@ -10,6 +10,7 @@
 #import "VistaInicioSesion.h"
 #import "VistaCuentaPerfil.h"
 #import "VistaUnoOrden.h"
+#import "VistaCarrito.h"
 @implementation miOrdenAppDelegate
 
 
@@ -30,6 +31,11 @@
     //serviciosVC.tabBarItem.image = [UIImage imageNamed:@"112-group.png"];
     [viewControllers addObject:orden];
     [orden release];
+    
+    VistaCarrito *carrito = [[VistaCarrito alloc] initWithStyle:UITableViewStyleGrouped];
+    carrito.title = @"Carrito";
+    [viewControllers addObject:carrito];
+    [carrito release];
     
     NSMutableArray *navegadores = [NSMutableArray array];
     

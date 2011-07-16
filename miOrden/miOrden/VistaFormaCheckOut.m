@@ -49,7 +49,11 @@
     [tableModel addSection:section];
     
     SCNumericTextFieldCell *personas = [[SCNumericTextFieldCell alloc] initWithText:@"Personas" withPlaceholder:@"# de Personas" withBoundKey:@"personasKey" withTextFieldTextValue:nil];
-    //SCSegmentedCell *tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-//1] withSegmentTitlesArray:
+    NSArray *temp = [[NSArray alloc] initWithObjects:@"Inmediato",@"Futuro", nil];
+    SCSegmentedCell *tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:temp];
+    [temp release];
+    SCDateCell *fecha =  [[SCDateCell alloc] initWithText:@"Fecha" withBoundKey:@"fechaKey" withDateValue:nil];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
