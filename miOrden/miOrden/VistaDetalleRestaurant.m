@@ -50,7 +50,12 @@
     [pagedView addSubview:pagedVIew];
     pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 223, 38, 36)];
     pageControl.numberOfPages = 3;
+    [pageControl addTarget:self action:@selector(pagedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
     [pagedView addSubview:pageControl];
+}
+
+- (void)pagedControlIndexChanged:(UIPageControl*)sender{
+    [pagedVIew setCurrentPageIndex:sender.currentPage];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
