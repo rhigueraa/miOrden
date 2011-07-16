@@ -7,17 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATPagingView.h"
+#import <MapKit/MapKit.h>
 
-
-@interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate> {
+@interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate> {
     UITableView  *table;
-    IBOutlet UIImage *image;
-    IBOutlet UITextView *text;
-   
+    UIView *pagedView;
+    MKMapView *theMapView;
+    ATPagingView *pagedVIew;
+    UIPageControl *pageControl;
 }
 
-
--(IBAction) enviarPressed: (UIButton *) sender;
 @property(nonatomic,retain) IBOutlet UITableView *table;
+@property (nonatomic, retain) IBOutlet UIView *pagedView;
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC1D941213D234DB00B3CC94 /* ATPagingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
 		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
@@ -68,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC1D93FD13D234DB00B3CC94 /* ATPagingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATPagingView.h; sourceTree = "<group>"; };
+		BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATPagingView.m; sourceTree = "<group>"; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
 		E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCuentaPerfil.m; sourceTree = "<group>"; };
@@ -176,6 +179,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BC1D93FC13D234DB00B3CC94 /* ATPagingView */ = {
+			isa = PBXGroup;
+			children = (
+				BC1D93FD13D234DB00B3CC94 /* ATPagingView.h */,
+				BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */,
+			);
+			path = ATPagingView;
+			sourceTree = "<group>";
+		};
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +389,7 @@
 		E8CFDF1F13CDF35600F06E73 /* Support Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BC1D93FC13D234DB00B3CC94 /* ATPagingView */,
 				E8CFDF2013CDF36F00F06E73 /* SensibleTableView */,
 			);
 			name = "Support Classes";
@@ -550,6 +563,7 @@
 				E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */,
 				E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */,
 				E8B8108613D10E3800BF03B8 /* VistaFormaCheckOut.m in Sources */,
+				BC1D941213D234DB00B3CC94 /* ATPagingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
