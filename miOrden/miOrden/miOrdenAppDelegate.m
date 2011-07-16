@@ -43,7 +43,7 @@
     
     for (UIViewController *vc in viewControllers) {
         navCont = [[UINavigationController alloc] initWithRootViewController:vc];
-        //navCont.navigationBar.tintColor = [UIColor colorWithRed:4/255.0 green:81/255.0 blue:150/255.0 alpha:1.0];
+        navCont.navigationBar.tintColor = [UIColor redColor];
         [navegadores addObject:navCont];
     }
     
