@@ -38,7 +38,9 @@
 }
 -(void) segmentAction:(UISegmentedControl*)segmented{
 
-    [self.table reloadData];
+    [self.table beginUpdates];
+    [self.table reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.table endUpdates];
 }
 
 
@@ -46,14 +48,7 @@
 
 #pragma mark - View lifecycle
 - (void)addSegmented{
-    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"a Domicilio",@"a Recoger",nil]];
-	segmentedControl.selectedSegmentIndex = 0;
-	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	self.navigationItem.titleView = segmentedControl;
-    control = segmentedControl;
-    
+	[control addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     
 }
 - (void)viewDidLoad
@@ -85,12 +80,6 @@
     // e.g. self.myOutlet = nil;
 }
 
-
-
-
-
-
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -119,10 +108,19 @@
 
 #pragma mark - Table view data source
 
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if(control.selectedSegmentIndex == 0){
+        return @"Direcciones";
+    }
+    else{
+        return @"Zonas";
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
-    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -193,17 +191,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStyleGrouped];
+    VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:lista animated:YES];
     [lista release];
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
 }
 
 @end

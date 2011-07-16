@@ -25,7 +25,7 @@
     [viewControllers addObject:inicio];
     [inicio release];
     
-    VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithStyle:UITableViewStyleGrouped];
+    VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithNibName:@"VistaUnoOrden" bundle:nil];
     orden.title = @"Nueva Orden";
     //serviciosVC.tabBarItem.image = [UIImage imageNamed:@"112-group.png"];
     [viewControllers addObject:orden];
