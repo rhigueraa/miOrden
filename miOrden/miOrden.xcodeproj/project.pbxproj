@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		BC1D941213D234DB00B3CC94 /* ATPagingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */; };
+		BC1D943113D247E600B3CC94 /* 06-magnify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D942F13D247E600B3CC94 /* 06-magnify@2x.png */; };
+		BC1D943213D247E600B3CC94 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D943013D247E600B3CC94 /* 06-magnify.png */; };
+		BC1D943513D2488D00B3CC94 /* 111-user.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D943313D2488D00B3CC94 /* 111-user.png */; };
+		BC1D943613D2488D00B3CC94 /* 111-user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D943413D2488D00B3CC94 /* 111-user@2x.png */; };
+		BC1D943913D2489800B3CC94 /* 80-shopping-cart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D943713D2489800B3CC94 /* 80-shopping-cart@2x.png */; };
+		BC1D943A13D2489800B3CC94 /* 80-shopping-cart.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D943813D2489800B3CC94 /* 80-shopping-cart.png */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
 		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
@@ -71,6 +77,12 @@
 /* Begin PBXFileReference section */
 		BC1D93FD13D234DB00B3CC94 /* ATPagingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATPagingView.h; sourceTree = "<group>"; };
 		BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATPagingView.m; sourceTree = "<group>"; };
+		BC1D942F13D247E600B3CC94 /* 06-magnify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify@2x.png"; sourceTree = "<group>"; };
+		BC1D943013D247E600B3CC94 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
+		BC1D943313D2488D00B3CC94 /* 111-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "111-user.png"; sourceTree = "<group>"; };
+		BC1D943413D2488D00B3CC94 /* 111-user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "111-user@2x.png"; sourceTree = "<group>"; };
+		BC1D943713D2489800B3CC94 /* 80-shopping-cart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "80-shopping-cart@2x.png"; sourceTree = "<group>"; };
+		BC1D943813D2489800B3CC94 /* 80-shopping-cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "80-shopping-cart.png"; sourceTree = "<group>"; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
 		E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCuentaPerfil.m; sourceTree = "<group>"; };
@@ -186,6 +198,27 @@
 				BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */,
 			);
 			path = ATPagingView;
+			sourceTree = "<group>";
+		};
+		BC1D942D13D247D300B3CC94 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				BC1D942E13D247D900B3CC94 /* TabBarImages */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		BC1D942E13D247D900B3CC94 /* TabBarImages */ = {
+			isa = PBXGroup;
+			children = (
+				BC1D943713D2489800B3CC94 /* 80-shopping-cart@2x.png */,
+				BC1D943813D2489800B3CC94 /* 80-shopping-cart.png */,
+				BC1D943313D2488D00B3CC94 /* 111-user.png */,
+				BC1D943413D2488D00B3CC94 /* 111-user@2x.png */,
+				BC1D942F13D247E600B3CC94 /* 06-magnify@2x.png */,
+				BC1D943013D247E600B3CC94 /* 06-magnify.png */,
+			);
+			name = TabBarImages;
 			sourceTree = "<group>";
 		};
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
@@ -329,6 +362,7 @@
 		E8CFDEDB13CDF09700F06E73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BC1D942D13D247D300B3CC94 /* Images */,
 				E8CFDEDC13CDF09700F06E73 /* miOrden-Info.plist */,
 				E8CFDEDD13CDF09700F06E73 /* InfoPlist.strings */,
 				E8CFDEE013CDF09700F06E73 /* miOrden-Prefix.pch */,
@@ -498,6 +532,12 @@
 				E805A9A713CE478500A96038 /* VistaUbicacionRestaurant.xib in Resources */,
 				E861897A13CF414E003BA7AE /* VistaMenu.xib in Resources */,
 				E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */,
+				BC1D943113D247E600B3CC94 /* 06-magnify@2x.png in Resources */,
+				BC1D943213D247E600B3CC94 /* 06-magnify.png in Resources */,
+				BC1D943513D2488D00B3CC94 /* 111-user.png in Resources */,
+				BC1D943613D2488D00B3CC94 /* 111-user@2x.png in Resources */,
+				BC1D943913D2489800B3CC94 /* 80-shopping-cart@2x.png in Resources */,
+				BC1D943A13D2489800B3CC94 /* 80-shopping-cart.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Inicio de Sesión";
     
     
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
