@@ -11,11 +11,13 @@
 #import "VistaMenu.h"
 @implementation VistaDetalleRestaurant
 @synthesize table;
+
 -(IBAction) enviarPressed: (UIButton *) sender{
     VistaUbicacionRestaurant *mapa = [[VistaUbicacionRestaurant alloc] init];
     [self.navigationController pushViewController:mapa animated:YES];
     [mapa release];
 }
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
