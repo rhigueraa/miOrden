@@ -63,15 +63,15 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 0) return 3;
-        else return 2;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,6 +84,12 @@
     }
     
     // Configure the cell...
+    if(indexPath.row == 0)
+        cell.textLabel.text = @"Reseñas";
+    else
+        cell.textLabel.text = @"Ver menú";
+    
+    /*
     switch (indexPath.section) {
         case 0:
             if(indexPath.row == 0)
@@ -94,13 +100,11 @@
                 cell.textLabel.text = @"Pago";
             break;
         case 1:
-            if(indexPath.row == 0)
-                cell.textLabel.text = @"Reseñas";
-            else
-                cell.textLabel.text = @"Ver menú";
+            
         default:
             break;
     }
+    */
     
     return cell;
 }
