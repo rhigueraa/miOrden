@@ -188,6 +188,7 @@
             [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryNone];
         else
             [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryCheckmark];
+        [cell release];
     }else if(indexPath.section == 2){
         [self dismissModalViewControllerAnimated:YES];
     }
