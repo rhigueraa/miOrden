@@ -18,6 +18,10 @@
 		BC1D946113D25B3B00B3CC94 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1D945913D25B3B00B3CC94 /* SDWebImageDownloader.m */; };
 		BC1D946213D25B3B00B3CC94 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1D945C13D25B3B00B3CC94 /* SDWebImageManager.m */; };
 		BC1D946313D25B3B00B3CC94 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1D945F13D25B3B00B3CC94 /* UIImageView+WebCache.m */; };
+		BC1D946613D25DE800B3CC94 /* amex.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946513D25DE800B3CC94 /* amex.png */; };
+		BC1D946813D25DF100B3CC94 /* cash.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946713D25DF100B3CC94 /* cash.png */; };
+		BC1D946A13D25E1300B3CC94 /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946913D25E1300B3CC94 /* mastercard.png */; };
+		BC1D946C13D25E1D00B3CC94 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946B13D25E1D00B3CC94 /* visa.png */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
 		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
@@ -99,6 +103,10 @@
 		BC1D945D13D25B3B00B3CC94 /* SDWebImageManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManagerDelegate.h; sourceTree = "<group>"; };
 		BC1D945E13D25B3B00B3CC94 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		BC1D945F13D25B3B00B3CC94 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		BC1D946513D25DE800B3CC94 /* amex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amex.png; sourceTree = "<group>"; };
+		BC1D946713D25DF100B3CC94 /* cash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cash.png; sourceTree = "<group>"; };
+		BC1D946913D25E1300B3CC94 /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
+		BC1D946B13D25E1D00B3CC94 /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
 		E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCuentaPerfil.m; sourceTree = "<group>"; };
@@ -219,6 +227,7 @@
 		BC1D942D13D247D300B3CC94 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BC1D946413D25DDD00B3CC94 /* Tarjetas */,
 				BC1D942E13D247D900B3CC94 /* TabBarImages */,
 			);
 			name = Images;
@@ -250,19 +259,11 @@
 		BC1D944413D250EA00B3CC94 /* Vista Detalle Restaurant */ = {
 			isa = PBXGroup;
 			children = (
-				BC1D944513D250FC00B3CC94 /* Vista detallada extra */,
 				E805A99E13CE3F1100A96038 /* VistaDetalleRestaurant.h */,
 				E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */,
 				E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */,
 			);
 			name = "Vista Detalle Restaurant";
-			sourceTree = "<group>";
-		};
-		BC1D944513D250FC00B3CC94 /* Vista detallada extra */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Vista detallada extra";
 			sourceTree = "<group>";
 		};
 		BC1D945313D25AF500B3CC94 /* SDWebImageVIew */ = {
@@ -282,6 +283,17 @@
 				BC1D945F13D25B3B00B3CC94 /* UIImageView+WebCache.m */,
 			);
 			name = SDWebImageVIew;
+			sourceTree = "<group>";
+		};
+		BC1D946413D25DDD00B3CC94 /* Tarjetas */ = {
+			isa = PBXGroup;
+			children = (
+				BC1D946B13D25E1D00B3CC94 /* visa.png */,
+				BC1D946913D25E1300B3CC94 /* mastercard.png */,
+				BC1D946713D25DF100B3CC94 /* cash.png */,
+				BC1D946513D25DE800B3CC94 /* amex.png */,
+			);
+			name = Tarjetas;
 			sourceTree = "<group>";
 		};
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
@@ -598,6 +610,10 @@
 				BC1D943613D2488D00B3CC94 /* 111-user@2x.png in Resources */,
 				BC1D943913D2489800B3CC94 /* 80-shopping-cart@2x.png in Resources */,
 				BC1D943A13D2489800B3CC94 /* 80-shopping-cart.png in Resources */,
+				BC1D946613D25DE800B3CC94 /* amex.png in Resources */,
+				BC1D946813D25DF100B3CC94 /* cash.png in Resources */,
+				BC1D946A13D25E1300B3CC94 /* mastercard.png in Resources */,
+				BC1D946C13D25E1D00B3CC94 /* visa.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

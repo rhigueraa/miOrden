@@ -9,7 +9,7 @@
 #import "VistaDetalleRestaurant.h"
 #import "VistaUbicacionRestaurant.h"
 #import "VistaMenu.h"
-
+#import "UIImageView+WebCache.h"
 
 @implementation VistaDetalleRestaurant
 
@@ -59,6 +59,9 @@
     pageControl.numberOfPages = 3;
     [pageControl addTarget:self action:@selector(pagedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:pageControl];
+    
+    //Load image onto image view
+    [restaruantImageView setImageWithURL:[NSURL URLWithString:@"http://www.miorden.com/res/thumbs/121.jpg"]];
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -67,6 +70,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [pagedVIew reloadData];
+    [table deselectRowAtIndexPath:[table indexPathForSelectedRow] animated:YES];
 }
 
 - (void)viewDidUnload
