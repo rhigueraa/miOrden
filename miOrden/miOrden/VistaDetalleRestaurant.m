@@ -20,6 +20,7 @@
 @synthesize table2;
 @synthesize currentRestaurant;
 
+#pragma mark - Memory Managment
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -132,7 +133,7 @@
     
     if (tableView == table){
         cell.textLabel.textAlignment = UITextAlignmentCenter;
-        if(indexPath.row == 0)
+        if(indexPath.row == 1)
             cell.textLabel.text = @"Reseñas";
         else
             cell.textLabel.text = @"Ver menú"; 
@@ -148,6 +149,9 @@
         }
         else{
             cell.textLabel.text = @"Pago";
+            UISegmentedControl *segmetnedPayments = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"cash.png"],[UIImage imageNamed:@"visa.png"],[UIImage imageNamed:@"mastercard.png"],[UIImage imageNamed:@"amex.png"], nil]];
+            segmetnedPayments.frame = CGRectMake(0, 0, 200, 38);
+            cell.accessoryView = segmetnedPayments;
         }
     }
     
@@ -175,7 +179,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0)
-        if(indexPath.row == 1){
+        if(indexPath.row == 0){
           VistaMenu *menu = [[VistaMenu alloc] init];
           [self.navigationController pushViewController:menu animated:YES];
           [menu release];
@@ -221,12 +225,6 @@
 
 - (void)currentPageDidChangeInPagingView:(ATPagingView *)pagingViewS{
     pageControl.currentPage = pagingViewS.currentPageIndex;
-}
-
-#pragma mark - MapViewDelegate
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
-    
 }
 
 

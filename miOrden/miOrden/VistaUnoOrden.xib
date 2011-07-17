@@ -51,13 +51,12 @@
 							<object class="IBUISegmentedControl" id="609257151">
 								<reference key="NSNextResponder" ref="205116213"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{46, 12}, {229, 44}}</string>
+								<string key="NSFrame">{{46, 19}, {229, 30}}</string>
 								<reference key="NSSuperview" ref="205116213"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBSegmentControlStyle">3</int>
+								<int key="IBSegmentControlStyle">2</int>
 								<int key="IBNumberOfSegments">2</int>
 								<int key="IBSelectedSegmentIndex">0</int>
 								<object class="NSArray" key="IBSegmentTitles">
