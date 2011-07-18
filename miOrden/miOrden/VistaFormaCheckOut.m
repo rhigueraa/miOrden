@@ -8,7 +8,6 @@
 
 #import "VistaFormaCheckOut.h"
 #import "VistaUnoOrden.h"
-
 @implementation VistaFormaCheckOut
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -22,6 +21,7 @@
 
 - (void)dealloc
 {
+    [listaRfc release];
     [super dealloc];
 }
 
@@ -47,6 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    listaRfc = [[NSArray alloc] initWithObjects:@"RFC1", @"RFC2",@"RFC3", nil];
     self.title = @"Check-Out";
     UIBarButtonItem *enviar = [[UIBarButtonItem alloc] initWithTitle:@"Enviar" style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
     self.navigationItem.rightBarButtonItem = enviar;
@@ -59,24 +60,26 @@
     SCSegmentedCell *tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:temp];
     [temp release];
     SCDateCell *fecha =  [[SCDateCell alloc] initWithText:@"Fecha" withBoundKey:@"fechaKey" withDateValue:nil];
-    //agregar tipo de pago
+    SCTableViewCell *tipoPago =[[SCTableViewCell alloc] initWithText:@"Pago" withBoundKey:@"tipoPagoKey" withValue:nil];
+    UISegmentedControl *segmetnedPayments = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"cash.png"],[UIImage imageNamed:@"visa.png"],[UIImage imageNamed:@"mastercard.png"],[UIImage imageNamed:@"amex.png"], nil]];
+    segmetnedPayments.frame = CGRectMake(0, 0, 200, 38);
+    tipoPago.accessoryView = segmetnedPayments;
     SCNumericTextFieldCell *cambio = [[SCNumericTextFieldCell alloc] initWithText:@"Cambio de" withPlaceholder:@"billete del que desea cambio" withBoundKey:@"cambioKey" withTextFieldTextValue:nil];
     SCTextFieldCell *comentario = [[SCTextFieldCell alloc] initWithText:@"Comentario" withPlaceholder:@"introduzca un comentario" withBoundKey:@"comentarioKey" withTextFieldTextValue:nil];
     SCTableViewCell *favs = [[SCTableViewCell alloc] initWithText:@"¿Favoritos?" withBoundKey:@"favoritosKey" withValue:nil];
     favs.accessoryType = UITableViewCellAccessoryCheckmark;
     favs.selectionStyle = UITableViewCellSelectionStyleNone;
     SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"introduzca el nombre" withBoundKey:@"nombreKey" withTextFieldTextValue:nil];
-    //agregar factura
-    
+    SCSelectionCell *factura = [[SCSelectionCell alloc] initWithText:@"Factura" withBoundKey:@"facturaKey" withSelectedIndexValue:[NSNumber numberWithInt:-1] withItems:listaRfc];    
     [section addCell:personas];
     [section addCell:tipo];
     [section addCell:fecha];
-    //[section addCell:tipo de pago];
+    [section addCell:tipoPago];
     [section addCell:cambio];
     [section addCell:comentario];
     [section addCell:favs];
     [section addCell:nombre];
-    //[section addCell:factura];
+    [section addCell:factura];
     
     
     

@@ -10,6 +10,7 @@
 
 
 @implementation VistaListaRFC
+@synthesize rfc;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -44,7 +45,7 @@
     NSDictionary *rfc2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC2",@"Nombre",@"asdfgh1234hj",@"RFC", nil];
     NSDictionary *rfc3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC3",@"Nombre",@"fgaahj",@"RFC", nil];
 
-    rfc = [[NSArray alloc] initWithObjects:rfc1,rfc2,rfc3, nil];
+    self.rfc = [[NSArray alloc] initWithObjects:rfc1,rfc2,rfc3, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  

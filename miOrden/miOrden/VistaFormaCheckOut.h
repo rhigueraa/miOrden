@@ -11,6 +11,7 @@
 
 @interface VistaFormaCheckOut : UITableViewController <SCTableViewModelDelegate> {
     SCTableViewModel *tableModel;
+    NSArray *listaRfc;
 }
 
 @end

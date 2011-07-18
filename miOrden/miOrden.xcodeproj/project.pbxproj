@@ -68,6 +68,7 @@
 		E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */; };
 		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
 		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
+		E8D6DFB013D4AA3100ED7B9B /* VistaReseñas.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D6DFAF13D4AA3100ED7B9B /* VistaReseñas.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,6 +184,8 @@
 		E8CFDF3213CDF38400F06E73 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		E8CFDF4913CE000300F06E73 /* VistaRegistro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaRegistro.h; sourceTree = "<group>"; };
 		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
+		E8D6DFAE13D4AA3100ED7B9B /* VistaReseñas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VistaReseñas.h"; sourceTree = "<group>"; };
+		E8D6DFAF13D4AA3100ED7B9B /* VistaReseñas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VistaReseñas.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +297,7 @@
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E8D6DFAD13D4AA1C00ED7B9B /* Reseñas */,
 				E8B8107513D1095700BF03B8 /* Carrito */,
 				E890A7FF13CF7343001B9291 /* Resumen */,
 				E805A98813CE249000A96038 /* Orden */,
@@ -518,6 +522,15 @@
 			name = SensibleTableView;
 			sourceTree = "<group>";
 		};
+		E8D6DFAD13D4AA1C00ED7B9B /* Reseñas */ = {
+			isa = PBXGroup;
+			children = (
+				E8D6DFAE13D4AA3100ED7B9B /* VistaReseñas.h */,
+				E8D6DFAF13D4AA3100ED7B9B /* VistaReseñas.m */,
+			);
+			name = "Reseñas";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -674,6 +687,7 @@
 				BC1D946113D25B3B00B3CC94 /* SDWebImageDownloader.m in Sources */,
 				BC1D946213D25B3B00B3CC94 /* SDWebImageManager.m in Sources */,
 				BC1D946313D25B3B00B3CC94 /* UIImageView+WebCache.m in Sources */,
+				E8D6DFB013D4AA3100ED7B9B /* VistaReseñas.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

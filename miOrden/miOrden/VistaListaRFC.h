@@ -12,5 +12,6 @@
 @interface VistaListaRFC : UITableViewController {
     NSArray *rfc;
 }
+ @property(assign) NSArray *rfc;
 
 @end
