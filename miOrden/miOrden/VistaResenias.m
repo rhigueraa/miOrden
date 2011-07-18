@@ -40,9 +40,9 @@
 {
     [super viewDidLoad];
     self.title = @"Reseñas";
-    NSDictionary *res1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
-    NSDictionary *res2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 2 bla bla bla",@"Texto", nil];
-    NSDictionary *res3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 3 bla bla bla",@"Texto", nil];
+    NSDictionary *res1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 1 bla bla bla texto texto texto texto bla bl abla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
+    NSDictionary *res2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 2 bla bla bla bla 1 bla bla bla texto texto texto texto bla bl abla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
+    NSDictionary *res3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 3 bla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
     resenias = [[NSArray alloc] initWithObjects:res1,res2,res3, nil];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -111,6 +111,7 @@
     }
     
     // Configure the cell...
+    cell.detailTextLabel.numberOfLines = 5;
     cell.detailTextLabel.text = [[resenias objectAtIndex:indexPath.row] objectForKey:@"Texto"];    
     return cell;
 }
