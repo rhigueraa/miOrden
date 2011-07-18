@@ -38,6 +38,7 @@
 		E890A7FD13CF6F96001B9291 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E890A7FC13CF6F96001B9291 /* MapKit.framework */; };
 		E890A80213CF7386001B9291 /* VistaResumen.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80113CF7386001B9291 /* VistaResumen.m */; };
 		E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80413CF75F9001B9291 /* VistaTicket.m */; };
+		E899AFE313D4AEC600B688A7 /* VistaResenias.m in Sources */ = {isa = PBXBuildFile; fileRef = E899AFE213D4AEC600B688A7 /* VistaResenias.m */; };
 		E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8107D13D109A600BF03B8 /* VistaCarrito.m */; };
 		E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */; };
 		E8B8108613D10E3800BF03B8 /* VistaFormaCheckOut.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */; };
@@ -68,7 +69,6 @@
 		E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */; };
 		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
 		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
-		E8D6DFB013D4AA3100ED7B9B /* VistaReseñas.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D6DFAF13D4AA3100ED7B9B /* VistaReseñas.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +135,8 @@
 		E890A80113CF7386001B9291 /* VistaResumen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaResumen.m; sourceTree = "<group>"; };
 		E890A80313CF75F9001B9291 /* VistaTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaTicket.h; sourceTree = "<group>"; };
 		E890A80413CF75F9001B9291 /* VistaTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaTicket.m; sourceTree = "<group>"; };
+		E899AFE113D4AEC600B688A7 /* VistaResenias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaResenias.h; sourceTree = "<group>"; };
+		E899AFE213D4AEC600B688A7 /* VistaResenias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaResenias.m; sourceTree = "<group>"; };
 		E8B8107C13D109A600BF03B8 /* VistaCarrito.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCarrito.h; sourceTree = "<group>"; };
 		E8B8107D13D109A600BF03B8 /* VistaCarrito.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCarrito.m; sourceTree = "<group>"; };
 		E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaCarrito.xib; sourceTree = "<group>"; };
@@ -184,8 +186,6 @@
 		E8CFDF3213CDF38400F06E73 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		E8CFDF4913CE000300F06E73 /* VistaRegistro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaRegistro.h; sourceTree = "<group>"; };
 		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
-		E8D6DFAE13D4AA3100ED7B9B /* VistaReseñas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VistaReseñas.h"; sourceTree = "<group>"; };
-		E8D6DFAF13D4AA3100ED7B9B /* VistaReseñas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VistaReseñas.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -525,8 +525,8 @@
 		E8D6DFAD13D4AA1C00ED7B9B /* Reseñas */ = {
 			isa = PBXGroup;
 			children = (
-				E8D6DFAE13D4AA3100ED7B9B /* VistaReseñas.h */,
-				E8D6DFAF13D4AA3100ED7B9B /* VistaReseñas.m */,
+				E899AFE113D4AEC600B688A7 /* VistaResenias.h */,
+				E899AFE213D4AEC600B688A7 /* VistaResenias.m */,
 			);
 			name = "Reseñas";
 			sourceTree = "<group>";
@@ -687,7 +687,7 @@
 				BC1D946113D25B3B00B3CC94 /* SDWebImageDownloader.m in Sources */,
 				BC1D946213D25B3B00B3CC94 /* SDWebImageManager.m in Sources */,
 				BC1D946313D25B3B00B3CC94 /* UIImageView+WebCache.m in Sources */,
-				E8D6DFB013D4AA3100ED7B9B /* VistaReseñas.m in Sources */,
+				E899AFE313D4AEC600B688A7 /* VistaResenias.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

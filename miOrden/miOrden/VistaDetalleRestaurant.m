@@ -9,7 +9,7 @@
 #import "VistaDetalleRestaurant.h"
 #import "VistaMenu.h"
 #import "UIImageView+WebCache.h"
-#import "VistaReseñas.h"
+#import "VistaResenias.h"
 @implementation VistaDetalleRestaurant
 
 @synthesize restaruantImageView;
@@ -183,7 +183,7 @@
           [self.navigationController pushViewController:menu animated:YES];
           [menu release];
         }else{
-            VistaResen_as *resenia =[[VistaResen_as alloc] initWithStyle:UITableViewStyleGrouped];
+            VistaResenias *resenia =[[VistaResenias alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:resenia animated:YES];
             [resenia release];
         }
