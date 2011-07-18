@@ -7,7 +7,6 @@
 //
 
 #import "VistaDetalleRestaurant.h"
-#import "VistaUbicacionRestaurant.h"
 #import "VistaMenu.h"
 #import "UIImageView+WebCache.h"
 

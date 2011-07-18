@@ -28,8 +28,6 @@
 		E805A99313CE36E300A96038 /* VistaListaRestaurants.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A99213CE36E300A96038 /* VistaListaRestaurants.m */; };
 		E805A9A113CE3F1100A96038 /* VistaDetalleRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */; };
 		E805A9A213CE3F1100A96038 /* VistaDetalleRestaurant.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */; };
-		E805A9A613CE478500A96038 /* VistaUbicacionRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9A413CE478500A96038 /* VistaUbicacionRestaurant.m */; };
-		E805A9A713CE478500A96038 /* VistaUbicacionRestaurant.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A9A513CE478500A96038 /* VistaUbicacionRestaurant.xib */; };
 		E805A9AA13CE4B2400A96038 /* VistaListaDirecciones.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9A913CE4B2400A96038 /* VistaListaDirecciones.m */; };
 		E805A9AD13CE4C9100A96038 /* VistaListaRFC.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9AC13CE4C9100A96038 /* VistaListaRFC.m */; };
 		E805A9B313CE505F00A96038 /* VistaNuevaDir.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9B213CE505E00A96038 /* VistaNuevaDir.m */; };
@@ -118,9 +116,6 @@
 		E805A99E13CE3F1100A96038 /* VistaDetalleRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaDetalleRestaurant.h; sourceTree = "<group>"; };
 		E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaDetalleRestaurant.m; sourceTree = "<group>"; };
 		E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaDetalleRestaurant.xib; sourceTree = "<group>"; };
-		E805A9A313CE478400A96038 /* VistaUbicacionRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaUbicacionRestaurant.h; sourceTree = "<group>"; };
-		E805A9A413CE478500A96038 /* VistaUbicacionRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaUbicacionRestaurant.m; sourceTree = "<group>"; };
-		E805A9A513CE478500A96038 /* VistaUbicacionRestaurant.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaUbicacionRestaurant.xib; sourceTree = "<group>"; };
 		E805A9A813CE4B2400A96038 /* VistaListaDirecciones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListaDirecciones.h; sourceTree = "<group>"; };
 		E805A9A913CE4B2400A96038 /* VistaListaDirecciones.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaListaDirecciones.m; sourceTree = "<group>"; };
 		E805A9AB13CE4C9100A96038 /* VistaListaRFC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListaRFC.h; sourceTree = "<group>"; };
@@ -344,9 +339,6 @@
 				E805A99113CE36E300A96038 /* VistaListaRestaurants.h */,
 				E805A99213CE36E300A96038 /* VistaListaRestaurants.m */,
 				BC1D944413D250EA00B3CC94 /* Vista Detalle Restaurant */,
-				E805A9A313CE478400A96038 /* VistaUbicacionRestaurant.h */,
-				E805A9A413CE478500A96038 /* VistaUbicacionRestaurant.m */,
-				E805A9A513CE478500A96038 /* VistaUbicacionRestaurant.xib */,
 			);
 			name = Orden;
 			sourceTree = "<group>";
@@ -601,7 +593,6 @@
 				E8CFDEF313CDF09700F06E73 /* MainWindow_iPad.xib in Resources */,
 				E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */,
 				E805A9A213CE3F1100A96038 /* VistaDetalleRestaurant.xib in Resources */,
-				E805A9A713CE478500A96038 /* VistaUbicacionRestaurant.xib in Resources */,
 				E861897A13CF414E003BA7AE /* VistaMenu.xib in Resources */,
 				E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */,
 				BC1D943113D247E600B3CC94 /* 06-magnify@2x.png in Resources */,
@@ -668,7 +659,6 @@
 				E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */,
 				E805A99313CE36E300A96038 /* VistaListaRestaurants.m in Sources */,
 				E805A9A113CE3F1100A96038 /* VistaDetalleRestaurant.m in Sources */,
-				E805A9A613CE478500A96038 /* VistaUbicacionRestaurant.m in Sources */,
 				E805A9AA13CE4B2400A96038 /* VistaListaDirecciones.m in Sources */,
 				E805A9AD13CE4C9100A96038 /* VistaListaRFC.m in Sources */,
 				E805A9B313CE505F00A96038 /* VistaNuevaDir.m in Sources */,
