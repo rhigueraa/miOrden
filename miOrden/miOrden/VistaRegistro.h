@@ -11,6 +11,7 @@
 
 @interface VistaRegistro : UITableViewController <SCTableViewModelDelegate>{
     SCTableViewModel *tableModel;
+    NSDictionary *datos;
 }
 
 @end

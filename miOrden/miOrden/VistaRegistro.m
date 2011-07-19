@@ -34,6 +34,20 @@
 }
 
 -(void)confirmar{
+    datos = [[NSDictionary alloc] init];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nameKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"lastNameKey"] forKey:@"lastNameKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"phoneKey"] forKey:@"phoneKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"emailKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"passwordKey"] forKey:@"passwordKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"birthKey"] forKey:@"birthKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"sexKey"] forKey:@"genderKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"terminosKey"] forKey:@"terminosKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"newsKey"] forKey:@"newsKey"];
+    
+    
+    
+    
     UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
     [alerta show];
     [alerta release];
