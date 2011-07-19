@@ -34,7 +34,6 @@
 		E805A9B613CE540900A96038 /* VistaNuevoRFC.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9B513CE540900A96038 /* VistaNuevoRFC.m */; };
 		E861897913CF414E003BA7AE /* VistaMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E861897713CF414E003BA7AE /* VistaMenu.m */; };
 		E861897A13CF414E003BA7AE /* VistaMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E861897813CF414E003BA7AE /* VistaMenu.xib */; };
-		E861898513CF435B003BA7AE /* VistaListaMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E861898413CF435B003BA7AE /* VistaListaMenu.m */; };
 		E890A7FD13CF6F96001B9291 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E890A7FC13CF6F96001B9291 /* MapKit.framework */; };
 		E890A80213CF7386001B9291 /* VistaResumen.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80113CF7386001B9291 /* VistaResumen.m */; };
 		E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80413CF75F9001B9291 /* VistaTicket.m */; };
@@ -128,8 +127,6 @@
 		E861897613CF414E003BA7AE /* VistaMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaMenu.h; sourceTree = "<group>"; };
 		E861897713CF414E003BA7AE /* VistaMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaMenu.m; sourceTree = "<group>"; };
 		E861897813CF414E003BA7AE /* VistaMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaMenu.xib; sourceTree = "<group>"; };
-		E861898313CF435B003BA7AE /* VistaListaMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListaMenu.h; sourceTree = "<group>"; };
-		E861898413CF435B003BA7AE /* VistaListaMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaListaMenu.m; sourceTree = "<group>"; };
 		E890A7FC13CF6F96001B9291 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E890A80013CF7386001B9291 /* VistaResumen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaResumen.h; sourceTree = "<group>"; };
 		E890A80113CF7386001B9291 /* VistaResumen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaResumen.m; sourceTree = "<group>"; };
@@ -338,13 +335,21 @@
 		E805A98813CE249000A96038 /* Orden */ = {
 			isa = PBXGroup;
 			children = (
+				E806932313D64C6800EF4EFE /* Vista Listas Restaurant */,
 				E861897413CF4125003BA7AE /* Menu */,
 				BC1D943B13D249B600B3CC94 /* Primera vista orden */,
-				E805A99113CE36E300A96038 /* VistaListaRestaurants.h */,
-				E805A99213CE36E300A96038 /* VistaListaRestaurants.m */,
 				BC1D944413D250EA00B3CC94 /* Vista Detalle Restaurant */,
 			);
 			name = Orden;
+			sourceTree = "<group>";
+		};
+		E806932313D64C6800EF4EFE /* Vista Listas Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				E805A99113CE36E300A96038 /* VistaListaRestaurants.h */,
+				E805A99213CE36E300A96038 /* VistaListaRestaurants.m */,
+			);
+			name = "Vista Listas Restaurant";
 			sourceTree = "<group>";
 		};
 		E861897413CF4125003BA7AE /* Menu */ = {
@@ -353,8 +358,6 @@
 				E861897613CF414E003BA7AE /* VistaMenu.h */,
 				E861897713CF414E003BA7AE /* VistaMenu.m */,
 				E861897813CF414E003BA7AE /* VistaMenu.xib */,
-				E861898313CF435B003BA7AE /* VistaListaMenu.h */,
-				E861898413CF435B003BA7AE /* VistaListaMenu.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -677,7 +680,6 @@
 				E805A9B313CE505F00A96038 /* VistaNuevaDir.m in Sources */,
 				E805A9B613CE540900A96038 /* VistaNuevoRFC.m in Sources */,
 				E861897913CF414E003BA7AE /* VistaMenu.m in Sources */,
-				E861898513CF435B003BA7AE /* VistaListaMenu.m in Sources */,
 				E890A80213CF7386001B9291 /* VistaResumen.m in Sources */,
 				E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */,
 				E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */,

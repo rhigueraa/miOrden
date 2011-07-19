@@ -10,7 +10,8 @@
 
 
 @interface VistaMenu : UIViewController {
-   
+    NSDictionary *currentRestaurant;
     
 }
+@property(assign) NSDictionary *currentRestaurant;
 @end

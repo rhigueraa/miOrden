@@ -10,7 +10,7 @@
 #import "VistaDetalleRestaurant.h"
 
 @implementation VistaListaRestaurants
-
+@synthesize laDir;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -163,6 +163,7 @@
 {
     VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
     detalle.title = [[[tableView cellForRowAtIndexPath:indexPath]textLabel]text];
+    detalle.currentRestaurant = [listaRestaurants objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:detalle animated:YES];
     [detalle release];
 }

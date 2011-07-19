@@ -11,6 +11,8 @@
 
 @interface VistaResenias : UITableViewController {
     NSArray *resenias;
+    NSDictionary *currentRestaurant;
 }
+@property(assign) NSDictionary *currentRestaurant;
 
 @end

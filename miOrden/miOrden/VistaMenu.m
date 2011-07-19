@@ -7,10 +7,10 @@
 //
 
 #import "VistaMenu.h"
-#import "VistaListaMenu.h"
+
 
 @implementation VistaMenu
-
+@synthesize currentRestaurant;
 
 - (IBAction) tabIndexChanged{
     
@@ -41,45 +41,13 @@
     
 }
 
--(void) addTab{
-    UITabBarController *tabController = [[UITabBarController alloc] init];
-    NSMutableArray *viewControllers = [NSMutableArray array];
-    UIBarButtonItem *atras = [[UIBarButtonItem alloc] initWithTitle:@"Atrás" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-    tabController.navigationItem.backBarButtonItem = atras;
-    VistaListaMenu  *menu = [[VistaListaMenu alloc] initWithStyle:UITableViewStyleGrouped];
-    menu.title = @"menu1";
-    //menu.tabBarItem.image = [UIImage imageNamed:@"73-radar.png"];
-    [viewControllers addObject:menu];
-    [menu release];
-    VistaListaMenu  *menu2 = [[VistaListaMenu alloc] initWithStyle:UITableViewStyleGrouped];
-    menu2.title = @"menu2";
-    //menu.tabBarItem.image = [UIImage imageNamed:@"73-radar.png"];
-    [viewControllers addObject:menu2];
-    [menu2 release];
-    
-    NSMutableArray *navegadores = [NSMutableArray array];
-    
-    UINavigationController *navCont;
-    
-    for (UIViewController *vc in viewControllers) {
-        navCont = [[UINavigationController alloc] initWithRootViewController:vc];
-        navCont.navigationBar.tintColor = [UIColor colorWithRed:4/255.0 green:81/255.0 blue:150/255.0 alpha:1.0];
-        [navegadores addObject:navCont];
-    }
-    
-    tabController.viewControllers = [NSArray arrayWithArray:navegadores];
-    
-    [self.navigationController pushViewController:tabController animated:YES];
-
-
-}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self addTab];
+   
     
     
     // Do any additional setup after loading the view from its nib.

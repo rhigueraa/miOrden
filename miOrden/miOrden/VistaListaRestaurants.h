@@ -11,6 +11,7 @@
 
 @interface VistaListaRestaurants : UITableViewController {
     NSArray *listaRestaurants; 
+    NSDictionary *laDir;
 }
-
+@property(assign) NSDictionary *laDir;
 @end

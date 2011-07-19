@@ -180,10 +180,12 @@
     if(indexPath.section == 0)
         if(indexPath.row == 0){
           VistaMenu *menu = [[VistaMenu alloc] init];
+            menu.currentRestaurant = self.currentRestaurant;
           [self.navigationController pushViewController:menu animated:YES];
           [menu release];
         }else{
             VistaResenias *resenia =[[VistaResenias alloc] initWithStyle:UITableViewStyleGrouped];
+            resenia.currentRestaurant = self.currentRestaurant;
             [self.navigationController pushViewController:resenia animated:YES];
             [resenia release];
         }

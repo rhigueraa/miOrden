@@ -192,6 +192,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStylePlain];
+    if(control.selectedSegmentIndex == 0)
+        lista.laDir = [direcciones objectAtIndex:indexPath.row];
+    else
+        lista.laDir = [zonas objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:lista animated:YES];
     [lista release];
 }

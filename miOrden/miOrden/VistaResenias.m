@@ -10,7 +10,7 @@
 
 
 @implementation VistaResenias
-
+@synthesize currentRestaurant;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
