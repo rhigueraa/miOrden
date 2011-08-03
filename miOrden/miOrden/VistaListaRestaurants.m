@@ -8,6 +8,7 @@
 
 #import "VistaListaRestaurants.h"
 #import "VistaDetalleRestaurant.h"
+#import "UIImageView+WebCache.h"
 
 @implementation VistaListaRestaurants
 @synthesize laDir;
@@ -38,40 +39,27 @@
 
 
 -(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
-    NSLog(@"Did parse: %@", object);
+    //NSLog(@"Did parse: %@", object);
 }
 
 
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
-    NSLog(@"Parseo Todo");
+    listaRestaurants = [array retain];
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 - (void)viewDidLoad
 {
     
     [super viewDidLoad];
-    /*
     self.title = @"Restaurants";
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
     
     [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
-    
-    */
-    
-    NSDictionary *res1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 1",@"Nombre", nil];
-    NSDictionary *res2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 2",@"Nombre", nil];
-    NSDictionary *res3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 3",@"Nombre", nil];
-    NSDictionary *res4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 4",@"Nombre", nil];
-    
-    listaRestaurants = [[NSArray alloc] initWithObjects:res1,res2,res3,res4, nil];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -132,7 +120,9 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[listaRestaurants objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
+    NSDictionary *rest = [listaRestaurants objectAtIndex:indexPath.row];
+    cell.textLabel.text = [rest objectForKey:@"name"];
+    [cell.imageView setImageWithURL:[NSURL URLWithString:[rest objectForKey:@"logo"]] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
     
     return cell;
 }

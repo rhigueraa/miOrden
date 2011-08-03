@@ -22,6 +22,7 @@
 		BC1D946813D25DF100B3CC94 /* cash.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946713D25DF100B3CC94 /* cash.png */; };
 		BC1D946A13D25E1300B3CC94 /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946913D25E1300B3CC94 /* mastercard.png */; };
 		BC1D946C13D25E1D00B3CC94 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946B13D25E1D00B3CC94 /* visa.png */; };
+		BCFC66CD13EA0AC100846F19 /* placeholder-recipe-44.gif in Resources */ = {isa = PBXBuildFile; fileRef = BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
 		E805A99013CE24E500A96038 /* VistaUnoOrden.xib in Resources */ = {isa = PBXBuildFile; fileRef = E805A98E13CE24E500A96038 /* VistaUnoOrden.xib */; };
@@ -123,6 +124,7 @@
 		BC1D946913D25E1300B3CC94 /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
 		BC1D946B13D25E1D00B3CC94 /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder-recipe-44.gif"; sourceTree = "<group>"; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
 		E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCuentaPerfil.m; sourceTree = "<group>"; };
 		E805A98C13CE24E500A96038 /* VistaUnoOrden.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaUnoOrden.h; sourceTree = "<group>"; };
@@ -544,6 +546,7 @@
 		E8CFDEDB13CDF09700F06E73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */,
 				BC1D942D13D247D300B3CC94 /* Images */,
 				E8CFDEDC13CDF09700F06E73 /* miOrden-Info.plist */,
 				E8CFDEDD13CDF09700F06E73 /* InfoPlist.strings */,
@@ -737,6 +740,7 @@
 				E8C3413513E9F12B0071B12D /* abierto.png in Resources */,
 				E8C3413713E9F1330071B12D /* cerado.png in Resources */,
 				E8C3413913E9F13A0071B12D /* estrellitas.png in Resources */,
+				BCFC66CD13EA0AC100846F19 /* placeholder-recipe-44.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
