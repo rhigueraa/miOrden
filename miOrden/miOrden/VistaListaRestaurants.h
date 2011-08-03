@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XMLThreadedParser.h"
 
 
-@interface VistaListaRestaurants : UITableViewController {
+@interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate> {
     NSArray *listaRestaurants; 
     NSDictionary *laDir;
 }

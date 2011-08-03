@@ -36,18 +36,36 @@
 
 #pragma mark - View lifecycle
 
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    NSLog(@"Did parse: %@", object);
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    NSLog(@"Parseo Todo");
+}
+
 - (void)viewDidLoad
 {
     
     [super viewDidLoad];
     self.title = @"Restaurants";
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    
+    [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
+    
+    
+    /*
     NSDictionary *res1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 1",@"Nombre", nil];
     NSDictionary *res2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 2",@"Nombre", nil];
     NSDictionary *res3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 3",@"Nombre", nil];
     NSDictionary *res4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"restaurant 4",@"Nombre", nil];
     
     listaRestaurants = [[NSArray alloc] initWithObjects:res1,res2,res3,res4, nil];
-    
+    */
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
