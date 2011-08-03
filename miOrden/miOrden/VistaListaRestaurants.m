@@ -9,6 +9,7 @@
 #import "VistaListaRestaurants.h"
 #import "VistaDetalleRestaurant.h"
 #import "UIImageView+WebCache.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation VistaListaRestaurants
 @synthesize laDir;
@@ -117,13 +118,17 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell.imageView.layer.cornerRadius = 10.0;
+        cell.imageView.layer.masksToBounds = YES;
+        cell.imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        cell.imageView.layer.borderWidth = 1.0;
     }
     
     // Configure the cell...
     NSDictionary *rest = [listaRestaurants objectAtIndex:indexPath.row];
     cell.textLabel.text = [rest objectForKey:@"name"];
     [cell.imageView setImageWithURL:[NSURL URLWithString:[rest objectForKey:@"logo"]] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
-    
+    //cell.imageView.contentMode = UIViewContentModeCenter;
     return cell;
 }
 

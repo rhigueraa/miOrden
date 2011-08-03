@@ -62,12 +62,12 @@
     [self.view addSubview:pageControl];
     
     //Load image onto image view
-    [restaruantImageView setImageWithURL:[NSURL URLWithString:@"http://www.miorden.com/res/thumbs/121.jpg"]];
+    [restaruantImageView setImageWithURL:[NSURL URLWithString:[currentRestaurant valueForKey:@"logo"]]];
     restaruantImageView.layer.cornerRadius = 10.0;
     restaruantImageView.layer.masksToBounds = YES;
     restaruantImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     restaruantImageView.layer.borderWidth = 1.0;
-    restaruantImageView.contentMode = UIViewContentModeCenter;
+    restaruantImageView.contentMode = UIViewContentModeScaleAspectFill;
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -150,9 +150,14 @@
     else{
         if(indexPath.row == 0){
             cell.textLabel.text = @"Orden mínima";
-            cell.detailTextLabel.text = @"$500.00";
+            cell.detailTextLabel.text =[NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"deliver_minimum"] intValue]];
         }else if (indexPath.row == 1){
-            cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
+            if ([[currentRestaurant valueForKey:@"is_activated"] isEqualToString:@"yes"]) {
+                cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
+            }
+            else{
+                cell.imageView.image = [UIImage imageNamed:@"cerrado.png"];
+            }
             cell.detailTextLabel.text = @"9:00 - 21:00";
         }
         else if(indexPath.row == 2 ){
