@@ -15,12 +15,10 @@
 -(void)parse{
 	// Initialize the blogEntries MutableArray that we declared in the header
     NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];	
-	
-    [data writeToFile:@"/Users/Zebas/Desktop/test.xml" atomically:YES];
     
     // Create a new rssParser object based on the TouchXML "CXMLDocument" class, this is the
     // object that actually grabs and processes the RSS data
-    CXMLDocument *rssParser = [[[CXMLDocument alloc] initWithData:data options:0 error:nil] autorelease];
+    CXMLDocument *rssParser = [[[CXMLDocument alloc] initWithData:data encoding:NSASCIIStringEncoding options:0 error:nil] autorelease];
 	
     // Create a new Array object to be used with the looping of the results from the rssParser
     NSArray *resultNodes = NULL;
