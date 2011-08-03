@@ -8,6 +8,7 @@
 
 #import "VistaListaRestaurants.h"
 #import "VistaDetalleRestaurant.h"
+#import "UIImageView+WebCache.h"
 
 @implementation VistaListaRestaurants
 @synthesize laDir;
@@ -119,7 +120,9 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[listaRestaurants objectAtIndex:indexPath.row]objectForKey:@"nombre"];
+    NSDictionary *rest = [listaRestaurants objectAtIndex:indexPath.row];
+    cell.textLabel.text = [rest objectForKey:@"name"];
+    [cell.imageView setImageWithURL:[NSURL URLWithString:[rest objectForKey:@"logo"]] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
     
     return cell;
 }
