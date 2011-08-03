@@ -70,7 +70,9 @@
      SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
     SCNumericTextFieldCell *celular = [[SCNumericTextFieldCell alloc] initWithText:@"Celular" withPlaceholder:@"enter phone" withBoundKey:@"phoneKey" withTextFieldTextValue:nil];
      SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *confirmaEmail = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"Confirma tu eMail" withBoundKey:@"confirmaEmailKey" withTextFieldTextValue:nil];
      SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
     SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
     NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
     SCSegmentedCell *sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
@@ -81,7 +83,9 @@
     [section addCell:apellido];
     [section addCell:celular];
     [section addCell:email];
+    [section addCell:confirmaEmail];
     [section addCell:pass];
+    [section addCell:confirmaPass];
     [section addCell:fechaNacimiento];
     [section addCell:sexo];
     [section addCell:terminos];

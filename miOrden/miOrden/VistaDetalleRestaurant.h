@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ATPagingView.h"
 #import <MapKit/MapKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate> {
     UITableView  *table;

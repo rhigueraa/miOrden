@@ -20,18 +20,19 @@
     UITabBarController *tabController = [[UITabBarController alloc] init];
     NSMutableArray *viewControllers = [NSMutableArray array];
     
-    VistaCuentaPerfil  *cuenta = [[VistaCuentaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
-    cuenta.title = @"Perfil";
-    cuenta.tabBarItem.image = [UIImage imageNamed:@"111-user.png"];
-    [viewControllers addObject:cuenta];
-    [cuenta release];
-    
     VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithNibName:@"VistaUnoOrden" bundle:nil];
     orden.title = @"Nueva Orden";
     orden.tabBarItem.title = @"Buscar";
     orden.tabBarItem.image = [UIImage imageNamed:@"06-magnify.png"];
     [viewControllers addObject:orden];
     [orden release];
+    
+    VistaCuentaPerfil  *cuenta = [[VistaCuentaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
+    cuenta.title = @"Perfil";
+    cuenta.tabBarItem.image = [UIImage imageNamed:@"111-user.png"];
+    [viewControllers addObject:cuenta];
+    [cuenta release];
+    
     
     VistaCarrito *carrito = [[VistaCarrito alloc] initWithStyle:UITableViewStyleGrouped];
     carrito.title = @"Carrito";

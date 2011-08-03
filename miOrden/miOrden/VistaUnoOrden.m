@@ -192,6 +192,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStylePlain];
+    lista.title = @"Restaurants";
     if(control.selectedSegmentIndex == 0)
         lista.laDir = [direcciones objectAtIndex:indexPath.row];
     else

@@ -52,6 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    pagedView.backgroundColor = [UIColor redColor];
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
     pagedVIew.delegate = self;
     [pagedView addSubview:pagedVIew];
@@ -62,6 +63,11 @@
     
     //Load image onto image view
     [restaruantImageView setImageWithURL:[NSURL URLWithString:@"http://www.miorden.com/res/thumbs/121.jpg"]];
+    restaruantImageView.layer.cornerRadius = 10.0;
+    restaruantImageView.layer.masksToBounds = YES;
+    restaruantImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    restaruantImageView.layer.borderWidth = 1.0;
+    restaruantImageView.contentMode = UIViewContentModeCenter;
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -104,7 +110,7 @@
         return 2;
     }
     else{
-        return 3;
+        return 4;
     }
 }
 
@@ -122,7 +128,7 @@
     
     if (cell == nil) {
         if (tableView == table)
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
         else
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier2] autorelease];
     }
@@ -132,17 +138,24 @@
     
     if (tableView == table){
         cell.textLabel.textAlignment = UITextAlignmentCenter;
-        if(indexPath.row == 1)
-            cell.textLabel.text = @"Reseñas";
-        else
+        if(indexPath.row == 1){
+            cell.imageView.image = [UIImage imageNamed:@"estrellitas.png"];
+            cell.detailTextLabel.text = @"# reviews";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else{
             cell.textLabel.text = @"Ver menú"; 
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
     else{
         if(indexPath.row == 0){
             cell.textLabel.text = @"Orden mínima";
             cell.detailTextLabel.text = @"$500.00";
+        }else if (indexPath.row == 1){
+            cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
+            cell.detailTextLabel.text = @"9:00 - 21:00";
         }
-        else if(indexPath.row == 1 ){
+        else if(indexPath.row == 2 ){
             cell.textLabel.text = @"Costo de envío";
             cell.detailTextLabel.text = @"$70.00";
         }
