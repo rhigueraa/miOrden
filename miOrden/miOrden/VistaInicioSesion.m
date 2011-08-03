@@ -180,14 +180,6 @@
     if(indexPath.section == 3){
         VistaRegistro *registro = [[VistaRegistro alloc] initWithStyle:UITableViewStyleGrouped];
         [self.navigationController pushViewController:registro animated:YES];
-        [registro release];
-    }else if(indexPath.section == 1){
-        UITableViewCell *cell = [tableViewModel cellAtIndexPath:indexPath];
-        if(cell.accessoryType == UITableViewCellAccessoryCheckmark)
-            [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryNone];
-        else
-            [[tableViewModel cellAtIndexPath:indexPath]setAccessoryType:UITableViewCellAccessoryCheckmark];
-        [cell release];
     }else if(indexPath.section == 2){
         [self dismissModalViewControllerAnimated:YES];
     }
