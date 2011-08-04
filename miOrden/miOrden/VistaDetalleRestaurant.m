@@ -166,7 +166,20 @@
         }
         else{
             cell.textLabel.text = @"Pago";
-            UISegmentedControl *segmetnedPayments = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"cash.png"],[UIImage imageNamed:@"visa.png"],[UIImage imageNamed:@"mastercard.png"],[UIImage imageNamed:@"amex.png"], nil]];
+            NSMutableArray *images = [NSMutableArray array];
+            if ([[currentRestaurant valueForKey:@"efectivo1"] intValue]) {
+                [images addObject:[UIImage imageNamed:@"cash.png"]];
+            }
+            if ([[currentRestaurant valueForKey:@"visa1"] intValue]) {
+                [images addObject:[UIImage imageNamed:@"visa.png"]];
+            }
+            if ([[currentRestaurant valueForKey:@"ms1"] intValue]) {
+                [images addObject:[UIImage imageNamed:@"mastercard.png"]];
+            }
+            if ([[currentRestaurant valueForKey:@"am1"] intValue]) {
+                [images addObject:[UIImage imageNamed:@"amex.png"]];
+            }
+            UISegmentedControl *segmetnedPayments = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:images]];
             segmetnedPayments.frame = CGRectMake(0, 0, 200, 38);
             cell.accessoryView = segmetnedPayments;
         }
