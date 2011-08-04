@@ -18,7 +18,7 @@
     
     // Create a new rssParser object based on the TouchXML "CXMLDocument" class, this is the
     // object that actually grabs and processes the RSS data
-    CXMLDocument *rssParser = [[[CXMLDocument alloc] initWithData:data encoding:NSASCIIStringEncoding options:0 error:nil] autorelease];
+    CXMLDocument *rssParser = [[[CXMLDocument alloc] initWithData:data encoding:NSISOLatin1StringEncoding options:0 error:nil] autorelease];
 	
     // Create a new Array object to be used with the looping of the results from the rssParser
     NSArray *resultNodes = NULL;
