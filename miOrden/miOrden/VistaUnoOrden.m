@@ -59,6 +59,12 @@
     NSDictionary *dir1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 1",@"Nombre", nil];
     NSDictionary *dir2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 2",@"Nombre", nil];
     
+    
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/zones.php"]  withKey:@"zone"];
+    
+    
     NSDictionary *zona1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"zona 1",@"Nombre", nil];
     
     direcciones = [[NSArray alloc] initWithObjects:dir1,dir2, nil];
@@ -71,6 +77,18 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    zonas = [array retain];
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 - (void)viewDidUnload
@@ -143,7 +161,7 @@
         cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
         
     }else{
-        cell.textLabel.text = [[zonas objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
+        cell.textLabel.text = [zonas valueForKey:@"title"];
     }
     return cell;
 }
