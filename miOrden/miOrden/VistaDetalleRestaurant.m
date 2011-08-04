@@ -18,6 +18,7 @@
 @synthesize pagedView;
 @synthesize table2;
 @synthesize currentRestaurant;
+@synthesize direccion;
 
 #pragma mark - Memory Managment
 
@@ -52,6 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    direccion.text = [currentRestaurant valueForKey:@"address"];
     pagedView.backgroundColor = [UIColor redColor];
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
     pagedVIew.delegate = self;
@@ -156,13 +158,16 @@
                 cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
             }
             else{
-                cell.imageView.image = [UIImage imageNamed:@"cerrado.png"];
+                cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
             }
             cell.detailTextLabel.text = @"9:00 - 21:00";
         }
         else if(indexPath.row == 2 ){
             cell.textLabel.text = @"Costo de envío";
-            cell.detailTextLabel.text = @"$70.00";
+            if([[currentRestaurant valueForKey:@"tipo_envio"]isEqualToString:@"porcentaje"])
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%d.00\%%",[[currentRestaurant valueForKey:@"costo_envio"] intValue]];
+            else
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"costo_envio"] intValue]];
         }
         else{
             cell.textLabel.text = @"Pago";
@@ -234,8 +239,10 @@
             break;
         case 2:{
             //Notes
-            UIView *detailVIew = [[UIView alloc] initWithFrame:pagedView.bounds];
-            detailVIew.backgroundColor = [UIColor redColor];
+            UITextView *detailVIew = [[UITextView alloc] initWithFrame:pagedView.bounds];
+            detailVIew.text = [NSString stringWithFormat:@"Descripción:\n%@Notas:\n%@\n",[currentRestaurant valueForKey:@"description"],[currentRestaurant valueForKey:@"special_note"]];
+            detailVIew.font = [UIFont systemFontOfSize:17];
+            
             return detailVIew;
         }
             

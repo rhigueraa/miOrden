@@ -20,7 +20,7 @@
     UIPageControl *pageControl;
     UIView *restaruanExtraDetailView;
     UIImageView *restaruantImageView;
-    
+    UITextView *direccion;
     NSDictionary *currentRestaurant;
     
 }
@@ -30,5 +30,6 @@
 @property(nonatomic,retain) IBOutlet UITableView *table;
 @property (nonatomic, retain) IBOutlet UIView *pagedView;
 @property (nonatomic, retain) IBOutlet UITableView *table2;
+@property (nonatomic, retain) IBOutlet UITextView *direccion;
 
 @end
