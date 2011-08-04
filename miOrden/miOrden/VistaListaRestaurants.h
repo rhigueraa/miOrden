@@ -11,8 +11,10 @@
 
 
 @interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate> {
+    NSString *zonaID;
     NSArray *listaRestaurants; 
     NSDictionary *laDir;
 }
 @property(assign) NSDictionary *laDir;
+@property(nonatomic,retain) NSString *zonaID;
 @end

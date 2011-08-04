@@ -161,7 +161,7 @@
         cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
         
     }else{
-        cell.textLabel.text = [zonas valueForKey:@"title"];
+        cell.textLabel.text = [[zonas objectAtIndex:indexPath.row] valueForKey:@"title"];
     }
     return cell;
 }
@@ -213,8 +213,11 @@
     lista.title = @"Restaurants";
     if(control.selectedSegmentIndex == 0)
         lista.laDir = [direcciones objectAtIndex:indexPath.row];
-    else
+    else{
         lista.laDir = [zonas objectAtIndex:indexPath.row];
+        lista.zonaID = [[zonas objectAtIndex:indexPath.row] valueForKey:@"zone_id"];
+
+}
     [self.navigationController pushViewController:lista animated:YES];
     [lista release];
 }

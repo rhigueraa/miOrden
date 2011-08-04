@@ -77,7 +77,7 @@
     if (!theMapView) {
         theMapView = [[MKMapView alloc] initWithFrame:pagedView.bounds];
         theMapView.delegate = self;
-       theMapView.userInteractionEnabled = YES;
+       theMapView.userInteractionEnabled = NO;
         theMapView.showsUserLocation = YES;
     }
     NSDictionary *coordenadas = [[NSDictionary alloc] initWithObjectsAndKeys:[currentRestaurant valueForKey:@"lon"],@"longitudKey",
@@ -86,7 +86,7 @@
     ann.title = [currentRestaurant valueForKey:@"name"];
     [theMapView addAnnotation:ann];
     [theMapView setCenterCoordinate:ann.coordinate];
-    MKCoordinateRegion region = {ann.coordinate, {0.02f, 0.02f}};
+    MKCoordinateRegion region = {ann.coordinate, {0.01f, 0.01f}};
     [theMapView setRegion:region];
     
     [coordenadas release];
@@ -183,7 +183,7 @@
             else{
                 cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
             }
-            cell.detailTextLabel.text = @"9:00 - 21:00";
+            //cell.detailTextLabel.text = @"9:00 - 21:00";
         }
         else if(indexPath.row == 2 ){
             cell.textLabel.text = @"Costo de envío";

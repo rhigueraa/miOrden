@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation VistaListaRestaurants
-@synthesize laDir;
+@synthesize laDir, zonaID;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -59,8 +59,11 @@
     self.title = @"Restaurants";
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
-    
-    [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
+    if(self.zonaID == nil)
+        [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
+    else
+        [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]] withKey:@"restaurant"];
+
 }
 
 - (void)viewDidUnload
