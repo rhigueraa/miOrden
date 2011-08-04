@@ -42,6 +42,7 @@
 		E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8107D13D109A600BF03B8 /* VistaCarrito.m */; };
 		E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */; };
 		E8B8108613D10E3800BF03B8 /* VistaFormaCheckOut.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */; };
+		E8BA0D7613EA240200631B7D /* HotelesAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BA0D7513EA240200631B7D /* HotelesAnnotation.m */; };
 		E8C3410A13E9E0510071B12D /* XMLThreadedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C3410913E9E0510071B12D /* XMLThreadedParser.m */; };
 		E8C3412613E9E0640071B12D /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C3410C13E9E0640071B12D /* CXMLDocument_CreationExtensions.m */; };
 		E8C3412713E9E0640071B12D /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C3410E13E9E0640071B12D /* CXMLNode_CreationExtensions.m */; };
@@ -158,6 +159,8 @@
 		E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaCarrito.xib; sourceTree = "<group>"; };
 		E8B8108413D10E3800BF03B8 /* VistaFormaCheckOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaFormaCheckOut.h; sourceTree = "<group>"; };
 		E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaFormaCheckOut.m; sourceTree = "<group>"; };
+		E8BA0D7413EA240200631B7D /* HotelesAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelesAnnotation.h; sourceTree = "<group>"; };
+		E8BA0D7513EA240200631B7D /* HotelesAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelesAnnotation.m; sourceTree = "<group>"; };
 		E8C3410813E9E0510071B12D /* XMLThreadedParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLThreadedParser.h; sourceTree = "<group>"; };
 		E8C3410913E9E0510071B12D /* XMLThreadedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLThreadedParser.m; sourceTree = "<group>"; };
 		E8C3410B13E9E0640071B12D /* CXMLDocument_CreationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLDocument_CreationExtensions.h; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				E805A99E13CE3F1100A96038 /* VistaDetalleRestaurant.h */,
 				E805A99F13CE3F1100A96038 /* VistaDetalleRestaurant.m */,
 				E805A9A013CE3F1100A96038 /* VistaDetalleRestaurant.xib */,
+				E8BA0D7413EA240200631B7D /* HotelesAnnotation.h */,
+				E8BA0D7513EA240200631B7D /* HotelesAnnotation.m */,
 			);
 			name = "Vista Detalle Restaurant";
 			sourceTree = "<group>";
@@ -824,6 +829,7 @@
 				E8C3413013E9E0640071B12D /* CXMLNode_PrivateExtensions.m in Sources */,
 				E8C3413113E9E0640071B12D /* CXMLNode_XPathExtensions.m in Sources */,
 				E8C3413213E9E0640071B12D /* CTidy.m in Sources */,
+				E8BA0D7613EA240200631B7D /* HotelesAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

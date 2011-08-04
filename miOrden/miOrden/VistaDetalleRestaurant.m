@@ -10,6 +10,7 @@
 #import "VistaMenu.h"
 #import "UIImageView+WebCache.h"
 #import "VistaResenias.h"
+#import "HotelesAnnotation.h"
 @implementation VistaDetalleRestaurant
 
 @synthesize restaruantImageView;
@@ -70,6 +71,28 @@
     restaruantImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     restaruantImageView.layer.borderWidth = 1.0;
     restaruantImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    //map annotations
+    
+    if (!theMapView) {
+        theMapView = [[MKMapView alloc] initWithFrame:pagedView.bounds];
+        theMapView.delegate = self;
+       theMapView.userInteractionEnabled = YES;
+        theMapView.showsUserLocation = YES;
+    }
+    NSDictionary *coordenadas = [[NSDictionary alloc] initWithObjectsAndKeys:[currentRestaurant valueForKey:@"lon"],@"longitudKey",
+    [currentRestaurant valueForKey:@"lat"],@"latitudKey", nil];
+    HotelesAnnotation *ann = [[HotelesAnnotation alloc] initWithHotel:coordenadas];
+    ann.title = [currentRestaurant valueForKey:@"name"];
+    [theMapView addAnnotation:ann];
+    [theMapView setCenterCoordinate:ann.coordinate];
+    MKCoordinateRegion region = {ann.coordinate, {0.02f, 0.02f}};
+    [theMapView setRegion:region];
+    
+    [coordenadas release];
+    
+    
+   
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -269,6 +292,23 @@
 - (void)currentPageDidChangeInPagingView:(ATPagingView *)pagingViewS{
     pageControl.currentPage = pagingViewS.currentPageIndex;
 }
+- (MKAnnotationView *)mapView:(MKMapView *)mapView 
+            viewForAnnotation:(id <MKAnnotation>)annotation {
+    MKAnnotationView *view = nil;
+    if(annotation != theMapView.userLocation) {
+		HotelesAnnotation *hotAnn = (HotelesAnnotation*)annotation;
+		view = [theMapView dequeueReusableAnnotationViewWithIdentifier:@"hotelLoc"];
+		if(nil == view) {
+			view = [[[MKPinAnnotationView alloc] initWithAnnotation:hotAnn
+                                                    reuseIdentifier:@"HotelLoc"] autorelease];
+		}
+        [(MKPinAnnotationView *)view setAnimatesDrop:YES];
+		[view setCanShowCallout:YES];
+               
+    }
+    return view;
+}
+
 
 
 @end
