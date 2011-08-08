@@ -21,11 +21,12 @@
     UIView *restaruanExtraDetailView;
     UIImageView *restaruantImageView;
     UITextView *direccion;
-    NSDictionary *currentRestaurant;
+    NSMutableDictionary *currentRestaurant;
+    int numeroResenias;
     
 }
 @property (nonatomic, retain) IBOutlet UIImageView *restaruantImageView;
-@property (nonatomic, assign) NSDictionary *currentRestaurant;
+@property (nonatomic, assign) NSMutableDictionary *currentRestaurant;
 @property (nonatomic, retain) IBOutlet UIView *restaruanExtraDetailView;
 @property(nonatomic,retain) IBOutlet UITableView *table;
 @property (nonatomic, retain) IBOutlet UIView *pagedView;

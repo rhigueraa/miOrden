@@ -72,6 +72,12 @@
     restaruantImageView.layer.borderWidth = 1.0;
     restaruantImageView.contentMode = UIViewContentModeScaleAspectFill;
     
+    //review count
+    VistaResenias *resenia =[[VistaResenias alloc] initWithStyle:UITableViewStyleGrouped];
+    resenia.currentRestaurant = self.currentRestaurant;
+    numeroResenias = [resenia.resenias count];
+    [resenia release];
+    
     //map annotations
     
     if (!theMapView) {
@@ -165,7 +171,7 @@
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         if(indexPath.row == 1){
             cell.imageView.image = [UIImage imageNamed:@"estrellitas.png"];
-            cell.detailTextLabel.text = @"# reviews";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d reseñas", numeroResenias];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else{
             cell.textLabel.text = @"Ver menú"; 

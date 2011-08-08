@@ -10,7 +10,7 @@
 
 
 @implementation VistaResenias
-@synthesize currentRestaurant;
+@synthesize currentRestaurant, resenias;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -35,15 +35,33 @@
 }
 
 #pragma mark - View lifecycle
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    //NSLog(@"Did parse: %@", object);
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    resenias = [array retain];
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
+
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    resenias = [[NSMutableDictionary alloc] init];
     self.title = @"Reseñas";
-    NSDictionary *res1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 1 bla bla bla texto texto texto texto bla bl abla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
-    NSDictionary *res2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 2 bla bla bla bla 1 bla bla bla texto texto texto texto bla bl abla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
-    NSDictionary *res3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"bla 3 bla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla blabla 1 bla bla bla texto texto texto texto bla bl abla bla bla",@"Texto", nil];
-    resenias = [[NSArray alloc] initWithObjects:res1,res2,res3, nil];
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    
+    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=1",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
+    //[parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=1"] withKey:@"review"];
+    
+    resenias = [[NSMutableDictionary alloc] init];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -107,12 +125,13 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
     cell.detailTextLabel.numberOfLines = 5;
-    cell.detailTextLabel.text = [[resenias objectAtIndex:indexPath.row] objectForKey:@"Texto"];    
+    cell.textLabel.text = [[resenias objectAtIndex:indexPath.row] valueForKey:@"title"];
+    cell.detailTextLabel.text = [[resenias objectAtIndex:indexPath.row] valueForKey:@"description"];    
     return cell;
 }
 

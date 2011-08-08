@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XMLThreadedParser.h"
 
-
-@interface VistaResenias : UITableViewController {
-    NSArray *resenias;
-    NSDictionary *currentRestaurant;
+@interface VistaResenias : UITableViewController<XMLThreadedParserDelegate>{
+    NSMutableArray *resenias;
+    NSMutableDictionary *currentRestaurant;
 }
-@property(assign) NSDictionary *currentRestaurant;
-
+@property(assign) NSMutableDictionary *currentRestaurant;
+@property(assign) NSMutableArray *resenias;
 @end
