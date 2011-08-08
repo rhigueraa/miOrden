@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SCTableViewModel.h"
+#import "XMLThreadedParser.h"
 
-@interface VistaNuevaDir : UITableViewController<SCTableViewModelDelegate> {
+@interface VistaNuevaDir : UITableViewController<SCTableViewModelDelegate, XMLThreadedParserDelegate> {
     SCTableViewModel *tableModel;
+    NSMutableArray *estadosArr;
+    NSMutableArray *delegacionesArr;
+    NSMutableArray *coloniasArr;
 }
 
 @end
