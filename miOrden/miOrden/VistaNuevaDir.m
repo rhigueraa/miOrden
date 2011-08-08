@@ -61,29 +61,11 @@
     
     SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"introduzca un nickname" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
     
-    SCDictionaryDefinition *direccion = [[SCDictionaryDefinition alloc] initWithDictionaryKeyNames:[NSArray arrayWithObjects:@"Estado",@"Delegación",@"Colonia",@"Calle",@"Número", nil]];
-    
-    SCPropertyDefinition *estado = [direccion propertyDefinitionWithName:@"Estado"];
-    estado.type = SCPropertyTypeSelection;
-    estado.attributes = [SCSelectionAttributes attributesWithItems:[NSArray arrayWithObjects:@"estado1",@"estado2", nil] allowMultipleSelection:NO allowNoSelection:NO];
-    estado.title = @"Estado";
-    
-    SCPropertyDefinition *delegacion = [direccion propertyDefinitionWithName:@"Delegación"];
-    delegacion.type = SCPropertyTypeSelection;
-    delegacion.attributes = [SCSelectionAttributes attributesWithItems:[NSArray arrayWithObjects:@"dele 1",@"dele 2", nil] allowMultipleSelection:NO allowNoSelection:NO];
-    estado.title = @"Delegación";
-    
-    SCPropertyDefinition *colonia = [direccion propertyDefinitionWithName:@"Colonia"];
-    colonia.type = SCPropertyTypeSelection;
-    colonia.attributes = [SCSelectionAttributes attributesWithItems:[NSArray arrayWithObjects:@"colonia 1",@"colonia 2", nil] allowMultipleSelection:NO allowNoSelection:NO];
-    colonia.title = @"Colonia";
-    
-    
-    [direccion propertyDefinitionWithName:@"Calle"].type = SCPropertyTypeTextField;
-    [direccion propertyDefinitionWithName:@"Número"].type = SCPropertyTypeTextField;
-    
+    SCSelectionCell *colonias = [SCSelectionCell cellWithText:@"Colonia" withBoundKey:@"coloniaKey" withSelectedIndexValue:nil withItems:[NSArray arrayWithObjects:@"Hidalgo",@"Colonia 2",@"Colonia 3", nil]];
+     
     
     [section addCell:nombre];
+    [section addCell:colonias];
  
     [tableModel addSection:section];
     
