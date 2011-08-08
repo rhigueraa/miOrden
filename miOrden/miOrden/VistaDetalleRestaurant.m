@@ -65,7 +65,7 @@
     [self.view addSubview:pageControl];
     
     //Load image onto image view
-    [restaruantImageView setImageWithURL:[NSURL URLWithString:[currentRestaurant valueForKey:@"logo"]]];
+    [restaruantImageView setImageWithURL:[NSURL URLWithString:[currentRestaurant valueForKey:@"logo"]] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
     restaruantImageView.layer.cornerRadius = 10.0;
     restaruantImageView.layer.masksToBounds = YES;
     restaruantImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
