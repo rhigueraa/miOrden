@@ -522,7 +522,6 @@
 		E8CFDEC513CDF09700F06E73 = {
 			isa = PBXGroup;
 			children = (
-				BC2D925213F1ECE700430D27 /* Security.framework */,
 				E8CFDEDA13CDF09700F06E73 /* miOrden */,
 				E8CFDEFF13CDF09700F06E73 /* miOrdenTests */,
 				E8CFDED313CDF09700F06E73 /* Frameworks */,
@@ -542,6 +541,7 @@
 		E8CFDED313CDF09700F06E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BC2D925213F1ECE700430D27 /* Security.framework */,
 				E890A7FC13CF6F96001B9291 /* MapKit.framework */,
 				BCD60D8413CE96EC00DF55A6 /* MapKit.framework */,
 				E8CFDED413CDF09700F06E73 /* UIKit.framework */,
