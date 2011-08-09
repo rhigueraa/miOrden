@@ -22,6 +22,8 @@
 		BC1D946813D25DF100B3CC94 /* cash.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946713D25DF100B3CC94 /* cash.png */; };
 		BC1D946A13D25E1300B3CC94 /* mastercard.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946913D25E1300B3CC94 /* mastercard.png */; };
 		BC1D946C13D25E1D00B3CC94 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946B13D25E1D00B3CC94 /* visa.png */; };
+		BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D925013F1EC8300430D27 /* NSString+MD5.m */; };
+		BC2D925313F1ECE700430D27 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2D925213F1ECE700430D27 /* Security.framework */; };
 		BCFC66CD13EA0AC100846F19 /* placeholder-recipe-44.gif in Resources */ = {isa = PBXBuildFile; fileRef = BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
@@ -124,6 +126,9 @@
 		BC1D946713D25DF100B3CC94 /* cash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cash.png; sourceTree = "<group>"; };
 		BC1D946913D25E1300B3CC94 /* mastercard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mastercard.png; sourceTree = "<group>"; };
 		BC1D946B13D25E1D00B3CC94 /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
+		BC2D924F13F1EC8300430D27 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		BC2D925013F1EC8300430D27 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		BC2D925213F1ECE700430D27 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder-recipe-44.gif"; sourceTree = "<group>"; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
@@ -244,6 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC2D925313F1ECE700430D27 /* Security.framework in Frameworks */,
 				E890A7FD13CF6F96001B9291 /* MapKit.framework in Frameworks */,
 				E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */,
 				E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */,
@@ -346,6 +352,15 @@
 				BC1D946513D25DE800B3CC94 /* amex.png */,
 			);
 			name = Tarjetas;
+			sourceTree = "<group>";
+		};
+		BC2D924D13F1EC5400430D27 /* MD5 Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				BC2D924F13F1EC8300430D27 /* NSString+MD5.h */,
+				BC2D925013F1EC8300430D27 /* NSString+MD5.m */,
+			);
+			name = "MD5 Encryption";
 			sourceTree = "<group>";
 		};
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
@@ -507,6 +522,7 @@
 		E8CFDEC513CDF09700F06E73 = {
 			isa = PBXGroup;
 			children = (
+				BC2D925213F1ECE700430D27 /* Security.framework */,
 				E8CFDEDA13CDF09700F06E73 /* miOrden */,
 				E8CFDEFF13CDF09700F06E73 /* miOrdenTests */,
 				E8CFDED313CDF09700F06E73 /* Frameworks */,
@@ -613,6 +629,7 @@
 		E8CFDF1F13CDF35600F06E73 /* Support Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BC2D924D13F1EC5400430D27 /* MD5 Encryption */,
 				E8C3410413E9E0120071B12D /* XML Paser */,
 				BC1D945313D25AF500B3CC94 /* SDWebImageVIew */,
 				BC1D93FC13D234DB00B3CC94 /* ATPagingView */,
@@ -830,6 +847,7 @@
 				E8C3413113E9E0640071B12D /* CXMLNode_XPathExtensions.m in Sources */,
 				E8C3413213E9E0640071B12D /* CTidy.m in Sources */,
 				E8BA0D7613EA240200631B7D /* HotelesAnnotation.m in Sources */,
+				BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

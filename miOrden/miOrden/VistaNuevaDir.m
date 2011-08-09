@@ -131,9 +131,15 @@
     switch (parser.tagg.intValue) {
         case 1:
             [array retain];
-            estadosArr = [NSMutableArray array];
+            NSLog(@"Arreglo: %@",array);
+            //estadosArr = [[NSMutableArray array] retain];
             for (NSDictionary *estado in array) {
-                [estadosArr addObject:[estado objectForKey:@"text"]];
+                NSString *normalString = [estado objectForKey:@"text"];
+                NSLog(@"Normal String: %@",normalString);
+                NSData *stringData = [[estado objectForKey:@"text"] dataUsingEncoding: NSUnicodeStringEncoding allowLossyConversion: YES];
+                NSString *cleanString = [[[NSString alloc] initWithData: stringData encoding: NSUnicodeStringEncoding] autorelease];
+                NSLog(@"Clean String: %@",cleanString);
+                [estadosArr addObject:cleanString];
             }
             
             [self.tableView reloadData];
