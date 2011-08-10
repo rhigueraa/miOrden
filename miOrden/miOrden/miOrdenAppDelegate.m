@@ -11,12 +11,38 @@
 #import "VistaCuentaPerfil.h"
 #import "VistaUnoOrden.h"
 #import "VistaCarrito.h"
+#import "JSONKit.h"
+
 @implementation miOrdenAppDelegate
 
 
 @synthesize window=_window;
 
 - (void)addAsTabBar{
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/estadoJSON.php"]];
+    
+    NSString *stringJ = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"DOwnloaded: %@", stringJ);
+    
+    stringJ = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/estadoJSON.php"] encoding:NSUTF8StringEncoding error:nil];
+    
+    stringJ = [stringJ stringByReplacingOccurrencesOfString: @"\\u00e1" withString:@"á"];
+    
+    stringJ = [stringJ stringByReplacingOccurrencesOfString: @"\\u00e9" withString:@"é"];
+    
+    stringJ = [stringJ stringByReplacingOccurrencesOfString: @"\\u00e1" withString:@"í"];
+    
+    stringJ = [stringJ stringByReplacingOccurrencesOfString: @"\\u00e9" withString:@"ó"];
+    
+    stringJ = [stringJ stringByReplacingOccurrencesOfString: @"\\u00e1" withString:@"ú"];
+    
+    NSArray *dataArray = [[NSString stringWithUTF8String:[stringJ cStringUsingEncoding:NSISOLatin1StringEncoding]] objectFromJSONString];
+    
+    NSLog(@"Array: %@", dataArray);
+    
+    NSLog(@"DOwnloaded: %@", stringJ);
+    
     UITabBarController *tabController = [[UITabBarController alloc] init];
     NSMutableArray *viewControllers = [NSMutableArray array];
     

@@ -24,6 +24,8 @@
 		BC1D946C13D25E1D00B3CC94 /* visa.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D946B13D25E1D00B3CC94 /* visa.png */; };
 		BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D925013F1EC8300430D27 /* NSString+MD5.m */; };
 		BC2D925313F1ECE700430D27 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2D925213F1ECE700430D27 /* Security.framework */; };
+		BC2D926213F241F800430D27 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926113F241F800430D27 /* JSONKit.m */; };
+		BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */; };
 		BCFC66CD13EA0AC100846F19 /* placeholder-recipe-44.gif in Resources */ = {isa = PBXBuildFile; fileRef = BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
@@ -129,6 +131,10 @@
 		BC2D924F13F1EC8300430D27 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		BC2D925013F1EC8300430D27 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		BC2D925213F1ECE700430D27 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BC2D926013F241F800430D27 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		BC2D926113F241F800430D27 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AccentCorrection.h"; sourceTree = "<group>"; };
+		BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AccentCorrection.m"; sourceTree = "<group>"; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder-recipe-44.gif"; sourceTree = "<group>"; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
@@ -629,11 +635,15 @@
 		E8CFDF1F13CDF35600F06E73 /* Support Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BC2D926013F241F800430D27 /* JSONKit.h */,
+				BC2D926113F241F800430D27 /* JSONKit.m */,
 				BC2D924D13F1EC5400430D27 /* MD5 Encryption */,
 				E8C3410413E9E0120071B12D /* XML Paser */,
 				BC1D945313D25AF500B3CC94 /* SDWebImageVIew */,
 				BC1D93FC13D234DB00B3CC94 /* ATPagingView */,
 				E8CFDF2013CDF36F00F06E73 /* SensibleTableView */,
+				BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */,
+				BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */,
 			);
 			name = "Support Classes";
 			sourceTree = "<group>";
@@ -848,6 +858,8 @@
 				E8C3413213E9E0640071B12D /* CTidy.m in Sources */,
 				E8BA0D7613EA240200631B7D /* HotelesAnnotation.m in Sources */,
 				BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */,
+				BC2D926213F241F800430D27 /* JSONKit.m in Sources */,
+				BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
