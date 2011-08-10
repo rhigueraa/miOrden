@@ -39,12 +39,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
+    parser.delegate = self;
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locationlist.php?user_id=%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"]];
+    [parser   parseXMLat:[NSURL URLWithString:cadena] withKey:@"location"];
+    
     self.title = @"Direcciones";
-    NSDictionary *dir1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Dir1",@"Nombre",@"calle 1 colonia 1 bla bla 1",@"Ubicacion", nil];
-    NSDictionary *dir2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Dir2",@"Nombre",@"calle 2 colonia 2 bla bla 2",@"Ubicacion", nil];
-    NSDictionary *dir3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Dir3",@"Nombre",@"calle 3 colonia 3 bla bla 3",@"Ubicacion", nil];
-
-    direcciones = [[NSArray alloc] initWithObjects:dir1,dir2,dir3, nil];
+    
+    direcciones = [[NSMutableArray alloc] init];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -103,12 +105,12 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row] objectForKey:@"Nombre"];
-    cell.detailTextLabel.text = [[direcciones objectAtIndex:indexPath.row] objectForKey:@"Ubicacion"];
+    cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"title_loc"];
+    cell.detailTextLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"address"];
     return cell;
 }
 
@@ -163,6 +165,16 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    direcciones = [array retain];
+    [self.tableView reloadData];
 }
 
 @end

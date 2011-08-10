@@ -15,6 +15,7 @@
     NSMutableArray *estadosArr;
     NSMutableArray *delegacionesArr;
     NSMutableArray *coloniasArr;
+    NSMutableArray *zonasArr;
     NSMutableDictionary *direccion;
     
 }
