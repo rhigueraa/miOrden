@@ -98,6 +98,9 @@
 {
     return [direcciones count];
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100.0;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -110,7 +113,10 @@
     
     // Configure the cell...
     cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"title_loc"];
-    cell.detailTextLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"address"];
+    NSString *cadena = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",[[direcciones objectAtIndex:indexPath.row] valueForKey:@"address"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"colony"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"delegation"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"state"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"telephone"]];
+    cell.detailTextLabel.numberOfLines = 5;
+    
+    cell.detailTextLabel.text = cadena;
     return cell;
 }
 
