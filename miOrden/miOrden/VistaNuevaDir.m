@@ -52,7 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    direccion  = [[NSMutableArray alloc] init];
+    direccion  = [[NSMutableDictionary alloc] init];
     
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
@@ -185,11 +185,11 @@
     [direccion setValue:[delegacionesArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"delegacionKey"]intValue]] forKey:@"delegacion"];
     [direccion setValue:[coloniasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"coloniaKey"]intValue]] forKey:@"colonia"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"calleKey"] forKey:@"calle"];
-   // NSLog(@"%@",[estadosArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"estadoKey"]intValue]]);
+    NSLog(@"%@",direccion);
     
-   // NSString *dirFinal = [NSString stringWithFormat:@"%@ %@ %@ %@",[direccion valueForKey:@"calle"],[direccion valueForKey:@"colonia"],[direccion valueForKey:@"delegacion"],[direccion valueForKey:@"estado"]];
+   NSString *dirFinal = [NSString stringWithFormat:@"%@ %@, %@ %@",[direccion valueForKey:@"calle"],[direccion valueForKey:@"colonia"],[direccion valueForKey:@"delegacion"],[direccion valueForKey:@"estado"]];
     
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:@"mensaje" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
+    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:dirFinal delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
     [alerta show];
     [alerta release];
 }
