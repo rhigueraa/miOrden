@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "SCTableViewModel.h"
+#import "XMLThreadedParser.h"
 
-@interface VistaInicioSesion : UITableViewController <SCTableViewModelDelegate>{
-    NSMutableDictionary *inicioSesionData;
+@interface VistaInicioSesion : UITableViewController <SCTableViewModelDelegate, XMLThreadedParserDelegate>{
+    NSMutableArray *arregloUserId;
     SCTableViewModel *tableModel;
+    NSString *ID;
 }
-
+@property (nonatomic,retain) NSString *ID;
 @end

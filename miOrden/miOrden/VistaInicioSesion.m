@@ -9,8 +9,10 @@
 #import "VistaInicioSesion.h"
 #import "VistaRegistro.h"
 #import "VistaCuentaPerfil.h"
-@implementation VistaInicioSesion
+#import "NSString+MD5.h"
 
+@implementation VistaInicioSesion
+@synthesize ID;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -41,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    
+    arregloUserId = [[NSMutableArray alloc] init];
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
     SCTableViewSection *section1 = [SCTableViewSection sectionWithHeaderTitle:@"Inicio de Sesión"];
     SCTextFieldCell *email = [SCTextFieldCell cellWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
@@ -178,10 +180,24 @@
 
 - (void)tableViewModel:(SCTableViewModel *)tableViewModel didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 3){
+        
+        
+        
+        
         VistaRegistro *registro = [[VistaRegistro alloc] initWithStyle:UITableViewStyleGrouped];
         [self.navigationController pushViewController:registro animated:YES];
     }else if(indexPath.section == 2){
-        [self dismissModalViewControllerAnimated:YES];
+        
+        XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+        parser.delegate = self;
+        NSString *username = [tableViewModel.modelKeyValues valueForKey:@"emailKey"];
+        NSString *pass = [tableViewModel.modelKeyValues valueForKey:@"passwordKey"];
+        pass = [pass md5];
+        NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/login.php?username=%@&password=%@",username,pass];
+        
+        [parser parseXMLat:[NSURL URLWithString:cadena]withKey:@"user_id"];
+        NSLog(@"%@",cadena);
+        
     }
     
     // Navigation logic may go here. Create and push another view controller.
@@ -192,6 +208,35 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    arregloUserId = [array retain];
+    UIAlertView *alerta;
+    ID = [[arregloUserId objectAtIndex:0]valueForKey:@"text"];
+    if([ID isEqualToString:@"0"]){
+        alerta = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Nombre de usuario o contraseña inválidos" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+        [alerta show];
+        [alerta release];
+    }else if([ID isEqualToString:@"-1"]){
+        alerta = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Introduzca un usuario y contraseña" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+        [alerta show];
+        [alerta release];
+    }else{
+        NSLog(@"%@",ID);
+        alerta = [[UIAlertView alloc] initWithTitle:@"Bienvenido" message:@"MiOrden.com te da la bienvenida" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+        [alerta show];
+        [alerta release];
+        
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
 }
 
 @end
