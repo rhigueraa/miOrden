@@ -39,10 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
-    parser.delegate = self;
-    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locationlist.php?user_id=%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"]];
-    [parser   parseXMLat:[NSURL URLWithString:cadena] withKey:@"location"];
+    
     
     self.title = @"Direcciones";
     
@@ -63,6 +60,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
+    parser.delegate = self;
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locationlist.php?user_id=%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"]];
+    [parser   parseXMLat:[NSURL URLWithString:cadena] withKey:@"location"];
     [super viewWillAppear:animated];
 }
 

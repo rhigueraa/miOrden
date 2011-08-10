@@ -47,7 +47,9 @@
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
     SCTableViewSection *section1 = [SCTableViewSection sectionWithHeaderTitle:@"Inicio de Sesión"];
     SCTextFieldCell *email = [SCTextFieldCell cellWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
+    email.textField.keyboardType = UIKeyboardTypeEmailAddress;
     SCTextFieldCell *pass = [SCTextFieldCell cellWithText:@"Password" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
+    pass.textField.secureTextEntry = YES;
     [tableModel addSection:section1];
     [section1 addCell:email];
     [section1 addCell:pass];
