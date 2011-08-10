@@ -15,6 +15,8 @@
     NSMutableArray *estadosArr;
     NSMutableArray *delegacionesArr;
     NSMutableArray *coloniasArr;
+    NSMutableDictionary *direccion;
+    
 }
-
+@property(nonatomic,retain) NSMutableDictionary *direccion;
 @end

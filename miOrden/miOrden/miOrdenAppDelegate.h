@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface miOrdenAppDelegate : NSObject <UIApplicationDelegate> {
-
+    NSString *userID;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-
+@property (nonatomic, retain) NSString *userID;
 @end

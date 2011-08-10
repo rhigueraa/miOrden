@@ -17,7 +17,7 @@
 
 
 @synthesize window=_window;
-
+@synthesize userID;
 - (void)addAsTabBar{
     
     UITabBarController *tabController = [[UITabBarController alloc] init];

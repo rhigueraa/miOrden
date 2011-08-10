@@ -10,7 +10,7 @@
 
 
 @implementation VistaNuevaDir
-
+@synthesize direccion;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -22,6 +22,10 @@
 
 - (void)dealloc
 {
+    [estadosArr release];
+    [coloniasArr release];
+    [delegacionesArr release];
+    [direccion release];
     [tableModel release];
     [super dealloc];
 }
@@ -44,14 +48,11 @@
 */
 
  
--(void) guardar{
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:@"Dirección guardada" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
-    [alerta show];
-    [alerta release];
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    direccion  = [[NSMutableArray alloc] init];
     
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
@@ -75,13 +76,16 @@
     
     SCSelectionCell *delegacion = [SCSelectionCell cellWithText:@"Delegacion" withBoundKey:@"delegacionKey" withSelectedIndexValue:nil withItems:delegacionesArr];
     
-    SCSelectionCell *colonias = [SCSelectionCell cellWithText:@"Colonia" withBoundKey:@"coloniaKey" withSelectedIndexValue:nil withItems:[NSArray arrayWithObjects:@"Hidalgo",@"Colonia 2",@"Colonia 3", nil]];
+    SCSelectionCell *colonias = [SCSelectionCell cellWithText:@"Colonia" withBoundKey:@"coloniaKey" withSelectedIndexValue:nil withItems:coloniasArr];
      
+    SCTextFieldCell *calle = [[SCTextFieldCell alloc]initWithText:@"Detalles" withPlaceholder:@"calle y número" withBoundKey:@"calleKey" withTextFieldTextValue:nil];
+    
     
     [section addCell:nombre];
     [section addCell:estados];
     [section addCell:delegacion];
     [section addCell:colonias];
+    [section addCell:calle];
  
     [tableModel addSection:section];
     
@@ -108,18 +112,29 @@
 -(void) tableViewModel:(SCTableViewModel *)tableViewModel valueChangedForRowAtIndexPath:(NSIndexPath *)indexPath{
     XMLThreadedParser *parser2 = [[XMLThreadedParser alloc] init];
     parser2.delegate = self;
-    parser2.tagg = [NSNumber numberWithInt:2];
+    
     NSString *cadena;
-    NSString *estadoName;
+    NSString *estadoName, *delegacionName;
     switch (indexPath.row) {
         case 1:
+            parser2.tagg = [NSNumber numberWithInt:2];
             estadoName = [estadosArr objectAtIndex:[[tableViewModel.modelKeyValues valueForKey:@"estadoKey"]intValue]];
             cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/delegacion.php?estado=%@",
             estadoName];
+            cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             [parser2 parseXMLat:[NSURL URLWithString:cadena] withKey:@"delegacion"];
             NSLog(@"%@",cadena);
         break;
-            
+        case 2:
+            parser2.tagg = [NSNumber numberWithInt:3];
+            delegacionName = [delegacionesArr objectAtIndex:[[tableViewModel.modelKeyValues valueForKey:@"delegacionKey"]intValue]];
+            estadoName = [estadosArr objectAtIndex:[[tableViewModel.modelKeyValues valueForKey:@"estadoKey"]intValue]];
+            cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/colonia.php?estado=%@&delegacion=%@",estadoName,
+                      delegacionName];
+            cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            [parser2 parseXMLat:[NSURL URLWithString:cadena] withKey:@"colonia"];
+             NSLog(@"%@",cadena);
+            break;
         default:
             break;
     }
@@ -131,26 +146,31 @@
     switch (parser.tagg.intValue) {
         case 1:
             [array retain];
-            NSLog(@"Arreglo: %@",array);
-            //estadosArr = [[NSMutableArray array] retain];
+            
+            [estadosArr removeAllObjects];
             for (NSDictionary *estado in array) {
-                NSString *normalString = [estado objectForKey:@"text"];
-                NSLog(@"Normal String: %@",normalString);
-                NSData *stringData = [[estado objectForKey:@"text"] dataUsingEncoding: NSUnicodeStringEncoding allowLossyConversion: YES];
-                NSString *cleanString = [[[NSString alloc] initWithData: stringData encoding: NSUnicodeStringEncoding] autorelease];
-                NSLog(@"Clean String: %@",cleanString);
-                [estadosArr addObject:cleanString];
+                [estadosArr addObject:[estado objectForKey:@"text"]];
+               
             }
             
             [self.tableView reloadData];
             break;
         case 2:
             [array retain];
-            delegacionesArr = [NSMutableArray array];
+           
+            [delegacionesArr removeAllObjects];
             for (NSDictionary *delegacion in array) {
                 [delegacionesArr addObject:[delegacion objectForKey:@"text"]];
             }
-            NSLog(@"%@",delegacionesArr);
+        case 3:
+            [array retain];
+           
+            [coloniasArr removeAllObjects];
+            for (NSDictionary *colonia in array) {
+                [coloniasArr addObject:[colonia objectForKey:@"text"]];
+            }
+            break;
+            
             [self.tableView reloadData];
             break;
         default:
@@ -158,6 +178,20 @@
     }
     
     
+}
+
+-(void) guardar{
+    [direccion setValue:[estadosArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"estadoKey"]intValue]] forKey:@"estado"];
+    [direccion setValue:[delegacionesArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"delegacionKey"]intValue]] forKey:@"delegacion"];
+    [direccion setValue:[coloniasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"coloniaKey"]intValue]] forKey:@"colonia"];
+    [direccion setValue:[tableModel.modelKeyValues valueForKey:@"calleKey"] forKey:@"calle"];
+   // NSLog(@"%@",[estadosArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"estadoKey"]intValue]]);
+    
+   // NSString *dirFinal = [NSString stringWithFormat:@"%@ %@ %@ %@",[direccion valueForKey:@"calle"],[direccion valueForKey:@"colonia"],[direccion valueForKey:@"delegacion"],[direccion valueForKey:@"estado"]];
+    
+    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:@"mensaje" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
+    [alerta show];
+    [alerta release];
 }
 
 @end
