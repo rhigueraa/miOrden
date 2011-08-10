@@ -369,6 +369,24 @@
 			name = "MD5 Encryption";
 			sourceTree = "<group>";
 		};
+		BC2D926E13F3083000430D27 /* Accent Correction */ = {
+			isa = PBXGroup;
+			children = (
+				BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */,
+				BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */,
+			);
+			name = "Accent Correction";
+			sourceTree = "<group>";
+		};
+		BC2D926F13F3084100430D27 /* JSON Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				BC2D926013F241F800430D27 /* JSONKit.h */,
+				BC2D926113F241F800430D27 /* JSONKit.m */,
+			);
+			name = "JSON Parsing";
+			sourceTree = "<group>";
+		};
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,15 +653,13 @@
 		E8CFDF1F13CDF35600F06E73 /* Support Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BC2D926013F241F800430D27 /* JSONKit.h */,
-				BC2D926113F241F800430D27 /* JSONKit.m */,
+				BC2D926F13F3084100430D27 /* JSON Parsing */,
 				BC2D924D13F1EC5400430D27 /* MD5 Encryption */,
 				E8C3410413E9E0120071B12D /* XML Paser */,
 				BC1D945313D25AF500B3CC94 /* SDWebImageVIew */,
 				BC1D93FC13D234DB00B3CC94 /* ATPagingView */,
 				E8CFDF2013CDF36F00F06E73 /* SensibleTableView */,
-				BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */,
-				BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */,
+				BC2D926E13F3083000430D27 /* Accent Correction */,
 			);
 			name = "Support Classes";
 			sourceTree = "<group>";
