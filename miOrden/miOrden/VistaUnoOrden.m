@@ -56,17 +56,14 @@
     [super viewDidLoad];
     [self addSegmented];
     
-    NSDictionary *dir1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 1",@"Nombre", nil];
-    NSDictionary *dir2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"direccion 2",@"Nombre", nil];
-    
-    
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
+    parser.tagg = [NSNumber numberWithInt:1];
     [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/zones.php"]  withKey:@"zone"];
     
     
         
-    direcciones = [[NSArray alloc] initWithObjects:dir1,dir2, nil];
+    direcciones = [[NSArray alloc] init];
    
     
     
@@ -84,7 +81,17 @@
 
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
-    zonas = [array retain];
+    switch ([parser.tagg intValue]) {
+        case 1:
+            zonas = [array retain];
+            break;
+        case 2:
+            direcciones = [array retain];
+            break;
+        default:
+            break;
+    }
+    
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
@@ -99,7 +106,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    XMLThreadedParser *parser2 = [[XMLThreadedParser alloc]init];
+    parser2.delegate = self;
+    parser2.tagg = [NSNumber numberWithInt:2];
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locationlist.php?user_id=%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"]];
+    [parser2   parseXMLat:[NSURL URLWithString:cadena] withKey:@"location"];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -146,20 +158,34 @@
 
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(control.selectedSegmentIndex == 0){
+        return 100.0;
+    }else{
+        return 50.0;
+    }
+        
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     // Configure the cell...
     if(control.selectedSegmentIndex == 0){
-        cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row]objectForKey:@"Nombre"];
+        cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"title_loc"];
+        NSString *cadena = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",[[direcciones objectAtIndex:indexPath.row] valueForKey:@"address"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"colony"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"delegation"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"state"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"telephone"]];
+        cell.detailTextLabel.numberOfLines = 5;
+        cell.detailTextLabel.text = cadena;   
         
     }else{
+        cell.detailTextLabel.text = nil;
         cell.textLabel.text = [[zonas objectAtIndex:indexPath.row] valueForKey:@"title"];
     }
     return cell;
