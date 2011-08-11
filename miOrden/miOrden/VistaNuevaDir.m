@@ -85,6 +85,7 @@
     SCSelectionCell *colonias = [SCSelectionCell cellWithText:@"Colonia" withBoundKey:@"coloniaKey" withSelectedIndexValue:nil withItems:coloniasArr];
      
     SCTextFieldCell *calle = [[SCTextFieldCell alloc]initWithText:@"Calle" withPlaceholder:@"calle" withBoundKey:@"calleKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *calleCer = [[SCTextFieldCell alloc]initWithText:@"Entre la calle" withPlaceholder:@"calle" withBoundKey:@"calleCercana" withTextFieldTextValue:nil];
     SCTextFieldCell *numExt = [[SCTextFieldCell alloc]initWithText:@"Número" withPlaceholder:@"exterior" withBoundKey:@"numExtKey" withTextFieldTextValue:nil];
     SCTextFieldCell *numInt = [[SCTextFieldCell alloc]initWithText:@"Número" withPlaceholder:@"interior" withBoundKey:@"numIntKey" withTextFieldTextValue:nil];
     SCNumericTextFieldCell *telefono = [[SCNumericTextFieldCell alloc]initWithText:@"Teléfono" withPlaceholder:@"teléfono" withBoundKey:@"telefonoKey" withTextFieldTextValue:nil];
@@ -98,6 +99,7 @@
     [section addCell:delegacion];
     [section addCell:colonias];
     [section addCell:calle];
+    [section  addCell:calleCer];
     [section addCell:numExt];
     [section  addCell:numInt];
     [section addCell:zonas];
@@ -195,6 +197,20 @@
             
             [self.tableView reloadData];
             break;
+        case 5:
+            [array retain];
+            if([[array objectAtIndex:0]valueForKey:@"text"]){
+                UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:@"La dirección ha sido agregada" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+                [alerta show];
+                [alerta release  ];
+                
+            }else{
+                UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No se ha podido agregar la dirección" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+                [alerta show];
+                [alerta release  ];
+            }
+            break;
+            
         default:
             break;
     }
@@ -208,40 +224,36 @@
     [direccion setValue:[coloniasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"coloniaKey"]intValue]] forKey:@"colonia"];
     [direccion setValue:[zonasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"zonaKey"]intValue]] forKey:@"zona"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"calleKey"] forKey:@"calle"];
+    [direccion setValue:[tableModel.modelKeyValues valueForKey:@"calleCercana"] forKey:@"calleCercana"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"numExtKey"] forKey:@"numExtKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"numIntKey"] forKey:@"numIntKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"telefonoKey"] forKey:@"telefonoKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nombreKey"];
-   /*
+   
     XMLThreadedParser *parser3 = [[XMLThreadedParser alloc]init];
     parser3.delegate = self;
-    parser3.tagg = [NSNumber numberWithInt:4];
+    parser3.tagg = [NSNumber numberWithInt:5];
     NSString *cadena;
     NSString *nombre = [direccion valueForKey:@"nombreKey"];
     NSString *estado = [direccion valueForKey:@"estado"];
     NSString *delegacion = [direccion valueForKey:@"delegacion"];
     NSString *colonia = [direccion valueForKey:@"colonia"];
     NSString *calle = [direccion valueForKey:@"calle"];
+    NSString *calleCerca = [direccion valueForKey:@"calleCercana"];
     NSString *numExt = [direccion valueForKey:@"numExtKey"];
     NSString *numInt = [direccion valueForKey:@"numIntKey"];
     NSString *telefono = [direccion valueForKey:@"telefonoKey"];
     NSString *zona = [direccion valueForKey:@"zona"];
-    
-    */
-    
-    //cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locations.php?title_loc=%@&state=%@&delegation=%@&colony=%@&address=%@&zone=%@&the_street=%@&telephone=%@&user_id=%@&exterior=%@&interior=%@", nombre,estado,delegacion,colonia,
+    NSString *userId = [[NSUserDefaults standardUserDefaults] valueForKey:@"userIdKey"];
     
     
     
+    cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locations.php?title_loc=%@&state=%@&delegation=%@&colony=%@&address=%@&zone=%@&the_street=%@&telephone=%@&user_id=%@&exterior=%@&interior=%@", nombre,estado,delegacion,colonia,calle,zona,calleCerca,telefono,userId,numExt,numInt]; 
+    cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    [parser3 parseXMLat:[NSURL URLWithString:cadena ] withKey:@"status"];
     
-    NSLog(@"%@",direccion);
-    
-   NSString *dirFinal = [NSString stringWithFormat:@"%@ %@ %@,%@ %@ %@, %@, %@",[direccion valueForKey:@"calle"],[direccion valueForKey:@"numExtKey"],[direccion valueForKey:@"numIntKey"],[direccion valueForKey:@"colonia"],[direccion valueForKey:@"delegacion"],[direccion valueForKey:@"estado"],[direccion valueForKey:@"telefonoKey"], [direccion valueForKey:@"zona"]];
-    
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:dirFinal delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
-    [alerta show];
-    [alerta release];
-}
+    NSLog(@"%@",cadena);
+    }
 
 
 @end

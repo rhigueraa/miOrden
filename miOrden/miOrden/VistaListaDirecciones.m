@@ -113,6 +113,8 @@
     }
     
     // Configure the cell...
+    
+    //[[direcciones objectAtIndex:indexPath.row] valueForKey:@"numExtKey"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"numIntKey"],
     cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"title_loc"];
     NSString *cadena = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",[[direcciones objectAtIndex:indexPath.row] valueForKey:@"address"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"colony"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"delegation"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"state"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"telephone"]];
     cell.detailTextLabel.numberOfLines = 5;
