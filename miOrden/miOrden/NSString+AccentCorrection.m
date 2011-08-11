@@ -12,17 +12,35 @@
 
 - (NSString*)fixAccents{
     
-    self = [self stringByReplacingOccurrencesOfString: @"\\u00e1" withString:@"á"];
+    NSString *mutString = [self copy];
     
-    self = [self stringByReplacingOccurrencesOfString: @"\\u00e9" withString:@"é"];
+    NSLog(@"String before: %@", mutString);
     
-    self = [self stringByReplacingOccurrencesOfString: @"\\u00e1" withString:@"í"];
+    mutString = [mutString stringByReplacingOccurrencesOfString:@"\\u00e1" withString:@"á"];
     
-    self = [self stringByReplacingOccurrencesOfString: @"\\u00e9" withString:@"ó"];
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\u00e9" withString:@"é"];
     
-    self = [self stringByReplacingOccurrencesOfString: @"\\u00e1" withString:@"ú"];
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\u00ed" withString:@"í"];
     
-    return self;
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\u00d3" withString:@"ó"];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\u00fa" withString:@"ú"];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\u00c3" withString:@""];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\U00e1" withString:@"á"];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\U00e9" withString:@"é"];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\U00ed" withString:@"í"];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\U00d3" withString:@"ó"];
+    
+    mutString = [mutString stringByReplacingOccurrencesOfString: @"\\U00fa" withString:@"ú"];
+    
+    NSLog(@"String after: %@", mutString);
+    
+    return mutString;
 }
 
 @end

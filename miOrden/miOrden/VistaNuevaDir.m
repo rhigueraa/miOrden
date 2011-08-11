@@ -7,7 +7,7 @@
 //
 
 #import "VistaNuevaDir.h"
-
+#import "NSString+AccentCorrection.h"
 
 @implementation VistaNuevaDir
 @synthesize direccion;
@@ -148,8 +148,11 @@
             [array retain];
             
             [estadosArr removeAllObjects];
+            
+            NSLog(@"EStados: %@", array);
+            
             for (NSDictionary *estado in array) {
-                [estadosArr addObject:[estado objectForKey:@"text"]];
+                [estadosArr addObject:[[estado objectForKey:@"text"] fixAccents]];
                
             }
             
@@ -160,14 +163,14 @@
            
             [delegacionesArr removeAllObjects];
             for (NSDictionary *delegacion in array) {
-                [delegacionesArr addObject:[delegacion objectForKey:@"text"]];
+                [delegacionesArr addObject:[[delegacion objectForKey:@"text"] fixAccents]];
             }
         case 3:
             [array retain];
            
             [coloniasArr removeAllObjects];
             for (NSDictionary *colonia in array) {
-                [coloniasArr addObject:[colonia objectForKey:@"text"]];
+                [coloniasArr addObject:[[colonia objectForKey:@"text"] fixAccents]];
             }
             break;
             
