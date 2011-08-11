@@ -12,7 +12,7 @@
 #import "NSString+MD5.h"
 
 @implementation VistaInicioSesion
-@synthesize ID;
+@synthesize ID, recordar    ;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -47,14 +47,17 @@
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
     SCTableViewSection *section1 = [SCTableViewSection sectionWithHeaderTitle:@"Inicio de Sesión"];
     SCTextFieldCell *email = [SCTextFieldCell cellWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
+    email.textField.keyboardType = UIKeyboardTypeEmailAddress;
     SCTextFieldCell *pass = [SCTextFieldCell cellWithText:@"Password" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
+    pass.textField.secureTextEntry = YES;
     [tableModel addSection:section1];
     [section1 addCell:email];
     [section1 addCell:pass];
     
     SCTableViewSection *section2 = [SCTableViewSection sectionWithHeaderTitle:nil];
-    SCSwitchCell *recordar = [[SCSwitchCell alloc]initWithText:@"Recordarme?"];
+    recordar = [[SCSwitchCell alloc]initWithText:@"Recordarme?"];
     recordar.selectionStyle = UITableViewCellSelectionStyleNone;
+
     [section2 addCell:recordar];
     
     SCTableViewSection *section3 = [SCTableViewSection section];
@@ -233,7 +236,13 @@
         alerta = [[UIAlertView alloc] initWithTitle:@"Bienvenido" message:@"MiOrden.com te da la bienvenida" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
         [alerta show];
         [alerta release];
-        
+        if(recordar.switchControl.on){
+            NSUserDefaults *loginDefault = [NSUserDefaults standardUserDefaults];
+            [loginDefault setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"userKey"];
+            [loginDefault setValue:[tableModel.modelKeyValues valueForKey:@"passwordKey"] forKey:@"passKey"];
+            [loginDefault setValue:ID forKey:@"userIdKey"];
+            [loginDefault synchronize];
+        }
         [self dismissModalViewControllerAnimated:YES];
     }
     

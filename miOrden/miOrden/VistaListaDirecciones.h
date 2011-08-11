@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XMLThreadedParser.h"
 
 
-@interface VistaListaDirecciones : UITableViewController {
-    NSArray *direcciones;
+@interface VistaListaDirecciones : UITableViewController<XMLThreadedParserDelegate> {
+    NSMutableArray *direcciones;
 }
 
 @end

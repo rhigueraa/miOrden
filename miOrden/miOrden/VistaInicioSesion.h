@@ -14,6 +14,8 @@
     NSMutableArray *arregloUserId;
     SCTableViewModel *tableModel;
     NSString *ID;
+    SCSwitchCell *recordar;
 }
 @property (nonatomic,retain) NSString *ID;
+@property (nonatomic,retain) SCSwitchCell *recordar;
 @end

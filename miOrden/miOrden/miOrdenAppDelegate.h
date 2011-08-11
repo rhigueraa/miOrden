@@ -10,6 +10,7 @@
 
 @interface miOrdenAppDelegate : NSObject <UIApplicationDelegate> {
     NSString *userID;
+    UITabBarController *tabController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

@@ -211,6 +211,8 @@
         inicio.title = @"Iniciar Sesión";
         [self presentModalViewController:inicio animated:YES];
         [inicio release];
+        [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"userKey"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     // Navigation logic may go here. Create and push another view controller.

@@ -19,7 +19,7 @@
 @synthesize window=_window;
 @synthesize userID;
 - (void)addAsTabBar{
-    UITabBarController *tabController = [[UITabBarController alloc] init];
+   tabController = [[UITabBarController alloc] init];
     NSMutableArray *viewControllers = [NSMutableArray array];
     
     VistaUnoOrden *orden = [[VistaUnoOrden alloc] initWithNibName:@"VistaUnoOrden" bundle:nil];
@@ -54,7 +54,6 @@
     
     tabController.viewControllers = [NSArray arrayWithArray:navegadores];
     [self.window addSubview:tabController.view];
-    
     VistaInicioSesion *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
     inicio.title =@"Mi Orden";
     UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
@@ -62,13 +61,21 @@
     [tabController presentModalViewController:temp animated:NO];
     [inicio release];
     [temp release];
+    
 }
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [self addAsTabBar];
+    if([[NSUserDefaults standardUserDefaults]valueForKey:@"userKey"]){
+        [self addAsTabBar];
+        [tabController dismissModalViewControllerAnimated:YES];
+    }else{
+        [self   addAsTabBar];
+        
+    }
+    
     
     [self.window makeKeyAndVisible];
     return YES;

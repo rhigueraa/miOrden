@@ -65,10 +65,9 @@
     [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/zones.php"]  withKey:@"zone"];
     
     
-    NSDictionary *zona1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"zona 1",@"Nombre", nil];
-    
+        
     direcciones = [[NSArray alloc] initWithObjects:dir1,dir2, nil];
-    zonas = [[NSArray alloc] initWithObjects:zona1, nil];
+   
     
     
     
