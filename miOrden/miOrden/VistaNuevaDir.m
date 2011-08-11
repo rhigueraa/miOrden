@@ -165,12 +165,8 @@
         case 1:
             [array retain];
             [estadosArr removeAllObjects];
-            
-            NSLog(@"EStados: %@", array);
-            
             for (NSDictionary *estado in array) {
-                [estadosArr addObject:[[estado objectForKey:@"text"] fixAccents]];
-               
+                [estadosArr addObject:[estado objectForKey:@"text"]];
             }
             
             [self.tableView reloadData];
