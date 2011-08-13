@@ -37,7 +37,6 @@
     datos = [[NSDictionary alloc] init];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nameKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"lastNameKey"] forKey:@"lastNameKey"];
-     [datos setValue:[tableModel.modelKeyValues valueForKey:@"phoneKey"] forKey:@"phoneKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"emailKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"passwordKey"] forKey:@"passwordKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"birthKey"] forKey:@"birthKey"];
@@ -68,7 +67,6 @@
     [tableModel addSection:section];
     SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"enter name" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
      SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
-    SCNumericTextFieldCell *celular = [[SCNumericTextFieldCell alloc] initWithText:@"Celular" withPlaceholder:@"enter phone" withBoundKey:@"phoneKey" withTextFieldTextValue:nil];
      SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
     SCTextFieldCell *confirmaEmail = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"Confirma tu eMail" withBoundKey:@"confirmaEmailKey" withTextFieldTextValue:nil];
      SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
@@ -81,7 +79,7 @@
                                                                            
     [section addCell:nombre];
     [section addCell:apellido];
-    [section addCell:celular];
+   
     [section addCell:email];
     [section addCell:confirmaEmail];
     [section addCell:pass];
