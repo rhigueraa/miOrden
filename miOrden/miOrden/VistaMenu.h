@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 //#import <Three20/Three20.h>
+#import "JSScrollableTabBar.h"
 
-@interface VistaMenu : UIViewController {
+@interface VistaMenu : UIViewController <JSScrollableTabBarDelegate> {
     NSDictionary *currentRestaurant;
+    JSScrollableTabBar *_tabBar;
     //TTTabBar* _tabBar1;
 }
 @property(assign) NSDictionary *currentRestaurant;

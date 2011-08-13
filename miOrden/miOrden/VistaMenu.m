@@ -50,24 +50,27 @@
     [super viewDidLoad];
     
     CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
-    /*
-    _tabBar1 = [[TTTabStrip alloc] initWithFrame:CGRectMake(0, 0, applicationFrame.size.width, 41)];
-    _tabBar1.tabItems = [NSArray arrayWithObjects:
-                         [[[TTTabItem alloc] initWithTitle:@"Item 1"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 2"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 3"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 4"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 5"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 6"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 7"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 8"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 9"] autorelease],
-                         [[[TTTabItem alloc] initWithTitle:@"Item 10"] autorelease],
-                         nil];
-    [self.view addSubview:_tabBar1];
-    */
     
+    _tabBar = [[[JSScrollableTabBar alloc] initWithFrame:CGRectMake(0, 0, applicationFrame.size.width, 44) style:JSScrollableTabBarStyleBlack] autorelease];
+	[_tabBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+	[_tabBar setDelegate:self];
+	[self.view addSubview:_tabBar];
+    
+    NSMutableArray *items = [NSMutableArray array];
+    for (int i = 0; i < 25; i++)
+	{
+		JSTabItem *item = [[JSTabItem alloc] initWithTitle:[NSString stringWithFormat:@"Itema %d", i]];
+		[items addObject:item];
+		[item release];
+	}
+	
+	[_tabBar setTabItems:items];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)scrollableTabBar:(JSScrollableTabBar *)tabBar didSelectTabAtIndex:(NSInteger)index
+{
+	NSLog(@"Selected tab: %d", index);
 }
 
 - (void)viewDidUnload
