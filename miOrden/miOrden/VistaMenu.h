@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//#import <Three20/Three20.h>
 
 @interface VistaMenu : UIViewController {
     NSDictionary *currentRestaurant;
-    
+    //TTTabBar* _tabBar1;
 }
 @property(assign) NSDictionary *currentRestaurant;
 @end
