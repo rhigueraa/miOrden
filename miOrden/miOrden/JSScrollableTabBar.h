@@ -43,7 +43,7 @@ typedef enum {
 @property (nonatomic, assign) JSScrollableTabBarStyle style;
 @property (nonatomic, assign) id <JSScrollableTabBarDelegate> delegate;
 
-- (id)initWithFrame:(CGRect)frame style:(JSScrollableTabBarStyle)style;
+- (id)initWithFrame:(CGRect)frame andStyle:(JSScrollableTabBarStyle)style;
 - (void)setTabItems:(NSArray *)tabItems;
 
 @end

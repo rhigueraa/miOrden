@@ -26,6 +26,7 @@
 
 - (void)dealloc
 {
+    [_tabBar release];
     //TT_RELEASE_SAFELY(_tabBar1);
     [super dealloc];
 }
@@ -49,9 +50,11 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Menú";
+    
     CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
     
-    _tabBar = [[[JSScrollableTabBar alloc] initWithFrame:CGRectMake(0, 0, applicationFrame.size.width, 44) style:JSScrollableTabBarStyleBlack] autorelease];
+    _tabBar = [[[JSScrollableTabBar alloc] initWithFrame:CGRectMake(0, 0, applicationFrame.size.width, 44) andStyle:JSScrollableTabBarStyleBlack] autorelease];
 	[_tabBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 	[_tabBar setDelegate:self];
 	[self.view addSubview:_tabBar];

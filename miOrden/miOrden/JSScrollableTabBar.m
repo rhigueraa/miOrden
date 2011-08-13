@@ -24,7 +24,7 @@
 @synthesize style = _style;
 @synthesize delegate = _delegate;
 
-- (id)initWithFrame:(CGRect)frame style:(JSScrollableTabBarStyle)style
+- (id)initWithFrame:(CGRect)frame andStyle:(JSScrollableTabBarStyle)style
 {
     if ((self = [super initWithFrame:frame]))
 	{
