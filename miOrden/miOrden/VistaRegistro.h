@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SCTableViewModel.h"
+#import "XMLThreadedParser.h"
 
-@interface VistaRegistro : UITableViewController <SCTableViewModelDelegate>{
+@interface VistaRegistro : UITableViewController <SCTableViewModelDelegate, XMLThreadedParserDelegate>{
     SCTableViewModel *tableModel;
-    NSDictionary *datos;
+    NSMutableDictionary *datos;
+    SCSegmentedCell *sexo;
+    SCSwitchCell *terminos;
 }
+
 
 @end

@@ -1,16 +1,16 @@
 //
-//  VistaResenias.m
+//  VistaNuevaResenia.m
 //  miOrden
 //
-//  Created by Rodrigo Higuera on 7/18/11.
+//  Created by Rodrigo Higuera on 8/14/11.
 //  Copyright 2011 ITAM. All rights reserved.
 //
 
-#import "VistaResenias.h"
 #import "VistaNuevaResenia.h"
 
-@implementation VistaResenias
-@synthesize currentRestaurant, resenias;
+
+@implementation VistaNuevaResenia
+@synthesize currentRestaurant;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -18,12 +18,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [resenias release];
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,47 +29,33 @@
 }
 
 #pragma mark - View lifecycle
--(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
-    //NSLog(@"Did parse: %@", object);
-}
-
-
-
--(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
-    resenias = [array retain];
-    [self.tableView beginUpdates];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-}
-
--(void) nuevaResenia{
-    VistaNuevaResenia  *resenia = [[VistaNuevaResenia alloc] initWithStyle:UITableViewStyleGrouped];
-    resenia.title  = @"Nueva Reseña";
-    resenia.currentRestaurant = self.currentRestaurant;
-    [self.navigationController pushViewController:resenia animated:YES];
-    [resenia release];
+-(void)enviar{
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
+    parser.delegate = self;
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/addreview.php?title=%@&description=%@&user_id=%@&rest_id=%@%22,@%22Review",[tableModel.modelKeyValues valueForKey:@"tituloKey"],[tableModel.modelKeyValues valueForKey:@"descripcionKey"],[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"],[currentRestaurant valueForKey:@"id"]];
+    cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSLog(@"%@",cadena);
     
 }
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevaResenia)];
-    self.navigationItem.rightBarButtonItem = nueva;
-    resenias = [[NSMutableDictionary alloc] init];
-    self.title = @"Reseñas";
-    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
-    parser.delegate = self;
+    tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
+    SCTableViewSection *section = [[SCTableViewSection alloc] initWithHeaderTitle:@"Introducir los Datos"];
     
-    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
-    //[parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=1"] withKey:@"review"];
+    SCTextFieldCell *titulo = [[SCTextFieldCell alloc]initWithText:@"Título" withPlaceholder:@"escribe un título" withBoundKey:@"tituloKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *descripcion  = [[SCTextFieldCell alloc]initWithText:@"Descripción" withPlaceholder:@"escribe tus comentarios" withBoundKey:@"descripcionKey" withTextFieldTextValue:nil];
     
-    resenias = [[NSMutableDictionary alloc] init];
+    UIBarButtonItem *enviar = [[UIBarButtonItem alloc] initWithTitle:@"Enviar" style:UIBarButtonItemStyleBordered target:self action:@selector(enviar)];
+    self.navigationItem.rightBarButtonItem = enviar;
+    
+    [section addCell:titulo];
+    [section addCell:descripcion];
+    [tableModel addSection:section];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
+ 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -115,19 +95,7 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [resenias count];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100.0;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -135,13 +103,11 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
-    cell.detailTextLabel.numberOfLines = 5;
-    cell.textLabel.text = [[resenias objectAtIndex:indexPath.row] valueForKey:@"title"];
-    cell.detailTextLabel.text = [[resenias objectAtIndex:indexPath.row] valueForKey:@"description"];    
+    
     return cell;
 }
 
@@ -196,6 +162,16 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    
 }
 
 @end

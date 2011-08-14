@@ -89,6 +89,7 @@
 		E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */; };
 		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
 		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
+		E8DC9ED413F8223C00D78E0F /* VistaNuevaResenia.m in Sources */ = {isa = PBXBuildFile; fileRef = E8DC9ED313F8223B00D78E0F /* VistaNuevaResenia.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +243,8 @@
 		E8CFDF3213CDF38400F06E73 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		E8CFDF4913CE000300F06E73 /* VistaRegistro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaRegistro.h; sourceTree = "<group>"; };
 		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
+		E8DC9ED213F8223B00D78E0F /* VistaNuevaResenia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevaResenia.h; sourceTree = "<group>"; };
+		E8DC9ED313F8223B00D78E0F /* VistaNuevaResenia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevaResenia.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -668,6 +671,8 @@
 			children = (
 				E899AFE113D4AEC600B688A7 /* VistaResenias.h */,
 				E899AFE213D4AEC600B688A7 /* VistaResenias.m */,
+				E8DC9ED213F8223B00D78E0F /* VistaNuevaResenia.h */,
+				E8DC9ED313F8223B00D78E0F /* VistaNuevaResenia.m */,
 			);
 			name = "Reseñas";
 			sourceTree = "<group>";
@@ -848,6 +853,7 @@
 				E8C3413213E9E0640071B12D /* CTidy.m in Sources */,
 				E8BA0D7613EA240200631B7D /* HotelesAnnotation.m in Sources */,
 				BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */,
+				E8DC9ED413F8223C00D78E0F /* VistaNuevaResenia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

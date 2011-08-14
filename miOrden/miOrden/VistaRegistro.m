@@ -34,22 +34,51 @@
 }
 
 -(void)confirmar{
-    datos = [[NSDictionary alloc] init];
+     datos = [[NSMutableDictionary alloc] init];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nameKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"lastNameKey"] forKey:@"lastNameKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"emailKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"confirmaEmailKey"] forKey:@"confirmaEmailKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"passwordKey"] forKey:@"passwordKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"confirmaPasswordKey"] forKey:@"confirmaPasswordKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"birthKey"] forKey:@"birthKey"];
-     [datos setValue:[tableModel.modelKeyValues valueForKey:@"sexKey"] forKey:@"genderKey"];
+    
+    if([[sexo segmentedControl]selectedSegmentIndex] == 0){
+        [datos setValue:@"Mujer" forKey:@"genderKey"];
+    }else{
+        [datos setValue:@"Hombre" forKey:@"genderKey"];
+    }
+    
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"terminosKey"] forKey:@"terminosKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"newsKey"] forKey:@"newsKey"];
     
+    NSString *email = [datos valueForKey:@"emailKey"];
+    NSString *confirmaEmail = [datos valueForKey:@"confirmaEmailKey"];
+    NSString *password = [datos valueForKey:@"passwordKey"];
+    NSString *confirmaPassword = [datos valueForKey:@"confirmaPasswordKey"];
+      
+    
+    
+    if([email isEqual:confirmaEmail] && [password isEqual:confirmaPassword] && [[datos valueForKey:@"terminosKey"] isEqual:@"1"]){
+        
+        XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
+        parser.delegate = self;
+        NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],[datos valueForKey:@"birthKey"], [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
+        cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        NSLog(@"%@", cadena);
+        
+    }else{
+        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
+        [alerta show];
+        [alerta release];
+    }
+       
     
     
     
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
-    [alerta show];
-    [alerta release];
+    
+    
+    
     
 }
 
@@ -73,9 +102,9 @@
     SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
     SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
     NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
-    SCSegmentedCell *sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
-    SCSwitchCell *terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
-     SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
+    sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
+    terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
+     SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
                                                                            
     [section addCell:nombre];
     [section addCell:apellido];
@@ -205,6 +234,15 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    
 }
 
 @end
