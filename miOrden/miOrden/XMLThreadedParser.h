@@ -32,9 +32,9 @@
 
 @protocol XMLThreadedParserDelegate <NSObject>
 
--(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object;
-    
 @optional
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object;
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array;
 

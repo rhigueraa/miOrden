@@ -7,7 +7,7 @@
 //
 
 #import "XMLThreadedParser.h"
-
+#import "NSString+AccentCorrection.h"
 
 @implementation XMLThreadedParser
 @synthesize delegate,tagg;
@@ -18,6 +18,13 @@
     
     // Create a new rssParser object based on the TouchXML "CXMLDocument" class, this is the
     // object that actually grabs and processes the RSS data
+    //NSString *xmlSource = [[[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding] autorelease];
+    
+    //xmlSource = [xmlSource fixAccents];
+    
+    //NSLog(@"XML reads: %@", xmlSource);
+    
+    //CXMLDocument *rssParser = [[[CXMLDocument alloc] initWithXMLString:xmlSource options:0 error:nil] autorelease];
  
     CXMLDocument *rssParser = [[[CXMLDocument alloc] initWithData:data encoding:NSISOLatin1StringEncoding options:0 error:nil] autorelease];
 	

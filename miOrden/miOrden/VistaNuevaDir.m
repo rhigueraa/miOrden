@@ -7,7 +7,7 @@
 //
 
 #import "VistaNuevaDir.h"
-
+#import "NSString+AccentCorrection.h"
 
 @implementation VistaNuevaDir
 @synthesize direccion;
@@ -176,7 +176,7 @@
            
             [delegacionesArr removeAllObjects];
             for (NSDictionary *delegacion in array) {
-                [delegacionesArr addObject:[delegacion objectForKey:@"text"]];
+                [delegacionesArr addObject:[[delegacion objectForKey:@"text"] fixAccents]];
             }
             [self.tableView reloadData];
         case 3:
@@ -184,7 +184,7 @@
            
             [coloniasArr removeAllObjects];
             for (NSDictionary *colonia in array) {
-                [coloniasArr addObject:[colonia objectForKey:@"text"]];
+                [coloniasArr addObject:[[colonia objectForKey:@"text"] fixAccents]];
             }
             [self.tableView reloadData];
             break;
