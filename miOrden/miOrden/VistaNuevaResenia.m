@@ -34,6 +34,8 @@
     parser.delegate = self;
     NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/addreview.php?title=%@&description=%@&user_id=%@&rest_id=%@%22,@%22Review",[tableModel.modelKeyValues valueForKey:@"tituloKey"],[tableModel.modelKeyValues valueForKey:@"descripcionKey"],[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"],[currentRestaurant valueForKey:@"id"]];
     cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    [parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"review_id"];
+    
     NSLog(@"%@",cadena);
     
 }
@@ -94,7 +96,15 @@
 }
 
 #pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 0;
+}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 0;
+}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,7 +181,9 @@
 
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
-    
+    UIAlertView *alerta = [[UIAlertView alloc]initWithTitle:@"Exito" message:@"Tu reseña ha sido posteada" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+    [alerta show];
+    [alerta release];
 }
 
 @end

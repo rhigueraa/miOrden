@@ -100,7 +100,10 @@
     SCTextFieldCell *confirmaEmail = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"Confirma tu eMail" withBoundKey:@"confirmaEmailKey" withTextFieldTextValue:nil];
      SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
     SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
+    
     SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
+    
+    
     NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
     sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
     terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
