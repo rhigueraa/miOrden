@@ -92,7 +92,7 @@
     SCTextFieldCell *numExt = [[SCTextFieldCell alloc]initWithText:@"Número" withPlaceholder:@"exterior" withBoundKey:@"numExtKey" withTextFieldTextValue:nil];
     SCTextFieldCell *numInt = [[SCTextFieldCell alloc]initWithText:@"Número" withPlaceholder:@"interior" withBoundKey:@"numIntKey" withTextFieldTextValue:nil];
     SCNumericTextFieldCell *telefono = [[SCNumericTextFieldCell alloc]initWithText:@"Teléfono" withPlaceholder:@"teléfono" withBoundKey:@"telefonoKey" withTextFieldTextValue:nil];
-    
+    SCNumericTextFieldCell *CP = [[SCNumericTextFieldCell alloc] initWithText:@"CP" withPlaceholder:@"Código Postal" withBoundKey:@"CPKey" withTextFieldTextValue:nil];
     SCSelectionCell *zonas = [SCSelectionCell cellWithText:@"Zona" withBoundKey:@"zonaKey" withSelectedIndexValue:nil withItems:zonasArr];
     
     
@@ -101,11 +101,13 @@
     [section addCell:estados];
     [section addCell:delegacion];
     [section addCell:colonias];
+    [section addCell:zonas];
     [section addCell:calle];
     [section  addCell:calleCer];
     [section addCell:numExt];
     [section  addCell:numInt];
-    [section addCell:zonas];
+    [section addCell:CP];
+    
     [section addCell:telefono];
  
     [tableModel addSection:section];
@@ -241,6 +243,8 @@
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"numIntKey"] forKey:@"numIntKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"telefonoKey"] forKey:@"telefonoKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nombreKey"];
+    [direccion setValue:[tableModel.modelKeyValues valueForKey:@"CPKey"] forKey:@"CPKey"];
+    
     [self encuentraIdZona];
     [direccion setValue:idZona forKey:@"idZona"];
     
@@ -261,6 +265,8 @@
     NSString *numExt = [direccion valueForKey:@"numExtKey"];
     NSString *numInt = [direccion valueForKey:@"numIntKey"];
     NSString *telefono = [direccion valueForKey:@"telefonoKey"];
+    NSString *CP = [direccion valueForKey:@"CPKey"];
+   
    
     NSString *userId = [[NSUserDefaults standardUserDefaults] valueForKey:@"userIdKey"];
     
@@ -273,9 +279,9 @@
     
     
     
-    cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locations.php?title_loc=%@&state=%@&delegation=%@&colony=%@&address=%@&zone=%@&the_street=%@&telephone=%@&user_id=%@&exterior=%@&interior=%@", nombre,estado,delegacion,colonia,calle,idZona,calleCerca,telefono,userId,numExt,numInt]; 
+    cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locations.php?title_loc=%@&state=%@&delegation=%@&colony=%@&address=%@&zone=%@&the_street=%@&telephone=%@&user_id=%@&exterior=%@&interior=%@&cp=%@", nombre,estado,delegacion,colonia,calle,idZona,calleCerca,telefono,userId,numExt,numInt,CP]; 
     cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-   
+    
     [parser3 parseXMLat:[NSURL URLWithString:cadena ] withKey:@"status"];
     
     [self.navigationController popViewControllerAnimated:YES];

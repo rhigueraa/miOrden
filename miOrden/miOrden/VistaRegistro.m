@@ -56,23 +56,33 @@
     NSString *confirmaEmail = [datos valueForKey:@"confirmaEmailKey"];
     NSString *password = [datos valueForKey:@"passwordKey"];
     NSString *confirmaPassword = [datos valueForKey:@"confirmaPasswordKey"];
-      
+    
+    NSDateFormatter *fecha = [[NSDateFormatter alloc]init];
+    fecha.timeStyle = NSDateFormatterNoStyle;
+    [fecha setDateFormat:@"yyyy-MM-dd"];
+    NSDate *fechaa = [datos valueForKey:@"birthKey"];
+    NSString *fechaFinal = [fecha stringFromDate:fechaa];
+    NSLog(@"Fecah es: %@", fechaFinal);
+    
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],fechaFinal, [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
     
     
     if([email isEqual:confirmaEmail] && [password isEqual:confirmaPassword] && [[datos valueForKey:@"terminosKey"] isEqual:@"1"]){
         
         XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
         parser.delegate = self;
-        NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],[datos valueForKey:@"birthKey"], [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
+        
         cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
         
-        NSLog(@"%@", cadena);
+      
         
     }else{
         UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
         [alerta show];
         [alerta release];
+       
+
     }
        
     
@@ -103,8 +113,12 @@
      SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
     SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
     
+    pass.textField.secureTextEntry = YES;
+    confirmaPass.textField.secureTextEntry = YES;
+    
     SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
     fechaNacimiento.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    [fechaNacimiento.dateFormatter setDateFormat:@"yyyy-MM-dd"];
     fechaNacimiento.datePicker.datePickerMode = UIDatePickerModeDate;
     
     NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
