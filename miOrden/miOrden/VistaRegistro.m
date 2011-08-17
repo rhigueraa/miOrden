@@ -102,7 +102,8 @@
     SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
     
     SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
-    
+    fechaNacimiento.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    fechaNacimiento.datePicker.datePickerMode = UIDatePickerModeDate;
     
     NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
     sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];

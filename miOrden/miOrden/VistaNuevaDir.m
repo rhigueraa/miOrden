@@ -28,6 +28,8 @@
     [delegacionesArr release];
     [direccion release];
     [tableModel release];
+    [auxZonas release];
+    
     [super dealloc];
 }
 
@@ -58,6 +60,7 @@
     delegacionesArr = [[NSMutableArray alloc] init];
     coloniasArr = [[NSMutableArray alloc] init];
     zonasArr = [[NSMutableArray alloc] init];
+    auxZonas = [[NSArray alloc]init];
 
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
@@ -141,7 +144,7 @@
             estadoName];
             cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             [parser2 parseXMLat:[NSURL URLWithString:cadena] withKey:@"delegacion"];
-            NSLog(@"%@",cadena);
+          
         break;
         case 2:
             parser2.tagg = [NSNumber numberWithInt:3];
@@ -151,7 +154,7 @@
                       delegacionName];
             cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             [parser2 parseXMLat:[NSURL URLWithString:cadena] withKey:@"colonia"];
-             NSLog(@"%@",cadena);
+           
             break;
         default:
             break;
@@ -189,11 +192,12 @@
             [self.tableView reloadData];
             break;
         case 4:
-            [array retain];
+            auxZonas = [array retain];
             [zonasArr removeAllObjects];
             for (NSDictionary *zonas in array) {
                 [zonasArr addObject:[zonas objectForKey:@"title"]];
             }
+            
             
             [self.tableView reloadData];
             break;
@@ -217,18 +221,32 @@
     
     
 }
+-(void) encuentraIdZona{
+    NSString *stringZona = [zonasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"zonaKey"]intValue]];
+    for (NSDictionary *zona in auxZonas) {
+        if([stringZona isEqualToString:[zona objectForKey:@"title"]])
+            idZona = [zona objectForKey:@"zone_id"];
+        
+    }
+    
+}
 
 -(void) guardar{
     [direccion setValue:[estadosArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"estadoKey"]intValue]] forKey:@"estado"];
     [direccion setValue:[delegacionesArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"delegacionKey"]intValue]] forKey:@"delegacion"];
     [direccion setValue:[coloniasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"coloniaKey"]intValue]] forKey:@"colonia"];
-    [direccion setValue:[zonasArr objectAtIndex:[[tableModel.modelKeyValues valueForKey:@"zonaKey"]intValue]] forKey:@"zona"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"calleKey"] forKey:@"calle"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"calleCercana"] forKey:@"calleCercana"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"numExtKey"] forKey:@"numExtKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"numIntKey"] forKey:@"numIntKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"telefonoKey"] forKey:@"telefonoKey"];
     [direccion setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nombreKey"];
+    [self encuentraIdZona];
+    [direccion setValue:idZona forKey:@"idZona"];
+    
+    
+    
+     
    
     XMLThreadedParser *parser3 = [[XMLThreadedParser alloc]init];
     parser3.delegate = self;
@@ -243,16 +261,25 @@
     NSString *numExt = [direccion valueForKey:@"numExtKey"];
     NSString *numInt = [direccion valueForKey:@"numIntKey"];
     NSString *telefono = [direccion valueForKey:@"telefonoKey"];
-    NSString *zona = [direccion valueForKey:@"zona"];
+   
     NSString *userId = [[NSUserDefaults standardUserDefaults] valueForKey:@"userIdKey"];
     
+    if (numExt == nil) 
+        numExt = @"0";
+    if (numInt == nil) 
+        numInt = @"0";
+    if (calleCerca == nil) 
+        calleCerca = @"0";
     
     
-    cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locations.php?title_loc=%@&state=%@&delegation=%@&colony=%@&address=%@&zone=%@&the_street=%@&telephone=%@&user_id=%@&exterior=%@&interior=%@", nombre,estado,delegacion,colonia,calle,zona,calleCerca,telefono,userId,numExt,numInt]; 
+    
+    cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/locations.php?title_loc=%@&state=%@&delegation=%@&colony=%@&address=%@&zone=%@&the_street=%@&telephone=%@&user_id=%@&exterior=%@&interior=%@", nombre,estado,delegacion,colonia,calle,idZona,calleCerca,telefono,userId,numExt,numInt]; 
     cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+   
     [parser3 parseXMLat:[NSURL URLWithString:cadena ] withKey:@"status"];
     
-    NSLog(@"%@",cadena);
+    [self.navigationController popViewControllerAnimated:YES];
+    
     }
 
 

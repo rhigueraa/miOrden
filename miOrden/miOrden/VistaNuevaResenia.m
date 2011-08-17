@@ -1,4 +1,4 @@
-//
+
 //  VistaNuevaResenia.m
 //  miOrden
 //
@@ -32,7 +32,7 @@
 -(void)enviar{
     XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
     parser.delegate = self;
-    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/addreview.php?title=%@&description=%@&user_id=%@&rest_id=%@%22,@%22Review",[tableModel.modelKeyValues valueForKey:@"tituloKey"],[tableModel.modelKeyValues valueForKey:@"descripcionKey"],[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"],[currentRestaurant valueForKey:@"id"]];
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/addreview.php?title=%@&description=%@&user_id=%@&rest_id=%@",[tableModel.modelKeyValues valueForKey:@"tituloKey"],[tableModel.modelKeyValues valueForKey:@"descripcionKey"],[[NSUserDefaults standardUserDefaults]valueForKey:@"userIdKey"],[currentRestaurant valueForKey:@"id"]];
     cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     [parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"review_id"];
     
@@ -57,7 +57,7 @@
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -122,43 +122,43 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }   
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }   
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Table view delegate
 
@@ -184,6 +184,7 @@
     UIAlertView *alerta = [[UIAlertView alloc]initWithTitle:@"Exito" message:@"Tu reseña ha sido posteada" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
     [alerta show];
     [alerta release];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

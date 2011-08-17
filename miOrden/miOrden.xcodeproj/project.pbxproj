@@ -70,6 +70,7 @@
 		E8C3413513E9F12B0071B12D /* abierto.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C3413413E9F12B0071B12D /* abierto.png */; };
 		E8C3413713E9F1330071B12D /* cerado.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C3413613E9F1330071B12D /* cerado.png */; };
 		E8C3413913E9F13A0071B12D /* estrellitas.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C3413813E9F13A0071B12D /* estrellitas.png */; };
+		E8C6059C13F98C75006E39CC /* VistaNuevaResenia.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C6059B13F98C75006E39CC /* VistaNuevaResenia.m */; };
 		E8CFDED513CDF09700F06E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED413CDF09700F06E73 /* UIKit.framework */; };
 		E8CFDED713CDF09700F06E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED613CDF09700F06E73 /* Foundation.framework */; };
 		E8CFDED913CDF09700F06E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFDED813CDF09700F06E73 /* CoreGraphics.framework */; };
@@ -97,7 +98,6 @@
 		E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */; };
 		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
 		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
-		E8DC9ED413F8223C00D78E0F /* VistaNuevaResenia.m in Sources */ = {isa = PBXBuildFile; fileRef = E8DC9ED313F8223B00D78E0F /* VistaNuevaResenia.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,6 +221,8 @@
 		E8C3413413E9F12B0071B12D /* abierto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abierto.png; sourceTree = "<group>"; };
 		E8C3413613E9F1330071B12D /* cerado.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cerado.png; sourceTree = "<group>"; };
 		E8C3413813E9F13A0071B12D /* estrellitas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = estrellitas.png; sourceTree = "<group>"; };
+		E8C6059A13F98C75006E39CC /* VistaNuevaResenia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevaResenia.h; sourceTree = "<group>"; };
+		E8C6059B13F98C75006E39CC /* VistaNuevaResenia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevaResenia.m; sourceTree = "<group>"; };
 		E8CFDED013CDF09700F06E73 /* miOrden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miOrden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8CFDED413CDF09700F06E73 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E8CFDED613CDF09700F06E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -265,8 +267,6 @@
 		E8CFDF3213CDF38400F06E73 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		E8CFDF4913CE000300F06E73 /* VistaRegistro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaRegistro.h; sourceTree = "<group>"; };
 		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
-		E8DC9ED213F8223B00D78E0F /* VistaNuevaResenia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevaResenia.h; sourceTree = "<group>"; };
-		E8DC9ED313F8223B00D78E0F /* VistaNuevaResenia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevaResenia.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -732,8 +732,8 @@
 			children = (
 				E899AFE113D4AEC600B688A7 /* VistaResenias.h */,
 				E899AFE213D4AEC600B688A7 /* VistaResenias.m */,
-				E8DC9ED213F8223B00D78E0F /* VistaNuevaResenia.h */,
-				E8DC9ED313F8223B00D78E0F /* VistaNuevaResenia.m */,
+				E8C6059A13F98C75006E39CC /* VistaNuevaResenia.h */,
+				E8C6059B13F98C75006E39CC /* VistaNuevaResenia.m */,
 			);
 			name = "Reseñas";
 			sourceTree = "<group>";
@@ -916,7 +916,13 @@
 				E8C3413213E9E0640071B12D /* CTidy.m in Sources */,
 				E8BA0D7613EA240200631B7D /* HotelesAnnotation.m in Sources */,
 				BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */,
-				E8DC9ED413F8223C00D78E0F /* VistaNuevaResenia.m in Sources */,
+				BC2D926213F241F800430D27 /* JSONKit.m in Sources */,
+				BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */,
+				BC9C06D013F71F5A006CFB6D /* JSScrollableTabBar.m in Sources */,
+				BC9C06D113F71F5A006CFB6D /* JSTabButton.m in Sources */,
+				BC9C06D213F71F5A006CFB6D /* JSTabItem.m in Sources */,
+				BC9C06D313F71F5A006CFB6D /* UIImage+JSRetinaAdditions.m in Sources */,
+				E8C6059C13F98C75006E39CC /* VistaNuevaResenia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

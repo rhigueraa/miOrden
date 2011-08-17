@@ -90,6 +90,8 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    
+    NSLog(@"Erro: %@",[error description]);
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	

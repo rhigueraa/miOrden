@@ -17,6 +17,8 @@
     NSMutableArray *coloniasArr;
     NSMutableArray *zonasArr;
     NSMutableDictionary *direccion;
+    NSArray *auxZonas;
+    NSString *idZona;
     
 }
 @property(nonatomic,retain) NSMutableDictionary *direccion;

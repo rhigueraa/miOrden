@@ -65,11 +65,7 @@
     self.navigationItem.rightBarButtonItem = nueva;
     resenias = [[NSMutableDictionary alloc] init];
     self.title = @"Reseñas";
-    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
-    parser.delegate = self;
-    
-    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
-    //[parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=1"] withKey:@"review"];
+   
     
     resenias = [[NSMutableDictionary alloc] init];
     
@@ -90,6 +86,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    
+    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
