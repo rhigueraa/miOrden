@@ -55,7 +55,7 @@
     tabController.viewControllers = [NSArray arrayWithArray:navegadores];
     [self.window addSubview:tabController.view];
     VistaInicioSesion *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
-    inicio.title =@"Mi Orden";
+    inicio.title =@"MiOrden";
     UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
     temp.navigationBar.tintColor = [UIColor redColor];
     [tabController presentModalViewController:temp animated:NO];
