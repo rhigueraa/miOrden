@@ -10,8 +10,9 @@
 #import "ATPagingView.h"
 #import <MapKit/MapKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "XMLThreadedParser.h"
 
-@interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate> {
+@interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate, XMLThreadedParserDelegate> {
     UITableView  *table;
     UIView *pagedView;
     UITableView *table2;

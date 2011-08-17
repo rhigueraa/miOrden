@@ -65,6 +65,8 @@
         parser.delegate = self;
         NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],[datos valueForKey:@"birthKey"], [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
         cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        
+        
         NSLog(@"%@", cadena);
         
     }else{

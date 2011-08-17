@@ -61,6 +61,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevaResenia)];
     self.navigationItem.rightBarButtonItem = nueva;
     resenias = [[NSMutableDictionary alloc] init];

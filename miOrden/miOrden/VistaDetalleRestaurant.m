@@ -54,6 +54,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
+    
     direccion.text = [currentRestaurant valueForKey:@"address"];
     pagedView.backgroundColor = [UIColor redColor];
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
@@ -108,6 +110,10 @@
 - (void)viewWillAppear:(BOOL)animated{
     [pagedVIew reloadData];
     [table deselectRowAtIndexPath:[table indexPathForSelectedRow] animated:YES];
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    
+    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
 }
 
 - (void)viewDidUnload
@@ -172,6 +178,8 @@
         if(indexPath.row == 1){
             cell.imageView.image = [UIImage imageNamed:@"estrellitas.png"];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d reseñas", numeroResenias];
+            
+                       
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else{
             cell.textLabel.text = @"Ver menú"; 
@@ -313,6 +321,19 @@
                
     }
     return view;
+}
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    numeroResenias = [[array retain]count];
+    NSLog(@"Número de reseñas: %d", numeroResenias);
+
+    [self.table beginUpdates];
+    [self.table reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.table endUpdates];
 }
 
 
