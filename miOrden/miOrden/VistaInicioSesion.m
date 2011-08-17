@@ -199,7 +199,7 @@
         NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/login.php?username=%@&password=%@",username,pass];
         
         [parser parseXMLat:[NSURL URLWithString:cadena]withKey:@"user_id"];
-        NSLog(@"%@",cadena);
+        
         
     }
     
