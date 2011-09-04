@@ -10,6 +10,8 @@
 #import "VistaDetalleRestaurant.h"
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ASIHTTPRequest.h"
+#import "JSONKit.h"
 
 @implementation VistaListaRestaurants
 @synthesize laDir, zonaID;
@@ -61,8 +63,22 @@
     parser.delegate = self;
     if(self.zonaID == nil)
         [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
-    else
+    else{
+        /*
+        NSString *URLString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantListByZone.php?zone=%@",zonaID];
+        NSLog(@"Will parse URL: %@",URLString);
+        __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:URLString]];
+        [request setCompletionBlock:^(void){
+            NSString *resposne = [request responseString];
+            listaRestaurants = [[resposne objectFromJSONString] retain];
+            [self.tableView beginUpdates];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+        }];
+        [request startAsynchronous];
+         */
         [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]] withKey:@"restaurant"];
+    }
 
 }
 
@@ -130,7 +146,16 @@
     // Configure the cell...
     NSDictionary *rest = [listaRestaurants objectAtIndex:indexPath.row];
     cell.textLabel.text = [rest objectForKey:@"name"];
-    [cell.imageView setImageWithURL:[NSURL URLWithString:[rest objectForKey:@"logo"]] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
+    
+    NSString *logoURL = [rest objectForKey:@"logo"];
+    
+    NSRange range = [logoURL rangeOfString:@"http://www.miorden.com/res/thumbs/"];
+    
+    if (!range.length>0) {
+        logoURL = [NSString stringWithFormat:@"http://www.miorden.com/res/thumbs/%@",logoURL];
+    }
+    
+    [cell.imageView setImageWithURL:[NSURL URLWithString:logoURL] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
     //cell.imageView.contentMode = UIViewContentModeCenter;
     return cell;
 }
