@@ -12,6 +12,8 @@
 
 @interface ItemConfigurationView : UITableViewController <SCTableViewModelDelegate, XMLThreadedParserDelegate>{
     SCTableViewModel *tableModel;
+    
+    NSArray *allExtras;
 }
 
 @property(nonatomic, retain) NSString *itemId;
