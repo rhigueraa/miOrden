@@ -28,10 +28,6 @@
 		BC2D926213F241F800430D27 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926113F241F800430D27 /* JSONKit.m */; };
 		BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */; };
 		BC9C06C613F71F36006CFB6D /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC9C06C513F71F36006CFB6D /* images.bundle */; };
-		BC9C06D013F71F5A006CFB6D /* JSScrollableTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9C06C913F71F5A006CFB6D /* JSScrollableTabBar.m */; };
-		BC9C06D113F71F5A006CFB6D /* JSTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9C06CB13F71F5A006CFB6D /* JSTabButton.m */; };
-		BC9C06D213F71F5A006CFB6D /* JSTabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9C06CD13F71F5A006CFB6D /* JSTabItem.m */; };
-		BC9C06D313F71F5A006CFB6D /* UIImage+JSRetinaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9C06CF13F71F5A006CFB6D /* UIImage+JSRetinaAdditions.m */; };
 		BCD428E61414256400FA2142 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D11414256400FA2142 /* Reachability.m */; };
 		BCD428E71414256400FA2142 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D31414256400FA2142 /* ASIAuthenticationDialog.m */; };
 		BCD428E81414256400FA2142 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D61414256400FA2142 /* ASIDataCompressor.m */; };
@@ -45,6 +41,11 @@
 		BCD428F41414278300FA2142 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD428F31414278300FA2142 /* SystemConfiguration.framework */; };
 		BCD428F61414279400FA2142 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD428F51414279400FA2142 /* MobileCoreServices.framework */; };
 		BCD428F8141427A400FA2142 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD428F7141427A400FA2142 /* libz.dylib */; };
+		BCD428FB14142E8F00FA2142 /* ItemConfigurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428FA14142E8F00FA2142 /* ItemConfigurationView.m */; };
+		BCD4291114169E8800FA2142 /* JSScrollableTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4290A14169E8800FA2142 /* JSScrollableTabBar.m */; };
+		BCD4291214169E8800FA2142 /* JSTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4290C14169E8800FA2142 /* JSTabButton.m */; };
+		BCD4291314169E8800FA2142 /* JSTabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4290E14169E8800FA2142 /* JSTabItem.m */; };
+		BCD4291414169E8800FA2142 /* UIImage+JSRetinaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4291014169E8800FA2142 /* UIImage+JSRetinaAdditions.m */; };
 		BCFC66CD13EA0AC100846F19 /* placeholder-recipe-44.gif in Resources */ = {isa = PBXBuildFile; fileRef = BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */; };
 		E805A98B13CE24B900A96038 /* VistaCuentaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98A13CE24B900A96038 /* VistaCuentaPerfil.m */; };
 		E805A98F13CE24E500A96038 /* VistaUnoOrden.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A98D13CE24E500A96038 /* VistaUnoOrden.m */; };
@@ -156,14 +157,6 @@
 		BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AccentCorrection.h"; sourceTree = "<group>"; };
 		BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AccentCorrection.m"; sourceTree = "<group>"; };
 		BC9C06C513F71F36006CFB6D /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
-		BC9C06C813F71F5A006CFB6D /* JSScrollableTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSScrollableTabBar.h; sourceTree = "<group>"; };
-		BC9C06C913F71F5A006CFB6D /* JSScrollableTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSScrollableTabBar.m; sourceTree = "<group>"; };
-		BC9C06CA13F71F5A006CFB6D /* JSTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTabButton.h; sourceTree = "<group>"; };
-		BC9C06CB13F71F5A006CFB6D /* JSTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTabButton.m; sourceTree = "<group>"; };
-		BC9C06CC13F71F5A006CFB6D /* JSTabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTabItem.h; sourceTree = "<group>"; };
-		BC9C06CD13F71F5A006CFB6D /* JSTabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTabItem.m; sourceTree = "<group>"; };
-		BC9C06CE13F71F5A006CFB6D /* UIImage+JSRetinaAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JSRetinaAdditions.h"; sourceTree = "<group>"; };
-		BC9C06CF13F71F5A006CFB6D /* UIImage+JSRetinaAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JSRetinaAdditions.m"; sourceTree = "<group>"; };
 		BCD428D01414256400FA2142 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		BCD428D11414256400FA2142 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BCD428D21414256400FA2142 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -190,6 +183,16 @@
 		BCD428F31414278300FA2142 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BCD428F51414279400FA2142 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BCD428F7141427A400FA2142 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		BCD428F914142E8F00FA2142 /* ItemConfigurationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemConfigurationView.h; sourceTree = "<group>"; };
+		BCD428FA14142E8F00FA2142 /* ItemConfigurationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemConfigurationView.m; sourceTree = "<group>"; };
+		BCD4290914169E8800FA2142 /* JSScrollableTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSScrollableTabBar.h; sourceTree = "<group>"; };
+		BCD4290A14169E8800FA2142 /* JSScrollableTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSScrollableTabBar.m; sourceTree = "<group>"; };
+		BCD4290B14169E8800FA2142 /* JSTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTabButton.h; sourceTree = "<group>"; };
+		BCD4290C14169E8800FA2142 /* JSTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTabButton.m; sourceTree = "<group>"; };
+		BCD4290D14169E8800FA2142 /* JSTabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTabItem.h; sourceTree = "<group>"; };
+		BCD4290E14169E8800FA2142 /* JSTabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTabItem.m; sourceTree = "<group>"; };
+		BCD4290F14169E8800FA2142 /* UIImage+JSRetinaAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JSRetinaAdditions.h"; sourceTree = "<group>"; };
+		BCD4291014169E8800FA2142 /* UIImage+JSRetinaAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JSRetinaAdditions.m"; sourceTree = "<group>"; };
 		BCD60D8413CE96EC00DF55A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "placeholder-recipe-44.gif"; sourceTree = "<group>"; };
 		E805A98913CE24B900A96038 /* VistaCuentaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCuentaPerfil.h; sourceTree = "<group>"; };
@@ -450,14 +453,14 @@
 		BC9C06D413F71F64006CFB6D /* JSSCrollable Tab */ = {
 			isa = PBXGroup;
 			children = (
-				BC9C06C813F71F5A006CFB6D /* JSScrollableTabBar.h */,
-				BC9C06C913F71F5A006CFB6D /* JSScrollableTabBar.m */,
-				BC9C06CA13F71F5A006CFB6D /* JSTabButton.h */,
-				BC9C06CB13F71F5A006CFB6D /* JSTabButton.m */,
-				BC9C06CC13F71F5A006CFB6D /* JSTabItem.h */,
-				BC9C06CD13F71F5A006CFB6D /* JSTabItem.m */,
-				BC9C06CE13F71F5A006CFB6D /* UIImage+JSRetinaAdditions.h */,
-				BC9C06CF13F71F5A006CFB6D /* UIImage+JSRetinaAdditions.m */,
+				BCD4290914169E8800FA2142 /* JSScrollableTabBar.h */,
+				BCD4290A14169E8800FA2142 /* JSScrollableTabBar.m */,
+				BCD4290B14169E8800FA2142 /* JSTabButton.h */,
+				BCD4290C14169E8800FA2142 /* JSTabButton.m */,
+				BCD4290D14169E8800FA2142 /* JSTabItem.h */,
+				BCD4290E14169E8800FA2142 /* JSTabItem.m */,
+				BCD4290F14169E8800FA2142 /* UIImage+JSRetinaAdditions.h */,
+				BCD4291014169E8800FA2142 /* UIImage+JSRetinaAdditions.m */,
 			);
 			name = "JSSCrollable Tab";
 			sourceTree = "<group>";
@@ -489,6 +492,15 @@
 				BCD428E51414256400FA2142 /* ASIProgressDelegate.h */,
 			);
 			name = ASIHTTP;
+			sourceTree = "<group>";
+		};
+		BCD428FC14142E9300FA2142 /* Item Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				BCD428F914142E8F00FA2142 /* ItemConfigurationView.h */,
+				BCD428FA14142E8F00FA2142 /* ItemConfigurationView.m */,
+			);
+			name = "Item Configuration";
 			sourceTree = "<group>";
 		};
 		E805A98413CE245D00A96038 /* Shared Classes */ = {
@@ -558,6 +570,7 @@
 				E861897613CF414E003BA7AE /* VistaMenu.h */,
 				E861897713CF414E003BA7AE /* VistaMenu.m */,
 				E861897813CF414E003BA7AE /* VistaMenu.xib */,
+				BCD428FC14142E9300FA2142 /* Item Configuration */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -650,10 +663,6 @@
 		E8CFDEC513CDF09700F06E73 = {
 			isa = PBXGroup;
 			children = (
-				BCD428F7141427A400FA2142 /* libz.dylib */,
-				BCD428F51414279400FA2142 /* MobileCoreServices.framework */,
-				BCD428F31414278300FA2142 /* SystemConfiguration.framework */,
-				BCD428F11414276900FA2142 /* CFNetwork.framework */,
 				E8CFDEDA13CDF09700F06E73 /* miOrden */,
 				E8CFDEFF13CDF09700F06E73 /* miOrdenTests */,
 				E8CFDED313CDF09700F06E73 /* Frameworks */,
@@ -673,6 +682,10 @@
 		E8CFDED313CDF09700F06E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BCD428F7141427A400FA2142 /* libz.dylib */,
+				BCD428F51414279400FA2142 /* MobileCoreServices.framework */,
+				BCD428F31414278300FA2142 /* SystemConfiguration.framework */,
+				BCD428F11414276900FA2142 /* CFNetwork.framework */,
 				320AF8492C47A4D819F7C450 /* QuartzCore.framework */,
 				BC2D925213F1ECE700430D27 /* Security.framework */,
 				E890A7FC13CF6F96001B9291 /* MapKit.framework */,
@@ -990,10 +1003,6 @@
 				BC2D925113F1EC8300430D27 /* NSString+MD5.m in Sources */,
 				BC2D926213F241F800430D27 /* JSONKit.m in Sources */,
 				BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */,
-				BC9C06D013F71F5A006CFB6D /* JSScrollableTabBar.m in Sources */,
-				BC9C06D113F71F5A006CFB6D /* JSTabButton.m in Sources */,
-				BC9C06D213F71F5A006CFB6D /* JSTabItem.m in Sources */,
-				BC9C06D313F71F5A006CFB6D /* UIImage+JSRetinaAdditions.m in Sources */,
 				BCD428E61414256400FA2142 /* Reachability.m in Sources */,
 				BCD428E71414256400FA2142 /* ASIAuthenticationDialog.m in Sources */,
 				BCD428E81414256400FA2142 /* ASIDataCompressor.m in Sources */,
@@ -1003,6 +1012,11 @@
 				BCD428EC1414256400FA2142 /* ASIHTTPRequest.m in Sources */,
 				BCD428ED1414256400FA2142 /* ASIInputStream.m in Sources */,
 				BCD428EE1414256400FA2142 /* ASINetworkQueue.m in Sources */,
+				BCD428FB14142E8F00FA2142 /* ItemConfigurationView.m in Sources */,
+				BCD4291114169E8800FA2142 /* JSScrollableTabBar.m in Sources */,
+				BCD4291214169E8800FA2142 /* JSTabButton.m in Sources */,
+				BCD4291314169E8800FA2142 /* JSTabItem.m in Sources */,
+				BCD4291414169E8800FA2142 /* UIImage+JSRetinaAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

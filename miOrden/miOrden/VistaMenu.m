@@ -7,7 +7,7 @@
 //
 
 #import "VistaMenu.h"
-
+#import "ItemConfigurationView.h"
 
 @implementation VistaMenu
 @synthesize currentRestaurant;
@@ -113,6 +113,13 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ItemConfigurationView *configView = [[ItemConfigurationView alloc] initWithStyle:UITableViewStyleGrouped];
+    configView.title = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    configView.itemId = [[itemList objectAtIndex:indexPath.row] valueForKey:@"id"];
+    [self.navigationController pushViewController:configView animated:YES];
+}
+
 -(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
     
 }
@@ -129,6 +136,7 @@
             }
             [_tabBar setTabItems:items];
             categories = [[array mutableCopy] retain];
+            [_tabBar selectTabAtIndex:0];
         }
             break;
         case 1:

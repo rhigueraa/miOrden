@@ -14,7 +14,6 @@
 - (void)layoutTabs;
 - (void)updateFaders;
 - (void)tabSelected:(id)sender;
-- (void)selectTabAtIndex:(NSInteger)index;
 
 @end
 
@@ -24,17 +23,17 @@
 @synthesize style = _style;
 @synthesize delegate = _delegate;
 
-- (id)initWithFrame:(CGRect)frame andStyle:(JSScrollableTabBarStyle)style
+- (id)initWithFrame:(CGRect)frame style:(JSScrollableTabBarStyle)style
 {
     if ((self = [super initWithFrame:frame]))
 	{
 		_tabItems = [[NSMutableArray alloc] init];
 		
-		_background = [[UIImageView alloc] initWithFrame:frame];
+		_background = [[UIImageView alloc] initWithFrame:self.bounds];
 		[_background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 		[self addSubview:_background];
 		
-		_scrollView = [[UIScrollView alloc] initWithFrame:frame];
+		_scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
 		[_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 		[_scrollView setShowsHorizontalScrollIndicator:NO];
 		[_scrollView setShowsVerticalScrollIndicator:NO];
