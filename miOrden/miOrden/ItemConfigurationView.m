@@ -24,6 +24,10 @@
     parser.delegate = self;
     NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/dish_addon.php?itemid=%@",itemId];
     [parser parseXMLat:[NSURL URLWithString:urlString] withKey:@"dish-addon"];
+    
+    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithTitle:@"Agregar" style:UIBarButtonItemStyleDone target:self action:@selector(addToCart)];
+    self.navigationItem.rightBarButtonItem = add;
+    [add release];
 }
 
 - (void)tableViewModel:(SCTableViewModel *)tableViewModel didLayoutSubviewsForCell:(SCTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -31,6 +35,10 @@
         //cell.textLabel.layer.borderWidth = 1.0;
         cell.textLabel.numberOfLines = 2;
     }
+}
+
+- (void)addToCart{
+    
 }
 
 - (void)parser:(XMLThreadedParser *)parser didParseObject:(NSDictionary *)object{

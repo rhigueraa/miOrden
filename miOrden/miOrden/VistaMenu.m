@@ -124,10 +124,27 @@
     
 }
 
+- (void)forceTabSelection{
+    if (categories.count) {
+        XMLThreadedParser *itemParser = [[XMLThreadedParser alloc] init];
+        itemParser.delegate = self;
+        itemParser.tagg = [NSNumber numberWithInt:1];
+        NSString *catId = [[categories objectAtIndex:0] valueForKey:@"category_id"];
+        [itemParser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://miorden.com/demo/iphone/getRestItems.php?id=%@&category_id=%@",[currentRestaurant valueForKey:@"id"], catId]] withKey:@"item"];
+    }
+}
+
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
     switch ([parser.tagg intValue]) {
         case 0:{
             //Categories
+            /*
+            array = [array sortedArrayUsingComparator:^(id a, id b) {
+                NSString *first = [a objectForKey:@"ordering"];
+                NSString *second = [b objectForKey:@"ordering"];
+                return [first compare:second options:NSNumericSearch];
+            }];
+             */
             NSMutableArray *items = [NSMutableArray array];
             for (NSDictionary *dict in array) {
                 JSTabItem *item = [[JSTabItem alloc] initWithTitle:[dict valueForKey:@"title"]];
@@ -136,7 +153,7 @@
             }
             [_tabBar setTabItems:items];
             categories = [[array mutableCopy] retain];
-            [_tabBar selectTabAtIndex:0];
+            [self forceTabSelection];
         }
             break;
         case 1:
@@ -146,5 +163,6 @@
             break;
     }
 }
+
 
 @end
