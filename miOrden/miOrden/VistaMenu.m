@@ -124,6 +124,13 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    NSIndexPath *path = [theTable indexPathForSelectedRow];
+    if (path) {
+        [theTable deselectRowAtIndexPath:path animated:YES];
+    }
+}
+
 - (void)forceTabSelection{
     if (categories.count) {
         XMLThreadedParser *itemParser = [[XMLThreadedParser alloc] init];
