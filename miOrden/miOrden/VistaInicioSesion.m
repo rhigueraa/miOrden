@@ -233,9 +233,11 @@
         [alerta release];
     }else{
         NSLog(@"%@",ID);
+        /*
         alerta = [[UIAlertView alloc] initWithTitle:@"Bienvenido" message:@"MiOrden.com te da la bienvenida" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
         [alerta show];
         [alerta release];
+         */
         if(recordar.switchControl.on){
             NSUserDefaults *loginDefault = [NSUserDefaults standardUserDefaults];
             [loginDefault setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"userKey"];

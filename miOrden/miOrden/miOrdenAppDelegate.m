@@ -48,7 +48,8 @@
     
     for (UIViewController *vc in viewControllers) {
         navCont = [[UINavigationController alloc] initWithRootViewController:vc];
-        navCont.navigationBar.tintColor = [UIColor redColor];
+        //navCont.navigationBar.tintColor = [UIColor redColor];
+        navCont.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
         [navegadores addObject:navCont];
     }
     
@@ -57,7 +58,8 @@
     VistaInicioSesion *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
     inicio.title =@"Mi Orden";
     UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
-    temp.navigationBar.tintColor = [UIColor redColor];
+    //temp.navigationBar.tintColor = [UIColor redColor];
+    temp.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
     [tabController presentModalViewController:temp animated:NO];
     [inicio release];
     [temp release];
