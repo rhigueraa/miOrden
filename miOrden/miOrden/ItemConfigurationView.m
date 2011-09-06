@@ -39,10 +39,10 @@
         
         SCSelectionCell *cell;
         
-        cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:nil withSelectedIndexValue:nil withItems:extras];
+        cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:[NSString stringWithFormat:@"%@Key",[extra valueForKey:@"id_extra"]] withSelectedIndexValue:nil withItems:extras];
         
          if ([[extra valueForKey:@"multiple"] isEqualToString:@"1"]) {
-             cell.allowMultipleSelection = 1;
+             cell.allowMultipleSelection = YES;
              cell.autoDismissDetailView = NO;
          }
          else{

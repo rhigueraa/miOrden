@@ -24,13 +24,13 @@
 	
 	if (!normalButton)
 	{
-		NSLog(@"setting normal button");
+		//NSLog(@"setting normal button");
 		normalButton = [[UIImage imageWithContentsOfResolutionIndependentFile:[imageBundle pathForResource:@"tabButtonNormal" ofType:@"png"]] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
 	}
 	
 	if (!highlightedButton)
 	{
-		NSLog(@"setting Highlighted button");
+		//NSLog(@"setting Highlighted button");
 		highlightedButton = [[UIImage imageWithContentsOfResolutionIndependentFile:[imageBundle pathForResource:@"tabButtonHighlighted" ofType:@"png"]] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
 	}
 	
