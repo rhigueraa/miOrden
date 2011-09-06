@@ -73,7 +73,7 @@
 
 - (void)scrollableTabBar:(JSScrollableTabBar *)tabBar didSelectTabAtIndex:(NSInteger)index
 {
-	NSLog(@"Selected tab: %d", index);
+	//NSLog(@"Selected tab: %d", index);
     XMLThreadedParser *itemParser = [[XMLThreadedParser alloc] init];
     itemParser.delegate = self;
     itemParser.tagg = [NSNumber numberWithInt:1];
