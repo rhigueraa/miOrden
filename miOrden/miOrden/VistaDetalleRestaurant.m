@@ -282,6 +282,7 @@
         case 2:{
             //Notes
             UITextView *detailVIew = [[UITextView alloc] initWithFrame:pagedView.bounds];
+            detailVIew.editable = NO;
             detailVIew.text = [NSString stringWithFormat:@"Descripción:\n%@Notas:\n%@\n",[currentRestaurant valueForKey:@"description"],[currentRestaurant valueForKey:@"special_note"]];
             detailVIew.font = [UIFont systemFontOfSize:17];
             

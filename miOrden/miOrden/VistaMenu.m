@@ -8,6 +8,7 @@
 
 #import "VistaMenu.h"
 #import "ItemConfigurationView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation VistaMenu
 @synthesize currentRestaurant;
@@ -15,6 +16,16 @@
 - (IBAction) tabIndexChanged{
     
 }
+
+- (UIImage *) imageWithView:(UIView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, [[UIScreen mainScreen] scale]); 
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -124,10 +135,54 @@
     
 }
 
+- (void)animateView:(UIView*)view{
+    
+    view.backgroundColor = [UIColor blueColor];
+    [self.view.window addSubview:view];
+    
+    [UIView animateWithDuration:1.0 animations:^(void) {
+        
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        CGRect frame = view.frame;
+        
+        frame.origin = CGPointMake(20, 20);
+        
+        frame = CGRectMake(216+10, 368+40+20, 106, 50);
+        
+        view.frame = frame;
+    }
+                     completion:^(BOOL finished) 
+     {
+         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+         [view removeFromSuperview];
+         NSIndexPath *path = [theTable indexPathForSelectedRow];
+         if (path) {
+             [theTable deselectRowAtIndexPath:path animated:YES];
+         }
+         [[(UIViewController*)[self.tabBarController.viewControllers objectAtIndex:2] tabBarItem] setBadgeValue:@"$50"];
+     }];
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     NSIndexPath *path = [theTable indexPathForSelectedRow];
     if (path) {
-        [theTable deselectRowAtIndexPath:path animated:YES];
+        //[theTable deselectRowAtIndexPath:path animated:YES];
+        UITableViewCell *cell = [theTable cellForRowAtIndexPath:path];
+        
+        UIImage *cellImage = [self imageWithView:cell];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:cellImage];
+        
+        CGRect frame = [theTable rectForRowAtIndexPath:path];
+        
+        CGPoint yOffset = theTable.contentOffset;
+        frame = CGRectMake(frame.origin.x, (frame.origin.y + 45 - yOffset.y), frame.size.width, frame.size.height);
+        
+        frame.origin.y+=110;
+        
+        imageView.frame = frame;
+        
+        [self animateView:imageView];
     }
 }
 

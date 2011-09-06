@@ -20,7 +20,15 @@
     NSMutableArray *tempArray = [NSMutableArray array];
     
     for (NSDictionary *dic in array) {
-        [tempArray addObject:[dic valueForKey:key]];
+        NSString *finalSubString;
+        if ([[dic valueForKey:@"precio"] isEqualToString:@"0.00"]) {
+            finalSubString = [dic valueForKey:key];
+        }
+        else{
+            finalSubString = [NSString stringWithFormat:@"%@: $%@",[dic valueForKey:key],[dic valueForKey:@"precio"]];
+        }
+        
+        [tempArray addObject:finalSubString];
     }
     
     return [NSArray arrayWithArray:tempArray]; 
@@ -97,7 +105,7 @@
 }
 
 - (void)addToCart{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)parser:(XMLThreadedParser *)parser didParseObject:(NSDictionary *)object{
