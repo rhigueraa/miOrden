@@ -129,7 +129,16 @@
 }
 
 #pragma mark - TableView
-
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == table) {
+        return 40;
+    }
+    else{
+        return 44;
+    }
+}
+*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;

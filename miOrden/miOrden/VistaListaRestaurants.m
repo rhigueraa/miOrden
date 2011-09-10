@@ -77,6 +77,9 @@
         }];
         [request startAsynchronous];
          */
+        if ([self.zonaID isEqualToString:@""]) {
+            [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
+        }
         [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]] withKey:@"restaurant"];
     }
 

@@ -54,7 +54,6 @@
 								<string key="NSFrame">{{46, 12}, {229, 44}}</string>
 								<reference key="NSSuperview" ref="205116213"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBNumberOfSegments">2</int>
@@ -83,10 +82,6 @@
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="NSNull" id="4"/>
 									<reference ref="4"/>
-								</object>
-								<object class="NSColor" key="IBTintColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MSAwLjIyMDY1NjA5MzcgMC4yNjc4NDQ3Mjc0AA</bytes>
 								</object>
 							</object>
 						</object>
