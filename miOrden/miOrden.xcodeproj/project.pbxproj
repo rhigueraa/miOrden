@@ -28,6 +28,8 @@
 		BC2D926213F241F800430D27 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926113F241F800430D27 /* JSONKit.m */; };
 		BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */; };
 		BC9C06C613F71F36006CFB6D /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC9C06C513F71F36006CFB6D /* images.bundle */; };
+		BCB9CC60141EAF1900B040D9 /* titulo.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC5E141EAF1900B040D9 /* titulo.png */; };
+		BCB9CC61141EAF1900B040D9 /* titulo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */; };
 		BCD428E61414256400FA2142 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D11414256400FA2142 /* Reachability.m */; };
 		BCD428E71414256400FA2142 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D31414256400FA2142 /* ASIAuthenticationDialog.m */; };
 		BCD428E81414256400FA2142 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D61414256400FA2142 /* ASIDataCompressor.m */; };
@@ -157,6 +159,8 @@
 		BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AccentCorrection.h"; sourceTree = "<group>"; };
 		BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AccentCorrection.m"; sourceTree = "<group>"; };
 		BC9C06C513F71F36006CFB6D /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
+		BCB9CC5E141EAF1900B040D9 /* titulo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titulo.png; sourceTree = "<group>"; };
+		BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titulo@2x.png"; sourceTree = "<group>"; };
 		BCD428D01414256400FA2142 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		BCD428D11414256400FA2142 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BCD428D21414256400FA2142 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -351,6 +355,7 @@
 		BC1D942D13D247D300B3CC94 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BCB9CC5C141EAE5800B040D9 /* Titulo MiOrden */,
 				E8C3413313E9F0C50071B12D /* Otras */,
 				BC1D946413D25DDD00B3CC94 /* Tarjetas */,
 				BC1D942E13D247D900B3CC94 /* TabBarImages */,
@@ -463,6 +468,15 @@
 				BCD4291014169E8800FA2142 /* UIImage+JSRetinaAdditions.m */,
 			);
 			name = "JSSCrollable Tab";
+			sourceTree = "<group>";
+		};
+		BCB9CC5C141EAE5800B040D9 /* Titulo MiOrden */ = {
+			isa = PBXGroup;
+			children = (
+				BCB9CC5E141EAF1900B040D9 /* titulo.png */,
+				BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */,
+			);
+			name = "Titulo MiOrden";
 			sourceTree = "<group>";
 		};
 		BCD428F01414256800FA2142 /* ASIHTTP */ = {
@@ -916,6 +930,8 @@
 				E8C3413913E9F13A0071B12D /* estrellitas.png in Resources */,
 				BCFC66CD13EA0AC100846F19 /* placeholder-recipe-44.gif in Resources */,
 				BC9C06C613F71F36006CFB6D /* images.bundle in Resources */,
+				BCB9CC60141EAF1900B040D9 /* titulo.png in Resources */,
+				BCB9CC61141EAF1900B040D9 /* titulo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
