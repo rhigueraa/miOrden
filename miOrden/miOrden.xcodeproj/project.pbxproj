@@ -30,6 +30,9 @@
 		BC9C06C613F71F36006CFB6D /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC9C06C513F71F36006CFB6D /* images.bundle */; };
 		BCB9CC60141EAF1900B040D9 /* titulo.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC5E141EAF1900B040D9 /* titulo.png */; };
 		BCB9CC61141EAF1900B040D9 /* titulo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */; };
+		BCB9CC67141EB5DD00B040D9 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC64141EB5DD00B040D9 /* iTunesArtwork */; };
+		BCB9CC69141EB5EA00B040D9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC68141EB5EA00B040D9 /* icon.png */; };
+		BCB9CC6B141EB5FA00B040D9 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC6A141EB5FA00B040D9 /* icon@2x.png */; };
 		BCD428E61414256400FA2142 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D11414256400FA2142 /* Reachability.m */; };
 		BCD428E71414256400FA2142 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D31414256400FA2142 /* ASIAuthenticationDialog.m */; };
 		BCD428E81414256400FA2142 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D61414256400FA2142 /* ASIDataCompressor.m */; };
@@ -161,6 +164,9 @@
 		BC9C06C513F71F36006CFB6D /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 		BCB9CC5E141EAF1900B040D9 /* titulo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titulo.png; sourceTree = "<group>"; };
 		BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titulo@2x.png"; sourceTree = "<group>"; };
+		BCB9CC64141EB5DD00B040D9 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = miOrden/iTunesArtwork; sourceTree = "<group>"; };
+		BCB9CC68141EB5EA00B040D9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		BCB9CC6A141EB5FA00B040D9 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		BCD428D01414256400FA2142 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		BCD428D11414256400FA2142 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BCD428D21414256400FA2142 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -355,6 +361,7 @@
 		BC1D942D13D247D300B3CC94 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BCB9CC6C141EB61200B040D9 /* iTunes Icons */,
 				BCB9CC5C141EAE5800B040D9 /* Titulo MiOrden */,
 				E8C3413313E9F0C50071B12D /* Otras */,
 				BC1D946413D25DDD00B3CC94 /* Tarjetas */,
@@ -477,6 +484,17 @@
 				BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */,
 			);
 			name = "Titulo MiOrden";
+			sourceTree = "<group>";
+		};
+		BCB9CC6C141EB61200B040D9 /* iTunes Icons */ = {
+			isa = PBXGroup;
+			children = (
+				BCB9CC64141EB5DD00B040D9 /* iTunesArtwork */,
+				BCB9CC6A141EB5FA00B040D9 /* icon@2x.png */,
+				BCB9CC68141EB5EA00B040D9 /* icon.png */,
+			);
+			name = "iTunes Icons";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BCD428F01414256800FA2142 /* ASIHTTP */ = {
@@ -932,6 +950,9 @@
 				BC9C06C613F71F36006CFB6D /* images.bundle in Resources */,
 				BCB9CC60141EAF1900B040D9 /* titulo.png in Resources */,
 				BCB9CC61141EAF1900B040D9 /* titulo@2x.png in Resources */,
+				BCB9CC67141EB5DD00B040D9 /* iTunesArtwork in Resources */,
+				BCB9CC69141EB5EA00B040D9 /* icon.png in Resources */,
+				BCB9CC6B141EB5FA00B040D9 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
