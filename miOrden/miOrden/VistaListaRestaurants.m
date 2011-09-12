@@ -49,6 +49,7 @@
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
     listaRestaurants = [array retain];
+    filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
@@ -56,6 +57,15 @@
 
 - (void)filter:(UIBarButtonItem*)sender{
     
+    NSLog(@"Restaurants are: %@", filteredRestaurants);
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"self.rest_type = 'Japonesa'"];
+    
+    [filteredRestaurants filterUsingPredicate:searchPredicate];
+    
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 - (void)viewDidLoad
@@ -139,7 +149,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [listaRestaurants count];
+    return [filteredRestaurants count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,7 +166,7 @@
     }
     
     // Configure the cell...
-    NSDictionary *rest = [listaRestaurants objectAtIndex:indexPath.row];
+    NSDictionary *rest = [filteredRestaurants objectAtIndex:indexPath.row];
     cell.textLabel.text = [rest objectForKey:@"name"];
     
     NSString *logoURL = [rest objectForKey:@"logo"];
@@ -217,7 +227,7 @@
 {
     VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
     detalle.title = [[[tableView cellForRowAtIndexPath:indexPath]textLabel]text];
-    detalle.currentRestaurant = [listaRestaurants objectAtIndex:indexPath.row];
+    detalle.currentRestaurant = [filteredRestaurants objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:detalle animated:YES];
     [detalle release];
 }

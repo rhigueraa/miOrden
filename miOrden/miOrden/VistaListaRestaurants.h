@@ -14,6 +14,8 @@
     NSString *zonaID;
     NSArray *listaRestaurants; 
     NSDictionary *laDir;
+    
+    NSMutableArray *filteredRestaurants;
 }
 @property(assign) NSDictionary *laDir;
 @property(nonatomic,retain) NSString *zonaID;
