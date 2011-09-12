@@ -282,6 +282,7 @@
             //Map
             if (!theMapView) {
                 theMapView = [[MKMapView alloc] initWithFrame:pagedView.bounds];
+                theMapView.showsUserLocation = YES;
                 theMapView.delegate = self;
                 theMapView.userInteractionEnabled = NO;
             }

@@ -54,6 +54,10 @@
     [self.tableView endUpdates];
 }
 
+- (void)filter:(UIBarButtonItem*)sender{
+    
+}
+
 - (void)viewDidLoad
 {
     
@@ -80,7 +84,12 @@
         if ([self.zonaID isEqualToString:@""]) {
             [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
         }
+        NSLog(@"String is: %@",[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]);
         [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]] withKey:@"restaurant"];
+        
+        UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithTitle:@"Filtro" style:UIBarButtonItemStyleDone target:self action:@selector(filter:)];
+        self.navigationItem.rightBarButtonItem = filter;
+        [filter release];
     }
 
 }

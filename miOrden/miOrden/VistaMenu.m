@@ -126,6 +126,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ItemConfigurationView *configView = [[ItemConfigurationView alloc] initWithStyle:UITableViewStyleGrouped];
+    configView.delegate = self;
     configView.title = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
     configView.itemId = [[itemList objectAtIndex:indexPath.row] valueForKey:@"id"];
     [self.navigationController pushViewController:configView animated:YES];
@@ -133,6 +134,10 @@
 
 -(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
     
+}
+
+- (void)shouldAddToCart{
+    shouldAnnimate = YES;
 }
 
 - (void)animateView:(UIView*)view{
@@ -159,13 +164,14 @@
          if (path) {
              [theTable deselectRowAtIndexPath:path animated:YES];
          }
+         shouldAnnimate = NO;
          [[(UIViewController*)[self.tabBarController.viewControllers objectAtIndex:2] tabBarItem] setBadgeValue:@"$50"];
      }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     NSIndexPath *path = [theTable indexPathForSelectedRow];
-    if (path) {
+    if (shouldAnnimate) {
         //[theTable deselectRowAtIndexPath:path animated:YES];
         UITableViewCell *cell = [theTable cellForRowAtIndexPath:path];
         
@@ -183,6 +189,11 @@
         imageView.frame = frame;
         
         [self animateView:imageView];
+    }
+    else{
+        if (path) {
+            [theTable deselectRowAtIndexPath:path animated:YES];
+        }
     }
 }
 

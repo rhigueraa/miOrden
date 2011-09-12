@@ -12,7 +12,7 @@
 #import "JSONKit.h"
 
 @implementation ItemConfigurationView
-@synthesize itemId;
+@synthesize itemId, delegate;
 
 #pragma mark - View lifecycle
 
@@ -105,6 +105,9 @@
 }
 
 - (void)addToCart{
+    
+    [self.delegate shouldAddToCart];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -10,14 +10,17 @@
 //#import <Three20/Three20.h>
 #import "JSScrollableTabBar.h"
 #import "XMLThreadedParser.h"
+#import "ItemConfigurationView.h"
 
-@interface VistaMenu : UIViewController <JSScrollableTabBarDelegate, UITableViewDelegate, UITableViewDataSource, XMLThreadedParserDelegate> {
+@interface VistaMenu : UIViewController <JSScrollableTabBarDelegate, UITableViewDelegate, UITableViewDataSource, XMLThreadedParserDelegate, ItemConfigurationDelegate> {
     NSDictionary *currentRestaurant;
     JSScrollableTabBar *_tabBar;
     UITableView *theTable;
     NSMutableArray *categories;
     
     NSArray *itemList;
+    
+    BOOL shouldAnnimate;
 }
 @property(assign) NSDictionary *currentRestaurant;
 @end

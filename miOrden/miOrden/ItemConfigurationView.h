@@ -10,6 +10,8 @@
 #import "SCTableViewModel.h"
 #import "XMLThreadedParser.h"
 
+@protocol ItemConfigurationDelegate;
+
 @interface ItemConfigurationView : UITableViewController <SCTableViewModelDelegate, XMLThreadedParserDelegate>{
     SCTableViewModel *tableModel;
     
@@ -17,5 +19,12 @@
 }
 
 @property(nonatomic, retain) NSString *itemId;
+@property(nonatomic, assign) id<ItemConfigurationDelegate> delegate;
+
+@end
+
+@protocol ItemConfigurationDelegate <NSObject>
+
+-(void)shouldAddToCart;
 
 @end
