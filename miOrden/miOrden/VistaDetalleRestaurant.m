@@ -59,7 +59,7 @@
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
     pagedVIew.delegate = self;
     [pagedView addSubview:pagedVIew];
-    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244, 38, 36)];
+    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244+1, 38, 36)];
     pageControl.numberOfPages = 3;
     [pageControl addTarget:self action:@selector(pagedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:pageControl];
