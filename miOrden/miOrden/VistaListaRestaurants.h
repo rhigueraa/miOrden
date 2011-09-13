@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "XMLThreadedParser.h"
+#import "FilterTableView.h"
 
-
-@interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate> {
+@interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate, FilterTableViewDelegate> {
     NSString *zonaID;
     NSArray *listaRestaurants; 
     NSDictionary *laDir;
     
     NSMutableArray *filteredRestaurants;
+    NSMutableArray *cocinas;
 }
 @property(assign) NSDictionary *laDir;
 @property(nonatomic,retain) NSString *zonaID;

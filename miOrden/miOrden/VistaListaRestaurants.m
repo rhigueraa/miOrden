@@ -50,6 +50,15 @@
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
     listaRestaurants = [array retain];
     filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
+    
+    cocinas = [[NSMutableArray alloc] initWithCapacity:[array count]];
+    [listaRestaurants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+        if (![cocinas containsObject:[obj valueForKey:@"rest_type"]]) {
+            [cocinas addObject:[obj valueForKey:@"rest_type"]];
+        }
+        
+    }];
+    
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
@@ -57,15 +66,18 @@
 
 - (void)filter:(UIBarButtonItem*)sender{
     
-    NSLog(@"Restaurants are: %@", filteredRestaurants);
+    //NSLog(@"Restaurants are: %@", filteredRestaurants);
     
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"self.rest_type = 'Japonesa'"];
+    FilterTableView *filterTable = [[FilterTableView alloc] initWithStyle:UITableViewStyleGrouped];
+    filterTable.delegate = self;
+    filterTable.title = @"Filtro";
+    filterTable.cocinas = cocinas;
     
-    [filteredRestaurants filterUsingPredicate:searchPredicate];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:filterTable];
+    navController.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
     
-    [self.tableView beginUpdates];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
+    [self presentModalViewController:navController animated:YES];
+    
 }
 
 - (void)viewDidLoad
@@ -182,44 +194,17 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)filterDidFinishWithPredicate:(NSPredicate *)predicate{
+    
+    filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
+    [filteredRestaurants filterUsingPredicate:predicate];
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 

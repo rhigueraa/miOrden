@@ -35,6 +35,10 @@
 		BCB9CC6B141EB5FA00B040D9 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC6A141EB5FA00B040D9 /* icon@2x.png */; };
 		BCB9CC71141EB6BA00B040D9 /* FilterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB9CC6F141EB6BA00B040D9 /* FilterTableView.m */; };
 		BCB9CC72141EB6BA00B040D9 /* FilterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC70141EB6BA00B040D9 /* FilterTableView.xib */; };
+		BCB9CC74141EF20600B040D9 /* amex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC73141EF20600B040D9 /* amex@2x.png */; };
+		BCB9CC76141EF21E00B040D9 /* cash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC75141EF21E00B040D9 /* cash@2x.png */; };
+		BCB9CC78141EF23B00B040D9 /* mastercard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC77141EF23B00B040D9 /* mastercard@2x.png */; };
+		BCB9CC7A141EF25200B040D9 /* visa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC79141EF25200B040D9 /* visa@2x.png */; };
 		BCD428E61414256400FA2142 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D11414256400FA2142 /* Reachability.m */; };
 		BCD428E71414256400FA2142 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D31414256400FA2142 /* ASIAuthenticationDialog.m */; };
 		BCD428E81414256400FA2142 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD428D61414256400FA2142 /* ASIDataCompressor.m */; };
@@ -172,6 +176,10 @@
 		BCB9CC6E141EB6BA00B040D9 /* FilterTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTableView.h; sourceTree = "<group>"; };
 		BCB9CC6F141EB6BA00B040D9 /* FilterTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterTableView.m; sourceTree = "<group>"; };
 		BCB9CC70141EB6BA00B040D9 /* FilterTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterTableView.xib; sourceTree = "<group>"; };
+		BCB9CC73141EF20600B040D9 /* amex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "amex@2x.png"; sourceTree = "<group>"; };
+		BCB9CC75141EF21E00B040D9 /* cash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cash@2x.png"; sourceTree = "<group>"; };
+		BCB9CC77141EF23B00B040D9 /* mastercard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mastercard@2x.png"; sourceTree = "<group>"; };
+		BCB9CC79141EF25200B040D9 /* visa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visa@2x.png"; sourceTree = "<group>"; };
 		BCD428D01414256400FA2142 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		BCD428D11414256400FA2142 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BCD428D21414256400FA2142 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -432,6 +440,10 @@
 		BC1D946413D25DDD00B3CC94 /* Tarjetas */ = {
 			isa = PBXGroup;
 			children = (
+				BCB9CC79141EF25200B040D9 /* visa@2x.png */,
+				BCB9CC77141EF23B00B040D9 /* mastercard@2x.png */,
+				BCB9CC75141EF21E00B040D9 /* cash@2x.png */,
+				BCB9CC73141EF20600B040D9 /* amex@2x.png */,
 				BC1D946B13D25E1D00B3CC94 /* visa.png */,
 				BC1D946913D25E1300B3CC94 /* mastercard.png */,
 				BC1D946713D25DF100B3CC94 /* cash.png */,
@@ -970,6 +982,10 @@
 				BCB9CC69141EB5EA00B040D9 /* icon.png in Resources */,
 				BCB9CC6B141EB5FA00B040D9 /* icon@2x.png in Resources */,
 				BCB9CC72141EB6BA00B040D9 /* FilterTableView.xib in Resources */,
+				BCB9CC74141EF20600B040D9 /* amex@2x.png in Resources */,
+				BCB9CC76141EF21E00B040D9 /* cash@2x.png in Resources */,
+				BCB9CC78141EF23B00B040D9 /* mastercard@2x.png in Resources */,
+				BCB9CC7A141EF25200B040D9 /* visa@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
