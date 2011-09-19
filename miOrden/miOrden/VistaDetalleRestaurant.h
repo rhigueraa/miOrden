@@ -24,6 +24,10 @@
     NSMutableDictionary *currentRestaurant;
     int numeroResenias;
     
+    BOOL open;
+    
+    NSArray *times;
+    NSDictionary *hours;
 }
 @property (nonatomic, retain) IBOutlet UIImageView *restaruantImageView;
 @property (nonatomic, assign) NSMutableDictionary *currentRestaurant;

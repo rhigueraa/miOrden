@@ -210,11 +210,50 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
-    detalle.title = [[[tableView cellForRowAtIndexPath:indexPath]textLabel]text];
-    detalle.currentRestaurant = [filteredRestaurants objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:detalle animated:YES];
-    [detalle release];
+    NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
+    BOOL imediatePush= YES;
+    for (NSDictionary* dict in carrito) {
+        NSString *cartRestaurant = [dict valueForKey:@"idRestaurant"];
+        NSString *listRestaurant = [[filteredRestaurants objectAtIndex:indexPath.row] valueForKey:@"id"];
+        if (![cartRestaurant isEqualToString:listRestaurant]) {
+            imediatePush = NO;
+            
+        }
+        break;
+    }
+    if (imediatePush) {
+        VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
+        detalle.title = [[[tableView cellForRowAtIndexPath:indexPath]textLabel]text];
+        detalle.currentRestaurant = [filteredRestaurants objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:detalle animated:YES];
+        [detalle release];
+    }else{
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Atención" message:@"Selecionar un restaurant diferente al de la orden acutal borrará todos los productos que estan actualmente en el carrito." delegate:self cancelButtonTitle:@"Cancelar" otherButtonTitles:@"Continuar", nil];
+        [alertView show];
+        [alertView release];
+    }
+    
+}
+
+- (void)emptyCart{
+    [[NSUserDefaults standardUserDefaults] setValue:[NSArray array] forKey:@"carritoProducts"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (buttonIndex == 1) {
+        //Empty cart
+        [self emptyCart];
+        if (indexPath) {
+            VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
+            detalle.title = [[[self.tableView cellForRowAtIndexPath:indexPath]textLabel]text];
+            detalle.currentRestaurant = [filteredRestaurants objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:detalle animated:YES];
+            [detalle release];
+        }
+    }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

@@ -11,6 +11,9 @@
 #import "UIImageView+WebCache.h"
 #import "VistaResenias.h"
 #import "HotelesAnnotation.h"
+#import "ASIHTTPRequest.h"
+#import "JSONKit.h"
+
 @implementation VistaDetalleRestaurant
 
 @synthesize restaruantImageView;
@@ -49,11 +52,72 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)isRestaurantOpen:(NSDictionary*)restaurant{
+    NSString *openingHour = [hours valueForKey:@"opening"];
+    NSString *closingHour = [hours valueForKey:@"closing"];
+    /*
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:[NSDate date]];
+    NSInteger hour = [components hour];
+    */
+    NSInteger openAt = [[[openingHour componentsSeparatedByString:@":"] objectAtIndex:0] intValue];
+    NSInteger closeAt = [[[closingHour componentsSeparatedByString:@":"] objectAtIndex:0] intValue];
+    
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *weekdayComponents = [gregorian components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:today];
+    [weekdayComponents setHour:openAt];
+    [weekdayComponents setMinute:0];
+    NSDate *openingDate = [gregorian dateFromComponents:weekdayComponents];
+    if (closeAt == 0) {
+        [weekdayComponents setDay:weekdayComponents.day+1];
+    }
+    [weekdayComponents setHour:closeAt];
+    NSDate *closingDate = [gregorian dateFromComponents:weekdayComponents];
+    today = [NSDate date];
+    
+    //NSArray* closeDays = [[currentRestaurant valueForKey:@"closing_time"] componentsSeparatedByString:@","];
+    //NSLog(@"Close days: %@",closeDays);
+    open = NO;
+    
+    if (([today compare:openingDate] == NSOrderedDescending) &&
+        ([today compare:closingDate] == NSOrderedAscending)) {
+        open = YES;
+    }
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantTimes.php?rest_id=%@",[currentRestaurant valueForKey:@"id"]];
+    
+    __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [request setCompletionBlock:^(void){
+        NSString *resposne = [request responseString];
+        
+        times = [[resposne objectFromJSONString] retain];
+        
+        NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+        [gregorian setFirstWeekday:2];
+        NSUInteger adjustedWeekdayOrdinal = [gregorian ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[NSDate date]];
+        //NSLog(@"Adjusted weekday ordinal: %d", adjustedWeekdayOrdinal);
+        
+        hours = [times objectAtIndex:0];
+        
+        [times enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            int day = [[obj valueForKey:@"day"] intValue];
+            if (day==adjustedWeekdayOrdinal-1) {
+                hours = obj;
+            }
+        }];
+        [self isRestaurantOpen:currentRestaurant];
+        [self.table2 reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+    [request startAsynchronous];
+    
+    
     direccion.text = [currentRestaurant valueForKey:@"address"];
     pagedView.backgroundColor = [UIColor redColor];
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
@@ -97,8 +161,16 @@
     
     [coordenadas release];
     
-    
+    /*
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Lista" style:UIBarButtonItemStyleDone target:self action:@selector(didPressBack)];
+    self.navigationItem.leftBarButtonItem= backItem;
+    [backItem release];
+     */
    
+}
+
+- (void)didPressBack{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -192,11 +264,14 @@
             cell.textLabel.text = @"Orden mínima";
             cell.detailTextLabel.text =[NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"deliver_minimum"] intValue]];
         }else if (indexPath.row == 1){
-            if ([[currentRestaurant valueForKey:@"is_activated"] isEqualToString:@"yes"]) {
+            if (open) {
                 cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
             }
             else{
                 cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
+            }
+            if (hours) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@", [hours valueForKey:@"opening"],[hours valueForKey:@"closing"]];
             }
             //cell.detailTextLabel.text = @"9:00 - 21:00";
         }

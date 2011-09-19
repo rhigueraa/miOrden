@@ -12,10 +12,11 @@
 
 @protocol ItemConfigurationDelegate;
 
-@interface ItemConfigurationView : UITableViewController <SCTableViewModelDelegate, XMLThreadedParserDelegate>{
+@interface ItemConfigurationView : UITableViewController <SCTableViewModelDelegate>{
     SCTableViewModel *tableModel;
     
     NSArray *allExtras;
+    NSDictionary *theExtra;
 }
 
 @property(nonatomic, retain) NSString *itemId;
@@ -25,6 +26,6 @@
 
 @protocol ItemConfigurationDelegate <NSObject>
 
--(void)shouldAddToCart;
+-(void)shouldAddToCart:(NSDictionary*)itemConfiguration;
 
 @end

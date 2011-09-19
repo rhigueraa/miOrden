@@ -27,6 +27,7 @@
 		BC2D925313F1ECE700430D27 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2D925213F1ECE700430D27 /* Security.framework */; };
 		BC2D926213F241F800430D27 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926113F241F800430D27 /* JSONKit.m */; };
 		BC2D926D13F305FF00430D27 /* NSString+AccentCorrection.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */; };
+		BC3A098C142547BC0049C57E /* CustomActionNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3A098B142547BC0049C57E /* CustomActionNavigationController.m */; };
 		BC9C06C613F71F36006CFB6D /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC9C06C513F71F36006CFB6D /* images.bundle */; };
 		BCB9CC60141EAF1900B040D9 /* titulo.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC5E141EAF1900B040D9 /* titulo.png */; };
 		BCB9CC61141EAF1900B040D9 /* titulo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */; };
@@ -167,6 +168,8 @@
 		BC2D926113F241F800430D27 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		BC2D926B13F305FE00430D27 /* NSString+AccentCorrection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AccentCorrection.h"; sourceTree = "<group>"; };
 		BC2D926C13F305FE00430D27 /* NSString+AccentCorrection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AccentCorrection.m"; sourceTree = "<group>"; };
+		BC3A098A142547BC0049C57E /* CustomActionNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomActionNavigationController.h; sourceTree = "<group>"; };
+		BC3A098B142547BC0049C57E /* CustomActionNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomActionNavigationController.m; sourceTree = "<group>"; };
 		BC9C06C513F71F36006CFB6D /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 		BCB9CC5E141EAF1900B040D9 /* titulo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titulo.png; sourceTree = "<group>"; };
 		BCB9CC5F141EAF1900B040D9 /* titulo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titulo@2x.png"; sourceTree = "<group>"; };
@@ -845,6 +848,8 @@
 				BC1D93FC13D234DB00B3CC94 /* ATPagingView */,
 				E8CFDF2013CDF36F00F06E73 /* SensibleTableView */,
 				BC2D926E13F3083000430D27 /* Accent Correction */,
+				BC3A098A142547BC0049C57E /* CustomActionNavigationController.h */,
+				BC3A098B142547BC0049C57E /* CustomActionNavigationController.m */,
 			);
 			name = "Support Classes";
 			sourceTree = "<group>";
@@ -1088,6 +1093,7 @@
 				BCD4291314169E8800FA2142 /* JSTabItem.m in Sources */,
 				BCD4291414169E8800FA2142 /* UIImage+JSRetinaAdditions.m in Sources */,
 				BCB9CC71141EB6BA00B040D9 /* FilterTableView.m in Sources */,
+				BC3A098C142547BC0049C57E /* CustomActionNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

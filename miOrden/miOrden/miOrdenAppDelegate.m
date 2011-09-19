@@ -9,6 +9,7 @@
 #import "miOrdenAppDelegate.h"
 #import "VistaInicioSesion.h"
 #import "VistaCuentaPerfil.h"
+#import "CustomActionNavigationController.h"
 #import "VistaUnoOrden.h"
 #import "VistaCarrito.h"
 #import "JSONKit.h"
@@ -48,7 +49,12 @@
     UINavigationController *navCont;
     
     for (UIViewController *vc in viewControllers) {
-        navCont = [[UINavigationController alloc] initWithRootViewController:vc];
+        if (vc == orden) {
+            navCont = [[CustomActionNavigationController alloc] initWithRootViewController:vc];
+        }
+        else{
+            navCont = [[UINavigationController alloc] initWithRootViewController:vc];
+        }
         //navCont.navigationBar.tintColor = [UIColor redColor];
         navCont.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
         [navegadores addObject:navCont];
@@ -127,6 +133,10 @@
 {
     [_window release];
     [super dealloc];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    
 }
 
 @end

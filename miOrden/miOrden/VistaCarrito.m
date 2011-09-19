@@ -9,6 +9,10 @@
 #import "VistaCarrito.h"
 #import "VistaFormaCheckOut.h"
 
+
+static NSString *nameKey = @"title";
+static NSString *priceKey = @"user_price";
+
 @implementation VistaCarrito
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -45,13 +49,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSDictionary *compra1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"comida1",@"Nombre",@"$2",@"Precio", nil];
-    NSDictionary *compra2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"comida2",@"Nombre",@"$23",@"Precio", nil];
-    NSDictionary *compra3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"comida3",@"Nombre",@"$234",@"Precio", nil];
     
-    
-    carrito = [[NSArray alloc] initWithObjects:compra1,compra2,compra3, nil];
-    
+    carrito = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"] retain];
     self.title = @"Carrito";
     UIBarButtonItem *comprar = [[UIBarButtonItem alloc] initWithTitle:@"Comprar" style:UIBarButtonItemStyleBordered target:self action:@selector(comprar)];
     self.navigationItem.rightBarButtonItem = comprar;
@@ -74,6 +73,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    carrito = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"] retain];
+    [self.tableView reloadData];
+    NSLog(@"Carrito is: %@",carrito);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -119,8 +121,15 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[carrito objectAtIndex:indexPath.row] objectForKey:@"Nombre"];
-    cell.detailTextLabel.text = [[ carrito objectAtIndex:indexPath.row] objectForKey:@"Precio"];
+    cell.textLabel.text = [[carrito objectAtIndex:indexPath.row] objectForKey:nameKey];
+    NSString *detailText;
+    if ([[[carrito objectAtIndex:indexPath.row] objectForKey:@"extrasPrice"] floatValue]>0) {
+        detailText = [NSString stringWithFormat:@"$%@ + $%.2f",[[carrito objectAtIndex:indexPath.row] objectForKey:priceKey],[[[carrito objectAtIndex:indexPath.row] objectForKey:@"extrasPrice"] floatValue]];
+    }
+    else{
+        detailText = [NSString stringWithFormat:@"$%@",[[carrito objectAtIndex:indexPath.row] objectForKey:priceKey]];
+    }
+    cell.detailTextLabel.text = detailText;
     return cell;
 }
 

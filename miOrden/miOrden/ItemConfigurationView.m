@@ -47,7 +47,16 @@
         
         SCSelectionCell *cell;
         
-        cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:[NSString stringWithFormat:@"%@Key",[extra valueForKey:@"id_extra"]] withSelectedIndexValue:nil withItems:extras];
+        cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:[NSString stringWithFormat:@"%@Key",[extra valueForKey:@"id_extra"]] withSelectedIndexesValue:nil withItems:extras allowMultipleSelection:YES];
+        
+        //cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:[NSString stringWithFormat:@"%@Key",[extra valueForKey:@"id_extra"]] withSelectedIndexValue:nil withItems:extras];
+        
+        if ([[extra valueForKey:@"requerido"] isEqualToString:@"1"]){
+            cell.allowNoSelection = NO;
+        }
+        else{
+            cell.allowNoSelection = YES; 
+        }
         
          if ([[extra valueForKey:@"multiple"] isEqualToString:@"1"]) {
              cell.allowMultipleSelection = YES;
@@ -75,9 +84,6 @@
     [super viewDidLoad];
 
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
-    
-    //XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
-    //parser.delegate = self;
     NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/dish_addon.php?itemid=%@",itemId];
     
     __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
@@ -89,8 +95,6 @@
         [self configureTableWithExtras:allExtras];
     }];
     [request startAsynchronous];
-    
-    //[parser parseXMLat:[NSURL URLWithString:urlString] withKey:@"dish-addon"];
     
     UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithTitle:@"Agregar" style:UIBarButtonItemStyleDone target:self action:@selector(addToCart)];
     self.navigationItem.rightBarButtonItem = add;
@@ -104,50 +108,43 @@
     }
 }
 
+- (NSDictionary*)buildRequest{
+    NSMutableArray *returnArray = [NSMutableArray array];
+    
+    for (NSDictionary *extra in allExtras) {
+        NSSet *wants = [[tableModel modelKeyValues] valueForKey:[NSString stringWithFormat:@"%@Key",[extra valueForKey:@"id_extra"]]];
+        
+        __block NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+        
+        [wants enumerateObjectsUsingBlock:^(id obj, BOOL *stop){
+            int index = [obj intValue];
+            [indexSet addIndex:index];
+        }];
+        
+        NSArray *selectedExtras =[[extra valueForKey:@"extra_items"] objectsAtIndexes:indexSet];
+        [returnArray addObject:selectedExtras];
+    }
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:returnArray,@"selectedExtras",
+                                [[tableModel modelKeyValues] valueForKey:@"quantityKey"],@"quantityKey",
+                                [[tableModel modelKeyValues] valueForKey:@"recipientnameKey"],@"recipientnameKey",
+                                [[tableModel modelKeyValues] valueForKey:@"specialRequestKey"],@"specialRequestKey",
+                                nil];
+    
+    return dictionary;
+}
+
 - (void)addToCart{
     
-    [self.delegate shouldAddToCart];
+    NSDictionary *itemConfiguration = [self buildRequest];
+    
+    [self.delegate shouldAddToCart:itemConfiguration];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)parser:(XMLThreadedParser *)parser didParseObject:(NSDictionary *)object{
-    
-}
 
-- (void)parser:(XMLThreadedParser *)parser didFinishParsing:(NSArray *)array{
-    SCTableViewSection *section = [[SCTableViewSection alloc] initWithHeaderTitle:@"Configura tu Pedido"];
-    
-    SCNumericTextFieldCell *quantityCell = [SCNumericTextFieldCell cellWithText:@"Cantidad" withBoundKey:@"quantityKey" withValue:[NSNumber numberWithInt:1]];
-    quantityCell.textField.keyboardType = UIKeyboardTypeNumberPad;
-    [section addCell:quantityCell];
-    
-    //Get Extra things
-    for (NSDictionary *extra in array) {
-        SCTableViewCell *cell;
-        
-        cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:nil withSelectedIndexValue:nil withItems:nil];
-        /*
-        if ([[extra valueForKey:@"multiple"] isEqualToString:@"1"]) {
-            cell = [SCSelectionCell cellWithText:[extra valueForKey:@"title"] withBoundKey:nil withSelectedIndexValue:nil withItems:nil];
-        }
-        else{
-            
-        }
-        */
-        [section addCell:cell];
-    }
-    
-    SCTextFieldCell *nameCell = [SCTextFieldCell cellWithText:@"Para" withPlaceholder:@"Nombre Comenzal" withBoundKey:@"recipientnameKey" withTextFieldTextValue:nil];
-    [section addCell:nameCell];
-    
-    SCTextViewCell *peticionesEspeciales = [SCTextViewCell cellWithText:@"Peticiones\nEspeciales" withBoundKey:@"specialRequestKey" withValue:nil];
-    [section addCell:peticionesEspeciales];
-    
-    [tableModel addSection:section];
-    
-    [self.tableView reloadData];
-}
+
 
 
 @end
