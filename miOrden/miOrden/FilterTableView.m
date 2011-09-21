@@ -59,6 +59,15 @@
         [mutArray addObject:subPredicate];
     }];
     
+    NSPredicate *filterPredicate;
+    
+    if ([mutArray count]>0) {
+        filterPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:mutArray];
+    }
+    else{
+        filterPredicate = nil;
+    }
+    
     /*
      NSString *finalComponents = [mutArray componentsJoinedByString:@" OR "];
      
@@ -66,7 +75,7 @@
      
      NSLog(@"Predicate is: %@", finalPredicate);
      */
-    NSPredicate *filterPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:mutArray];
+    
     
     [self.delegate filterDidFinishWithPredicate:filterPredicate];
 }

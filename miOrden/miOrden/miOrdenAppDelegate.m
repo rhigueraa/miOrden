@@ -20,6 +20,19 @@
 @synthesize window=_window;
 @synthesize userID;
 
+- (void)updateCartbadge{
+    NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
+    
+    float tot = 0;
+    for (NSDictionary* item in carrito) {
+        tot+=[[item objectForKey:@"extrasPrice"] floatValue];
+        tot+=[[item objectForKey:@"user_price"] floatValue];
+    }
+    UIViewController *cart= [[tabController viewControllers] objectAtIndex:2];
+    
+    cart.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+}
+
 - (void)addAsTabBar{
    tabController = [[UITabBarController alloc] init];
     NSMutableArray *viewControllers = [NSMutableArray array];
@@ -81,10 +94,11 @@
         [self addAsTabBar];
         [tabController dismissModalViewControllerAnimated:YES];
     }else{
-        [self   addAsTabBar];
+        [self addAsTabBar];
         
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCartbadge) name:@"CartUpdated" object:nil];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -133,6 +147,7 @@
 {
     [_window release];
     [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{

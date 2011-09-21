@@ -53,36 +53,15 @@
 }
 
 - (void)isRestaurantOpen:(NSDictionary*)restaurant{
-    NSString *openingHour = [hours valueForKey:@"opening"];
-    NSString *closingHour = [hours valueForKey:@"closing"];
-    /*
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:[NSDate date]];
-    NSInteger hour = [components hour];
-    */
-    NSInteger openAt = [[[openingHour componentsSeparatedByString:@":"] objectAtIndex:0] intValue];
-    NSInteger closeAt = [[[closingHour componentsSeparatedByString:@":"] objectAtIndex:0] intValue];
-    
-    NSDate *today = [NSDate date];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *weekdayComponents = [gregorian components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:today];
-    [weekdayComponents setHour:openAt];
-    [weekdayComponents setMinute:0];
-    NSDate *openingDate = [gregorian dateFromComponents:weekdayComponents];
-    if (closeAt == 0) {
-        [weekdayComponents setDay:weekdayComponents.day+1];
-    }
-    [weekdayComponents setHour:closeAt];
-    NSDate *closingDate = [gregorian dateFromComponents:weekdayComponents];
-    today = [NSDate date];
-    
-    //NSArray* closeDays = [[currentRestaurant valueForKey:@"closing_time"] componentsSeparatedByString:@","];
-    //NSLog(@"Close days: %@",closeDays);
-    open = NO;
-    
-    if (([today compare:openingDate] == NSOrderedDescending) &&
-        ([today compare:closingDate] == NSOrderedAscending)) {
-        open = YES;
-    }
+    NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/isRestOpen.php?restId=%@",[restaurant valueForKey:@"id"]];
+    __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [request setCompletionBlock:^{
+        NSString* responseString = [request responseString];
+        int isOpen = [responseString intValue];
+        open = isOpen;
+        [self.table2 reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+    [request startAsynchronous];
 }
 
 #pragma mark - View lifecycle

@@ -9,6 +9,7 @@
 #import "VistaMenu.h"
 #import "ItemConfigurationView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "VistaCarrito.h"
 
 @implementation VistaMenu
 @synthesize currentRestaurant;
@@ -193,7 +194,9 @@
              [theTable deselectRowAtIndexPath:path animated:YES];
          }
          shouldAnnimate = NO;
-         [[(UIViewController*)[self.tabBarController.viewControllers objectAtIndex:2] tabBarItem] setBadgeValue:@"$50"];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"CartUpdated" object:nil];
+         //[(VistaCarrito*)[self.tabBarController.viewControllers objectAtIndex:2] updateBadge];
+         //[[(UIViewController*)[self.tabBarController.viewControllers objectAtIndex:2] tabBarItem] setBadgeValue:@"$50"];
      }];
 }
 

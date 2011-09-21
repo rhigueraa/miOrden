@@ -12,6 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
+#import "VistaCarrito.h"
 
 @implementation VistaListaRestaurants
 @synthesize laDir, zonaID;
@@ -196,14 +197,16 @@
 
 - (void)filterDidFinishWithPredicate:(NSPredicate *)predicate{
     
-    filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
-    [filteredRestaurants filterUsingPredicate:predicate];
+    if (predicate) {
+        filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
+        [filteredRestaurants filterUsingPredicate:predicate];
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+    }
     
     [self dismissModalViewControllerAnimated:YES];
-    
-    [self.tableView beginUpdates];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
 }
 
 #pragma mark - Table view delegate
@@ -238,6 +241,8 @@
 - (void)emptyCart{
     [[NSUserDefaults standardUserDefaults] setValue:[NSArray array] forKey:@"carritoProducts"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CartUpdated" object:nil];
+    //[(VistaCarrito*)[self.tabBarController.viewControllers objectAtIndex:2] updateBadge];
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
