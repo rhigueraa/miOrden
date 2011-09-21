@@ -1236,6 +1236,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zebas Barrios (2S4B896YCM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zebas Barrios (2S4B896YCM)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "miOrden/miOrden-Prefix.pch";
@@ -1258,6 +1259,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8202ECAE-6C01-4126-8A2F-AA1DBD45B834";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8202ECAE-6C01-4126-8A2F-AA1DBD45B834";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
