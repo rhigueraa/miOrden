@@ -240,6 +240,7 @@
 
 - (void)emptyCart{
     [[NSUserDefaults standardUserDefaults] setValue:[NSArray array] forKey:@"carritoProducts"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentRestaurant"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"CartUpdated" object:nil];
     //[(VistaCarrito*)[self.tabBarController.viewControllers objectAtIndex:2] updateBadge];

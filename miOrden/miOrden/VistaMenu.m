@@ -150,7 +150,7 @@
         [mutItem setValuesForKeysWithDictionary:itemConfiguration];
         [mutItem setObject:[currentRestaurant valueForKey:@"id"] forKey:@"idRestaurant"];
         
-        NSLog(@"Item is: %@",mutItem);
+        //NSLog(@"Item is: %@",mutItem);
         
         //Calculate extras cost
         __block float totalItemPrice = 0;
@@ -163,6 +163,8 @@
         [mutItem setValue:[NSNumber numberWithFloat:totalItemPrice] forKey:@"extrasPrice"];
         
         [mutCart addObject:mutItem];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:currentRestaurant forKey:@"currentRestaurant"];
         
         [[NSUserDefaults standardUserDefaults] setObject:mutCart forKey:@"carritoProducts"];
         [[NSUserDefaults standardUserDefaults] synchronize];
