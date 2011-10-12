@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		320AF8492C47A4D819F7C451 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 320AF8492C47A4D819F7C450 /* QuartzCore.framework */; };
+		BC0AC7B21446480D00B58ADA /* abierto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0AC7B01446480D00B58ADA /* abierto@2x.png */; };
+		BC0AC7B31446480D00B58ADA /* cerrado@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0AC7B11446480D00B58ADA /* cerrado@2x.png */; };
 		BC1D941213D234DB00B3CC94 /* ATPagingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */; };
 		BC1D943113D247E600B3CC94 /* 06-magnify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D942F13D247E600B3CC94 /* 06-magnify@2x.png */; };
 		BC1D943213D247E600B3CC94 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = BC1D943013D247E600B3CC94 /* 06-magnify.png */; };
@@ -137,6 +139,8 @@
 
 /* Begin PBXFileReference section */
 		320AF8492C47A4D819F7C450 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.frameworks; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BC0AC7B01446480D00B58ADA /* abierto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "abierto@2x.png"; sourceTree = "<group>"; };
+		BC0AC7B11446480D00B58ADA /* cerrado@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cerrado@2x.png"; sourceTree = "<group>"; };
 		BC1D93FD13D234DB00B3CC94 /* ATPagingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATPagingView.h; sourceTree = "<group>"; };
 		BC1D93FE13D234DB00B3CC94 /* ATPagingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATPagingView.m; sourceTree = "<group>"; };
 		BC1D942F13D247E600B3CC94 /* 06-magnify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify@2x.png"; sourceTree = "<group>"; };
@@ -719,6 +723,8 @@
 				E8C3413813E9F13A0071B12D /* estrellitas.png */,
 				E8C3413613E9F1330071B12D /* cerado.png */,
 				E8C3413413E9F12B0071B12D /* abierto.png */,
+				BC0AC7B01446480D00B58ADA /* abierto@2x.png */,
+				BC0AC7B11446480D00B58ADA /* cerrado@2x.png */,
 			);
 			name = Otras;
 			sourceTree = "<group>";
@@ -991,6 +997,8 @@
 				BCB9CC76141EF21E00B040D9 /* cash@2x.png in Resources */,
 				BCB9CC78141EF23B00B040D9 /* mastercard@2x.png in Resources */,
 				BCB9CC7A141EF25200B040D9 /* visa@2x.png in Resources */,
+				BC0AC7B21446480D00B58ADA /* abierto@2x.png in Resources */,
+				BC0AC7B31446480D00B58ADA /* cerrado@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
