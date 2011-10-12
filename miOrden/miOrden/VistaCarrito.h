@@ -19,6 +19,7 @@
     
 }
 
+- (void)updateBadge;
 
 
 @end

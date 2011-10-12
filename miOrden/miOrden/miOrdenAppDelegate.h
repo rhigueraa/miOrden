@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface miOrdenAppDelegate : NSObject <UIApplicationDelegate> {
+@interface miOrdenAppDelegate : NSObject <UIApplicationDelegate, UINavigationControllerDelegate> {
     NSString *userID;
     UITabBarController *tabController;
 }

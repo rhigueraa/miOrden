@@ -11,6 +11,9 @@
 #import "UIImageView+WebCache.h"
 #import "VistaResenias.h"
 #import "HotelesAnnotation.h"
+#import "ASIHTTPRequest.h"
+#import "JSONKit.h"
+
 @implementation VistaDetalleRestaurant
 
 @synthesize restaruantImageView;
@@ -49,6 +52,18 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)isRestaurantOpen:(NSDictionary*)restaurant{
+    NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/isRestOpen.php?restId=%@",[restaurant valueForKey:@"id"]];
+    __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [request setCompletionBlock:^{
+        NSString* responseString = [request responseString];
+        int isOpen = [responseString intValue];
+        open = isOpen;
+        [self.table2 reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+    [request startAsynchronous];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -61,7 +76,7 @@
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
     pagedVIew.delegate = self;
     [pagedView addSubview:pagedVIew];
-    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244, 38, 36)];
+    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244+1, 38, 36)];
     pageControl.numberOfPages = 3;
     [pageControl addTarget:self action:@selector(pagedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:pageControl];
@@ -99,8 +114,16 @@
     
     [coordenadas release];
     
-    
+    /*
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Lista" style:UIBarButtonItemStyleDone target:self action:@selector(didPressBack)];
+    self.navigationItem.leftBarButtonItem= backItem;
+    [backItem release];
+     */
    
+}
+
+- (void)didPressBack{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)pagedControlIndexChanged:(UIPageControl*)sender{
@@ -135,7 +158,16 @@
 }
 
 #pragma mark - TableView
-
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == table) {
+        return 40;
+    }
+    else{
+        return 44;
+    }
+}
+*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -191,11 +223,14 @@
             cell.textLabel.text = @"Orden mínima";
             cell.detailTextLabel.text =[NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"deliver_minimum"] intValue]];
         }else if (indexPath.row == 1){
-            if ([[currentRestaurant valueForKey:@"is_activated"] isEqualToString:@"yes"]) {
+            if (open) {
                 cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
             }
             else{
                 cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
+            }
+            if (hours) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@", [hours valueForKey:@"opening"],[hours valueForKey:@"closing"]];
             }
             //cell.detailTextLabel.text = @"9:00 - 21:00";
         }
@@ -281,6 +316,7 @@
             //Map
             if (!theMapView) {
                 theMapView = [[MKMapView alloc] initWithFrame:pagedView.bounds];
+                theMapView.showsUserLocation = YES;
                 theMapView.delegate = self;
                 theMapView.userInteractionEnabled = NO;
             }

@@ -12,9 +12,11 @@
 @class JSScrollableTabBar, JSTabButton;
 
 typedef enum {
+	
 	JSScrollableTabBarStyleBlack,
 	JSScrollableTabBarStyleBlue,
 	JSScrollableTabBarStyleTransparent
+	
 } JSScrollableTabBarStyle;
 
 @protocol JSScrollableTabBarDelegate <NSObject>
@@ -45,5 +47,6 @@ typedef enum {
 
 - (id)initWithFrame:(CGRect)frame andStyle:(JSScrollableTabBarStyle)style;
 - (void)setTabItems:(NSArray *)tabItems;
+- (void)selectTabAtIndex:(NSInteger)index;
 
 @end

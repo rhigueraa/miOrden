@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "XMLThreadedParser.h"
+#import "FilterTableView.h"
 
-
-@interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate> {
+@interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate, FilterTableViewDelegate, UIAlertViewDelegate> {
     NSString *zonaID;
     NSArray *listaRestaurants; 
     NSDictionary *laDir;

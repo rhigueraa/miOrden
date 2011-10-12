@@ -9,6 +9,7 @@
 #import "miOrdenAppDelegate.h"
 #import "VistaInicioSesion.h"
 #import "VistaCuentaPerfil.h"
+#import "CustomActionNavigationController.h"
 #import "VistaUnoOrden.h"
 #import "VistaCarrito.h"
 #import "JSONKit.h"
@@ -18,6 +19,20 @@
 
 @synthesize window=_window;
 @synthesize userID;
+
+- (void)updateCartbadge{
+    NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
+    
+    float tot = 0;
+    for (NSDictionary* item in carrito) {
+        tot+=[[item objectForKey:@"extrasPrice"] floatValue];
+        tot+=[[item objectForKey:@"user_price"] floatValue];
+    }
+    UIViewController *cart= [[tabController viewControllers] objectAtIndex:2];
+    
+    cart.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+}
+
 - (void)addAsTabBar{
    tabController = [[UITabBarController alloc] init];
     NSMutableArray *viewControllers = [NSMutableArray array];
@@ -47,8 +62,14 @@
     UINavigationController *navCont;
     
     for (UIViewController *vc in viewControllers) {
-        navCont = [[UINavigationController alloc] initWithRootViewController:vc];
-        navCont.navigationBar.tintColor = [UIColor redColor];
+        if (vc == orden) {
+            navCont = [[CustomActionNavigationController alloc] initWithRootViewController:vc];
+        }
+        else{
+            navCont = [[UINavigationController alloc] initWithRootViewController:vc];
+        }
+        //navCont.navigationBar.tintColor = [UIColor redColor];
+        navCont.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
         [navegadores addObject:navCont];
     }
     
@@ -57,7 +78,8 @@
     VistaInicioSesion *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
     inicio.title =@"MiOrden";
     UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
-    temp.navigationBar.tintColor = [UIColor redColor];
+    //temp.navigationBar.tintColor = [UIColor redColor];
+    temp.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
     [tabController presentModalViewController:temp animated:NO];
     [inicio release];
     [temp release];
@@ -72,10 +94,11 @@
         [self addAsTabBar];
         [tabController dismissModalViewControllerAnimated:YES];
     }else{
-        [self   addAsTabBar];
+        [self addAsTabBar];
         
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCartbadge) name:@"CartUpdated" object:nil];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -124,6 +147,11 @@
 {
     [_window release];
     [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    
 }
 
 @end

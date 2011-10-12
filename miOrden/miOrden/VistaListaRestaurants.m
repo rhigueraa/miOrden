@@ -10,6 +10,9 @@
 #import "VistaDetalleRestaurant.h"
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ASIHTTPRequest.h"
+#import "JSONKit.h"
+#import "VistaCarrito.h"
 
 @implementation VistaListaRestaurants
 @synthesize laDir, zonaID, zonaID2;
@@ -47,9 +50,35 @@
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
     listaRestaurants = [array retain];
+    filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
+    
+    cocinas = [[NSMutableArray alloc] initWithCapacity:[array count]];
+    [listaRestaurants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+        if (![cocinas containsObject:[obj valueForKey:@"rest_type"]]) {
+            [cocinas addObject:[obj valueForKey:@"rest_type"]];
+        }
+        
+    }];
+    
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
+}
+
+- (void)filter:(UIBarButtonItem*)sender{
+    
+    //NSLog(@"Restaurants are: %@", filteredRestaurants);
+    
+    FilterTableView *filterTable = [[FilterTableView alloc] initWithStyle:UITableViewStyleGrouped];
+    filterTable.delegate = self;
+    filterTable.title = @"Filtro";
+    filterTable.cocinas = cocinas;
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:filterTable];
+    navController.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
+    
+    [self presentModalViewController:navController animated:YES];
+    
 }
 
 - (void)viewDidLoad
@@ -117,7 +146,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [listaRestaurants count];
+    return [filteredRestaurants count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,61 +163,87 @@
     }
     
     // Configure the cell...
-    NSDictionary *rest = [listaRestaurants objectAtIndex:indexPath.row];
+    NSDictionary *rest = [filteredRestaurants objectAtIndex:indexPath.row];
     cell.textLabel.text = [rest objectForKey:@"name"];
-    [cell.imageView setImageWithURL:[NSURL URLWithString:[rest objectForKey:@"logo"]] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
+    
+    NSString *logoURL = [rest objectForKey:@"logo"];
+    
+    NSRange range = [logoURL rangeOfString:@"http://www.miorden.com/res/thumbs/"];
+    
+    if (!range.length>0) {
+        logoURL = [NSString stringWithFormat:@"http://www.miorden.com/res/thumbs/%@",logoURL];
+    }
+    
+    [cell.imageView setImageWithURL:[NSURL URLWithString:logoURL] placeholderImage:[UIImage imageNamed:@"placeholder-recipe-44.gif"]];
     //cell.imageView.contentMode = UIViewContentModeCenter;
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)filterDidFinishWithPredicate:(NSPredicate *)predicate{
+    
+    if (predicate) {
+        filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
+        [filteredRestaurants filterUsingPredicate:predicate];
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+    }
+    
+    [self dismissModalViewControllerAnimated:YES];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
-    detalle.title = [[[tableView cellForRowAtIndexPath:indexPath]textLabel]text];
-    detalle.currentRestaurant = [listaRestaurants objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:detalle animated:YES];
-    [detalle release];
+    NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
+    BOOL imediatePush= YES;
+    for (NSDictionary* dict in carrito) {
+        NSString *cartRestaurant = [dict valueForKey:@"idRestaurant"];
+        NSString *listRestaurant = [[filteredRestaurants objectAtIndex:indexPath.row] valueForKey:@"id"];
+        if (![cartRestaurant isEqualToString:listRestaurant]) {
+            imediatePush = NO;
+            
+        }
+        break;
+    }
+    if (imediatePush) {
+        VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
+        detalle.title = [[[tableView cellForRowAtIndexPath:indexPath]textLabel]text];
+        detalle.currentRestaurant = [filteredRestaurants objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:detalle animated:YES];
+        [detalle release];
+    }else{
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Atención" message:@"Selecionar un restaurant diferente al de la orden acutal borrará todos los productos que estan actualmente en el carrito." delegate:self cancelButtonTitle:@"Cancelar" otherButtonTitles:@"Continuar", nil];
+        [alertView show];
+        [alertView release];
+    }
+    
+}
+
+- (void)emptyCart{
+    [[NSUserDefaults standardUserDefaults] setValue:[NSArray array] forKey:@"carritoProducts"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentRestaurant"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CartUpdated" object:nil];
+    //[(VistaCarrito*)[self.tabBarController.viewControllers objectAtIndex:2] updateBadge];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (buttonIndex == 1) {
+        //Empty cart
+        [self emptyCart];
+        if (indexPath) {
+            VistaDetalleRestaurant *detalle = [[VistaDetalleRestaurant alloc] init];
+            detalle.title = [[[self.tableView cellForRowAtIndexPath:indexPath]textLabel]text];
+            detalle.currentRestaurant = [filteredRestaurants objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:detalle animated:YES];
+            [detalle release];
+        }
+    }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
