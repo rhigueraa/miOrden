@@ -11,7 +11,7 @@
 
 @interface VistaFormaCheckOut : UITableViewController <SCTableViewModelDelegate> {
     SCTableViewModel *tableModel;
-    NSArray *listaRfc;
+    NSMutableArray *listaRfc;
     UISegmentedControl *segmetnedPayments;
     SCSegmentedCell *tipo;
     SCTableViewSection *section;

@@ -48,7 +48,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    listaRfc = [[NSArray alloc] initWithObjects:@"RFC1", @"RFC2",@"RFC3", nil];
+    listaRfc = [[NSMutableArray alloc] init];
+    NSArray *collection = [[NSUserDefaults standardUserDefaults]valueForKey:@"listaRFC"];
+    for (NSDictionary *dict in collection) {
+        NSString *objrfc = [dict valueForKey:@"rfcKey"];
+        [listaRfc addObject:objrfc];
+    }
+    
+    NSLog(@"lista: %@", listaRfc);
+    
+    
     self.title = @"Check-Out";
     UIBarButtonItem *enviar = [[UIBarButtonItem alloc] initWithTitle:@"Enviar" style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
     self.navigationItem.rightBarButtonItem = enviar;

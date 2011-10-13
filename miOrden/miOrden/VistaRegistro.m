@@ -53,10 +53,10 @@
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"terminosKey"] forKey:@"terminosKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"newsKey"] forKey:@"newsKey"];
     
-    NSString *email = [datos valueForKey:@"emailKey"];
-    NSString *confirmaEmail = [datos valueForKey:@"confirmaEmailKey"];
-    NSString *password = [datos valueForKey:@"passwordKey"];
-    NSString *confirmaPassword = [datos valueForKey:@"confirmaPasswordKey"];
+//    NSString *email = [datos valueForKey:@"emailKey"];
+//    NSString *confirmaEmail = [datos valueForKey:@"confirmaEmailKey"];
+//    NSString *password = [datos valueForKey:@"passwordKey"];
+//    NSString *confirmaPassword = [datos valueForKey:@"confirmaPasswordKey"];
     
     NSDateFormatter *fecha = [[NSDateFormatter alloc]init];
     fecha.timeStyle = NSDateFormatterNoStyle;
@@ -69,24 +69,24 @@
     
     BOOL flag;
     for (NSString *key in datos) {
-        if(![datos valueForKey:key])
-            flag = NO;
-        else
+        if([datos valueForKey:key])
             flag = YES;
+        else
+            flag = NO;
     }
-    
-    if([email isEqual:confirmaEmail] && [password isEqual:confirmaPassword] && [[datos valueForKey:@"terminosKey"] isEqual:@"1"] && flag){
-        
+      
+   
+    if([[datos valueForKey:@"emailKey"]isEqualToString:[datos valueForKey:@"confirmaEmailKey"]] && [[datos valueForKey:@"passwordKey"]isEqualToString:[datos valueForKey:@"confirmaPasswordKey"]] && [[datos valueForKey:@"terminosKey"]isEqual:[NSNumber numberWithInt:1]] && flag){
         XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
         parser.delegate = self;
         
         cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        
-        
+        NSLog(@"cadena: %@", cadena);
+        [parser   parseXMLat:[NSURL URLWithString:cadena ] withKey:@""];
       
         
     }else{
-        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
+        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
         [alerta show];
         [alerta release];
        
@@ -129,7 +129,7 @@
     [fechaNacimiento.dateFormatter setDateFormat:@"yyyy-MM-dd"];
     fechaNacimiento.datePicker.datePickerMode = UIDatePickerModeDate;
     
-    NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
+    NSArray *sex = [[NSArray alloc] initWithObjects:@"M",@"H", nil];
     sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
     terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
      SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
