@@ -209,8 +209,13 @@
         [alerta release];
         VistaInicioSesion  *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
         inicio.title = @"Iniciar Sesión";
-        [self presentModalViewController:inicio animated:YES];
+        
+        UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
+         temp.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
+        [self presentModalViewController:temp animated:YES];
         [inicio release];
+        [temp release];
+        
         [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"userKey"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
