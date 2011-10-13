@@ -23,6 +23,7 @@
 - (void)dealloc
 {
     [super dealloc];
+    [tableModel release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,8 +67,15 @@
     
     NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],fechaFinal, [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
     
+    BOOL flag;
+    for (NSString *key in datos) {
+        if(![datos valueForKey:key])
+            flag = NO;
+        else
+            flag = YES;
+    }
     
-    if([email isEqual:confirmaEmail] && [password isEqual:confirmaPassword] && [[datos valueForKey:@"terminosKey"] isEqual:@"1"]){
+    if([email isEqual:confirmaEmail] && [password isEqual:confirmaPassword] && [[datos valueForKey:@"terminosKey"] isEqual:@"1"] && flag){
         
         XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
         parser.delegate = self;
@@ -78,7 +86,7 @@
       
         
     }else{
-        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
+        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
         [alerta show];
         [alerta release];
        
@@ -108,10 +116,10 @@
     [tableModel addSection:section];
     SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"enter name" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
      SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
-    SCTextFieldCell *confirmaEmail = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"Confirma tu eMail" withBoundKey:@"confirmaEmailKey" withTextFieldTextValue:nil];
-     SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
-    SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
+     SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"Email" withPlaceholder:@"escribe tu Email" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *confirmaEmail = [[SCTextFieldCell alloc] initWithText:@"Email" withPlaceholder:@"Confirma tu Email" withBoundKey:@"confirmaEmailKey" withTextFieldTextValue:nil];
+     SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"Contraseña" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"Contraseña" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
     
     pass.textField.secureTextEntry = YES;
     confirmaPass.textField.secureTextEntry = YES;

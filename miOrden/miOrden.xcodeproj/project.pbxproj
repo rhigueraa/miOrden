@@ -128,6 +128,8 @@
 		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
 		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
 		E8D569C61446040800BB5093 /* VistaNuevaResenia.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D569C41446040800BB5093 /* VistaNuevaResenia.m */; };
+		E8E8B354144686BE00555A55 /* boton_iniciar_sesion.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E8B352144686BE00555A55 /* boton_iniciar_sesion.png */; };
+		E8E8B355144686BE00555A55 /* boton_registrate.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E8B353144686BE00555A55 /* boton_registrate.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -345,6 +347,8 @@
 		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
 		E8D569C31446040800BB5093 /* VistaNuevaResenia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevaResenia.h; sourceTree = "<group>"; };
 		E8D569C41446040800BB5093 /* VistaNuevaResenia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevaResenia.m; sourceTree = "<group>"; };
+		E8E8B352144686BE00555A55 /* boton_iniciar_sesion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_iniciar_sesion.png; sourceTree = "<group>"; };
+		E8E8B353144686BE00555A55 /* boton_registrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_registrate.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -804,6 +808,8 @@
 				BCFC66CC13EA0AC100846F19 /* placeholder-recipe-44.gif */,
 				BC1D942D13D247D300B3CC94 /* Images */,
 				E8CFDEDC13CDF09700F06E73 /* miOrden-Info.plist */,
+				E8E8B352144686BE00555A55 /* boton_iniciar_sesion.png */,
+				E8E8B353144686BE00555A55 /* boton_registrate.png */,
 				E8CFDEDD13CDF09700F06E73 /* InfoPlist.strings */,
 				E8CFDEE013CDF09700F06E73 /* miOrden-Prefix.pch */,
 				E8CFDEE113CDF09700F06E73 /* main.m */,

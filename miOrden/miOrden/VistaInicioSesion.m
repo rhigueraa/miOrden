@@ -63,13 +63,30 @@
     SCTableViewSection *section3 = [SCTableViewSection section];
     SCTableViewCell *iniciar = [[SCTableViewCell alloc]initWithText:@"Iniciar Sesión"];
     iniciar.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    UIImage *imagenInicio = [UIImage imageNamed:@"boton_iniciar_sesion.png"];
+    
+    UIImageView *inicioConImagen = [[UIImageView alloc]initWithImage:imagenInicio];
+    inicioConImagen.contentMode = UIViewContentModeScaleAspectFit;
+    [iniciar.contentView addSubview:inicioConImagen];
+    
+    
+    
     
     section3.footerTitle = @"¿Olvidaste tu Contraseña ? ¡Presiona Aquí!";
+    
+    [inicioConImagen release];
     
     [section3 addCell:iniciar];
     
     SCTableViewSection *section4 = [SCTableViewSection section];
     SCTableViewCell *registro = [[SCTableViewCell alloc]initWithText:@"¡Registrarme!"];
+    UIImage *imagenregistro = [UIImage imageNamed:@"boton_registrate.png"];
+    UIImageView *registroConImagen = [[UIImageView alloc]initWithImage:imagenregistro];
+    registroConImagen.contentMode = UIViewContentModeScaleAspectFit;
+    [registro.contentView addSubview:registroConImagen];
+    
+    [registroConImagen release];
+    
     registro.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [section4 addCell:registro];
     
