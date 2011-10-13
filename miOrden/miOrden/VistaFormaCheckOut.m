@@ -55,7 +55,7 @@
         [listaRfc addObject:objrfc];
     }
     
-    NSLog(@"lista: %@", listaRfc);
+   
     
     
     self.title = @"Check-Out";
