@@ -1028,6 +1028,8 @@
 				BCB9CC7A141EF25200B040D9 /* visa@2x.png in Resources */,
 				BC0AC7B21446480D00B58ADA /* abierto@2x.png in Resources */,
 				BC0AC7B31446480D00B58ADA /* cerrado@2x.png in Resources */,
+				E8E8B354144686BE00555A55 /* boton_iniciar_sesion.png in Resources */,
+				E8E8B355144686BE00555A55 /* boton_registrate.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
