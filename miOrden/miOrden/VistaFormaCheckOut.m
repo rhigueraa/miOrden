@@ -241,7 +241,7 @@
             }
             
         }
-    }else if(indexPath.row == 5 || indexPath.row == 6 || indexPath.row == 7){
+    }else if(indexPath.row == 5 || indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 4){
        
         if([[[tableViewModel cellAtIndexPath:indexPath]boundKey]isEqualToString:@"switchFacturaKey"]){
             if(factura.switchControl.on && ![[[section cellAtIndex:section.cellCount-1]boundKey]isEqualToString:@"facturaKey"]){
@@ -251,12 +251,23 @@
            
             
             }else{
+                if([[[section  cellAtIndex:section.cellCount-1]boundKey]isEqualToString:@"facturaKey"]){
                 [section removeCellAtIndex:section.cellCount-1];
                 [self.tableView reloadData];
+                }
               
             }
           
             
+        }else if([[[tableViewModel cellAtIndexPath:indexPath]boundKey]isEqualToString:@"favoritosKey"]){
+            if(![[[section cellAtIndex:indexPath.row+1]boundKey]isEqualToString:@"nombreFavsKey"]){
+            SCTextFieldCell *nombre = [SCTextFieldCell cellWithText:@"Nombre" withPlaceholder:@"para tus Favoritos" withBoundKey:@"nombreFavsKey" withTextFieldTextValue:nil];
+            [section insertCell:nombre atIndex:indexPath.row+1];
+            [self.tableView reloadData];
+            }else{
+                [section removeCellAtIndex:indexPath.row+1];
+                [self.tableView reloadData];
+            }
         }
     }
     
