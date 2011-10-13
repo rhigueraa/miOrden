@@ -11,7 +11,15 @@
 #import <MapKit/MapKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+typedef enum {
+    restaurantStateOpen,
+    restaurantStateClosed,
+    restaurantStateUnknown
+} RestaurantState;
+
 @interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate> {
+    RestaurantState currentRestaurantState;
+    
     UITableView  *table;
     UIView *pagedView;
     UITableView *table2;

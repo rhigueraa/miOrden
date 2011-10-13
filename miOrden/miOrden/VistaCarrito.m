@@ -150,7 +150,12 @@ static NSString *priceKey = @"user_price";
         tot+=[[item objectForKey:@"extrasPrice"] floatValue];
         tot+=[[item objectForKey:priceKey] floatValue];
     }
-    self.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+    if (tot>0) {
+        self.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+    }
+    else{
+        self.tabBarItem.badgeValue = nil;
+    }
 }
 
 @end

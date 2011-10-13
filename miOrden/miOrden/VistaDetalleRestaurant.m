@@ -58,6 +58,12 @@
     [request setCompletionBlock:^{
         NSString* responseString = [request responseString];
         int isOpen = [responseString intValue];
+        if (isOpen) {
+            currentRestaurantState = restaurantStateOpen;
+        }
+        else{
+            currentRestaurantState = restaurantStateClosed;
+        }
         open = isOpen;
         [self.table2 reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     }];
@@ -69,6 +75,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    currentRestaurantState = restaurantStateUnknown;
     
     NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantTimes.php?rest_id=%@",[currentRestaurant valueForKey:@"id"]];
     
@@ -243,11 +251,23 @@
             cell.textLabel.text = @"Orden mínima";
             cell.detailTextLabel.text =[NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"deliver_minimum"] intValue]];
         }else if (indexPath.row == 1){
-            if (open) {
-                cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
-            }
-            else{
-                cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
+            [[cell.contentView viewWithTag:11] removeFromSuperview];
+            switch (currentRestaurantState) {
+                case restaurantStateClosed:
+                    cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
+                    break;
+                case restaurantStateOpen:
+                    cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
+                    break;
+                case restaurantStateUnknown:{
+                    cell.imageView.image = nil;
+                    UIActivityIndicatorView *activity = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+                    activity.frame = CGRectMake(50, 10, 20, 20);
+                    [activity startAnimating];
+                    activity.tag = 11;
+                    [cell.contentView addSubview:activity];
+                }
+                    break;
             }
             if (hours) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@", [hours valueForKey:@"opening"],[hours valueForKey:@"closing"]];
