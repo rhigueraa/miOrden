@@ -11,6 +11,7 @@
 #import <MapKit/MapKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "XMLThreadedParser.h"
+#import "StyledPageControl.h"
 
 typedef enum {
     restaurantStateOpen,
@@ -18,7 +19,7 @@ typedef enum {
     restaurantStateUnknown
 } RestaurantState;
 
-@interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate> {
+@interface VistaDetalleRestaurant : UIViewController<UITableViewDelegate, ATPagingViewDelegate, MKMapViewDelegate,XMLThreadedParserDelegate> {
     RestaurantState currentRestaurantState;
     
     UITableView  *table;
@@ -26,7 +27,7 @@ typedef enum {
     UITableView *table2;
     MKMapView *theMapView;
     ATPagingView *pagedVIew;
-    UIPageControl *pageControl;
+    StyledPageControl *pageControl;
     UIView *restaruanExtraDetailView;
     UIImageView *restaruantImageView;
     UITextView *direccion;

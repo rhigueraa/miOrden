@@ -21,6 +21,7 @@
 @synthesize userID;
 
 - (void)updateCartbadge{
+    [[NSUserDefaults standardUserDefaults] synchronize];
     NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
     
     float tot = 0;
@@ -30,7 +31,13 @@
     }
     UIViewController *cart= [[tabController viewControllers] objectAtIndex:2];
     
-    cart.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+    if (tot>0) {
+        cart.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+    }
+    else{
+        cart.tabBarItem.badgeValue = nil;
+    }
+    
 }
 
 - (void)addAsTabBar{
