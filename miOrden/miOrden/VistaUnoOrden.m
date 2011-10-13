@@ -238,10 +238,12 @@
     VistaListaRestaurants *lista = [[VistaListaRestaurants alloc] initWithStyle:UITableViewStylePlain];
     lista.title = @"Restaurants";
     if(control.selectedSegmentIndex == 0){
+        //NSLog(@"Dirs: %@", direcciones);
+        
         lista.laDir = [direcciones objectAtIndex:indexPath.row];
-        lista.zonaID2 = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"zone_id"];
-      
-    } else{
+        lista.zonaID = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"zone_id"];
+    }
+    else{
         lista.laDir = [zonas objectAtIndex:indexPath.row];
         lista.zonaID = [[zonas objectAtIndex:indexPath.row] valueForKey:@"zone_id"];
 

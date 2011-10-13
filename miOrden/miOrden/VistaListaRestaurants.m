@@ -88,18 +88,36 @@
     self.title = @"Restaurants";
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
-    if(self.zonaID == nil){
+    if(self.zonaID == nil)
+        [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
+    else{
+        /*
+        NSString *URLString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantListByZone.php?zone=%@",zonaID];
+        NSLog(@"Will parse URL: %@",URLString);
+        __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:URLString]];
+        [request setCompletionBlock:^(void){
+            NSString *resposne = [request responseString];
+            listaRestaurants = [[resposne objectFromJSONString] retain];
+            [self.tableView beginUpdates];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+        }];
+        [request startAsynchronous];
+         */
+        if ([self.zonaID isEqualToString:@""]) {
+            [parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/restaurantlist.php"] withKey:@"restaurant"];
+        }
+        NSLog(@"String is: %@",[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]);
+        [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID]] withKey:@"restaurant"];
         
-        NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@", zonaID2];
-       
-        [parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"restaurant"];
-    
-    }else{
-        NSString *cadena =   [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantlist.php?zone=%@",zonaID];
-
-        [parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"restaurant"];
+        UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithTitle:@"Filtro" style:UIBarButtonItemStyleDone target:self action:@selector(filter:)];
+        self.navigationItem.rightBarButtonItem = filter;
+        [filter release];
     }
-}
+
+        //[parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"restaurant"];
+    }
+
 
 - (void)viewDidUnload
 {

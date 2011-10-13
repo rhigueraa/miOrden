@@ -71,6 +71,33 @@
     [super viewDidLoad];
    
     
+    NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantTimes.php?rest_id=%@",[currentRestaurant valueForKey:@"id"]];
+    
+    __block ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [request setCompletionBlock:^(void){
+        NSString *resposne = [request responseString];
+        
+        times = [[resposne objectFromJSONString] retain];
+        
+        NSCalendar *gregorian = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+        [gregorian setFirstWeekday:2];
+        NSUInteger adjustedWeekdayOrdinal = [gregorian ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:[NSDate date]];
+        //NSLog(@"Adjusted weekday ordinal: %d", adjustedWeekdayOrdinal);
+        
+        hours = [times objectAtIndex:0];
+        
+        [times enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            int day = [[obj valueForKey:@"day"] intValue];
+            if (day==adjustedWeekdayOrdinal-1) {
+                hours = obj;
+            }
+        }];
+        [self isRestaurantOpen:currentRestaurant];
+        [self.table2 reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+    [request startAsynchronous];
+    
+    
     direccion.text = [currentRestaurant valueForKey:@"address"];
     pagedView.backgroundColor = [UIColor redColor];
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
@@ -135,8 +162,10 @@
     [table deselectRowAtIndexPath:[table indexPathForSelectedRow] animated:YES];
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
-    
+    // NSString *cadena = @"http://www.miorden.com/demo/iphone/reviewlist.php?id=1";
     [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
+    //[parser parseXMLat:[NSURL URLWithString:cadena ] withKey:@"review"];
+
 }
 
 - (void)viewDidUnload
@@ -203,6 +232,7 @@
     }
     else{
         cell.textLabel.textAlignment = UITextAlignmentLeft;
+        
     }
     
     if (tableView == table){
@@ -326,7 +356,8 @@
         case 2:{
             //Notes
             UITextView *detailVIew = [[UITextView alloc] initWithFrame:pagedView.bounds];
-            detailVIew.text = [NSString stringWithFormat:@"Descripción:\n%@ \nNotas:\n%@\n",[currentRestaurant valueForKey:@"description"],[currentRestaurant valueForKey:@"special_note"]];
+            detailVIew.editable = NO;
+            detailVIew.text = [NSString stringWithFormat:@"Descripción:\n%@\nNotas:\n%@\n",[currentRestaurant valueForKey:@"description"],[currentRestaurant valueForKey:@"special_note"]];
             detailVIew.font = [UIFont systemFontOfSize:17];
             detailVIew.editable = NO;
             return detailVIew;
