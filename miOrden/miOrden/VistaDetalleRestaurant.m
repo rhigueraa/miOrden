@@ -58,6 +58,12 @@
     [request setCompletionBlock:^{
         NSString* responseString = [request responseString];
         int isOpen = [responseString intValue];
+        if (isOpen) {
+            currentRestaurantState = restaurantStateOpen;
+        }
+        else{
+            currentRestaurantState = restaurantStateClosed;
+        }
         open = isOpen;
         [self.table2 reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     }];
@@ -70,6 +76,8 @@
 {
     [super viewDidLoad];
    
+    
+    currentRestaurantState = restaurantStateUnknown;
     
     NSString *urlString = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/restaurantTimes.php?rest_id=%@",[currentRestaurant valueForKey:@"id"]];
     
@@ -103,7 +111,10 @@
     pagedVIew = [[ATPagingView alloc] initWithFrame:pagedView.bounds];
     pagedVIew.delegate = self;
     [pagedView addSubview:pagedVIew];
-    pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244+1, 38, 36)];
+    pageControl = [[StyledPageControl alloc] initWithFrame:CGRectMake(0, 260, 320, 9)];
+    [pageControl setCoreNormalColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1]];
+    [pageControl setCoreSelectedColor:[UIColor colorWithRed:0.8 green:0.2 blue:0.2 alpha:1]];
+    //pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(141, 244+1, 38, 36)];
     pageControl.numberOfPages = 3;
     [pageControl addTarget:self action:@selector(pagedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:pageControl];
@@ -187,6 +198,26 @@
 }
 
 #pragma mark - TableView
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == table) {
+        return 15;
+    }
+    else{
+        return 44;
+    }
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (tableView == table) {
+       return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];;
+    }
+    else{
+        return nil;
+    }
+    
+}
+
 /*
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == table) {
@@ -232,7 +263,9 @@
     }
     else{
         cell.textLabel.textAlignment = UITextAlignmentLeft;
-        
+        cell.imageView.image = nil;
+        cell.textLabel.text = @"";
+        cell.detailTextLabel.text = @"";
     }
     
     if (tableView == table){
@@ -253,11 +286,23 @@
             cell.textLabel.text = @"Orden mínima";
             cell.detailTextLabel.text =[NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"deliver_minimum"] intValue]];
         }else if (indexPath.row == 1){
-            if (open) {
-                cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
-            }
-            else{
-                cell.imageView.image = [UIImage imageNamed:@"cerado.png"];
+            [[cell.contentView viewWithTag:11] removeFromSuperview];
+            switch (currentRestaurantState) {
+                case restaurantStateClosed:
+                    cell.imageView.image = [UIImage imageNamed:@"cerrado.png"];
+                    break;
+                case restaurantStateOpen:
+                    cell.imageView.image = [UIImage imageNamed:@"abierto.png"];
+                    break;
+                case restaurantStateUnknown:{
+                    cell.imageView.image = nil;
+                    UIActivityIndicatorView *activity = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+                    activity.frame = CGRectMake(50, 10, 20, 20);
+                    [activity startAnimating];
+                    activity.tag = 11;
+                    [cell.contentView addSubview:activity];
+                }
+                    break;
             }
             if (hours) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@", [hours valueForKey:@"opening"],[hours valueForKey:@"closing"]];

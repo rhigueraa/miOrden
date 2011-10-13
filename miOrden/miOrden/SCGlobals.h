@@ -1,7 +1,7 @@
 /*
  *  SCGlobals.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -21,8 +21,9 @@
  */
 
 
+
 /* Uncomment the following line if you want to deploy your project to a device that is 
- * running an OS prior to 3.2. Note: When you do that, it is normal to get several compiler
+ * running iOS prior to version 3.2. Note: When you do that, it is normal to get several compiler
  * wanrning messages regarding the use of deprecated symbols. */
 
 // #define DEPLOYMENT_OS_PRIOR_TO_3_2
@@ -52,6 +53,98 @@
 #define		SC_DefaultTextFieldHeight			31		// Default height of UITextField
 #define		SC_DefaultSegmentedControlHeight	29		// Default height of UISegmentedControl
 /**********************************************************************************/
+
+
+
+
+
+
+/**********************************************************************************/
+/************************** DO NOT EDIT AFTER THIS LINE ***************************/
+/**********************************************************************************/
+
+
+
+
+/***************************************/
+/* ARC supporting functions and macros */
+/***************************************/
+
+#ifndef __has_feature      
+#define __has_feature(x) 0 // For compatibility with non-clang compilers.
+#endif
+
+#ifndef NS_CONSUMED
+#if __has_feature(attribute_ns_consumed)
+#define NS_CONSUMED __attribute__((ns_consumed))
+#else
+#define NS_CONSUMED
+#endif
+#endif
+
+#if __has_feature(objc_arc)
+#define ARC_ENABLED
+#endif
+
+#ifdef ARC_ENABLED
+
+#define SC_STRONG           strong
+#define __SC_STRONG         __strong
+#define __SC_IDCAST         __bridge id
+#define __SC_CONSTVOIDCAST  __bridge const void *
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
+#define SC_WEAK             unsafe_unretained
+#define __SC_WEAK           __unsafe_unretained
+#else
+#define SC_WEAK             weak
+#define __SC_WEAK           __weak
+#endif
+
+#else
+
+#define SC_STRONG           retain
+#define SC_WEAK             assign
+#define __SC_STRONG     
+#define __SC_WEAK       
+#define __SC_IDCAST         id
+#define __SC_CONSTVOIDCAST  const void *
+
+#endif
+
+
+NS_INLINE id SC_Retain(id obj)
+{
+#ifdef ARC_ENABLED
+    return obj;
+#else
+    return [obj retain];
+#endif
+}
+
+NS_INLINE void SC_Release(NS_CONSUMED id obj)
+{
+#ifdef ARC_ENABLED
+    // do nothing
+#else
+    [obj release];
+#endif
+}
+
+NS_INLINE id SC_Autorelease(NS_CONSUMED id obj)
+{
+#ifdef ARC_ENABLED
+    return obj;
+#else
+    return [obj autorelease];
+#endif
+}
+
+/***************************************/
+
+
+
+
+
 
 
 
@@ -104,6 +197,15 @@ typedef enum
 
 
 
+@interface UINavigationController (KeyboardDismiss)
+
+- (BOOL)disablesAutomaticKeyboardDismissal;
+
+@end
+
+
+
+
 @class SCClassDefinition;
 
 /* This class defines a set of internal helper methods */
@@ -123,7 +225,8 @@ typedef enum
 + (NSObject *)getFirstNodeInNibWithName:(NSString *)nibName;
 
 + (NSMutableArray *)generateObjectsArrayForEntityClassDefinition:(SCClassDefinition *)classDef
-												  usingPredicate:(NSPredicate *)predicate;
+												  usingPredicate:(NSPredicate *)predicate
+                                                       ascending:(BOOL)ascending;
 
 /*  Returns the the value for the given property in the given object. 
  *	@param propertyName The name of the property whose value is requested. propertyName can be
@@ -152,7 +255,7 @@ typedef enum
 	CFMutableSetRef modelsSet;
 }
 
-@property (nonatomic, assign) UIViewController *keyboardIssuer;
+@property (nonatomic, SC_WEAK) UIViewController *keyboardIssuer;
 
 + (SCModelCenter *)sharedModelCenter;
 

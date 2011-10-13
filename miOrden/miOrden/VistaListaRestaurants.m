@@ -49,6 +49,9 @@
 
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     listaRestaurants = [array retain];
     filteredRestaurants = [[NSMutableArray alloc] initWithArray:listaRestaurants];
     
@@ -86,6 +89,9 @@
     
     [super viewDidLoad];
     self.title = @"Restaurants";
+    
+    [[MBProgressHUD showHUDAddedTo:self.view animated:YES] setLabelText:@"Descargando Restaurantes"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
     if(self.zonaID == nil)

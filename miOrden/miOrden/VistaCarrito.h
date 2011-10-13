@@ -16,7 +16,7 @@
     
     NSArray *carrito;
     
-    
+    NSDictionary *currentRestaurant;
 }
 
 - (void)updateBadge;

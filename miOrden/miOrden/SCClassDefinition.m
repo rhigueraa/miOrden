@@ -1,7 +1,7 @@
 /*
  *  SCClassDefinition.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -44,16 +44,14 @@
 
 + (id)definitionWithName:(NSString *)propertyName
 {
-	return [[[[self class] alloc] initWithName:propertyName] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithName:propertyName]);
 }
 
 + (id)definitionWithName:(NSString *)propertyName 
 				   title:(NSString *)propertyTitle
 					type:(SCPropertyType)propertyType
 {
-	return [[[[self class] alloc] initWithName:propertyName
-										 title:propertyTitle
-										  type:propertyType] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithName:propertyName title:propertyTitle type:propertyType]);
 }
 
 - (id)initWithName:(NSString *)propertyName
@@ -88,6 +86,7 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[name release];
@@ -97,6 +96,7 @@
 	
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -108,33 +108,59 @@
 @implementation SCCustomPropertyDefinition
 
 @synthesize uiElement;
+@synthesize uiElementClass;
+@synthesize uiElementNibName;
 @synthesize objectBindings;
 
 + (id)definitionWithName:(NSString *)propertyName 
 		   withuiElement:(NSObject *)element
 	  withObjectBindings:(NSDictionary *)bindings
 {
-	return [[[[self class] alloc] initWithName:propertyName
-								 withuiElement:element
-							withObjectBindings:bindings] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithName:propertyName withuiElement:element withObjectBindings:bindings]);
+}
+
++ (id)definitionWithName:(NSString *)propertyName 
+      withuiElementClass:(Class)elementClass
+	  withObjectBindings:(NSDictionary *)bindings
+{
+	return SC_Autorelease([[[self class] alloc] initWithName:propertyName withuiElementClass:elementClass withObjectBindings:bindings]);
 }
 
 + (id)definitionWithName:(NSString *)propertyName 
 	withuiElementNibName:(NSString *)elementNibName
 	  withObjectBindings:(NSDictionary *)bindings
 {
-	return [[[[self class] alloc] initWithName:propertyName
-						  withuiElementNibName:elementNibName
-							withObjectBindings:bindings] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithName:propertyName withuiElementNibName:elementNibName withObjectBindings:bindings]);
+}
+
+//overrides superclass
+- (id)initWithName:(NSString *)propertyName
+{
+    if( (self = [super initWithName:propertyName]) )
+    {
+        uiElement = nil;
+        uiElementNibName = nil;
+    }
+    
+    return self;
 }
 
 - (id)initWithName:(NSString *)propertyName 
 	 withuiElement:(NSObject *)element
 withObjectBindings:(NSDictionary *)bindings
 {
-	if( (self = [super initWithName:propertyName]) )
+	self = [self initWithName:propertyName withuiElementClass:[element class] withObjectBindings:bindings];
+	
+	return self;
+}
+
+- (id)initWithName:(NSString *)propertyName 
+	 withuiElementClass:(Class)elementClass
+withObjectBindings:(NSDictionary *)bindings
+{
+	if( (self = [self initWithName:propertyName]) )
 	{
-		uiElement = [element retain];
+		uiElementClass = elementClass;
 		self.objectBindings = bindings;
 	}
 	
@@ -145,22 +171,25 @@ withObjectBindings:(NSDictionary *)bindings
 	withuiElementNibName:(NSString *)elementNibName
 	withObjectBindings:(NSDictionary *)bindings
 {
-	if( (self = [super initWithName:propertyName]) )
+	if( (self = [self initWithName:propertyName]) )
 	{
-		uiElement = [[SCHelper getFirstNodeInNibWithName:elementNibName] retain];
+		self.uiElementNibName = elementNibName;
 		self.objectBindings = bindings;
 	}
 	
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[uiElement release];
+    [uiElementNibName release];
 	[objectBindings release];
 	
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -179,8 +208,7 @@ withObjectBindings:(NSDictionary *)bindings
 + (id)groupWithHeaderTitle:(NSString *)groupHeaderTitle withFooterTitle:(NSString *)groupFooterTitle
          withPropertyNames:(NSArray *)propertyNames
 {
-    return [[[[self class] alloc] initWithHeaderTitle:groupHeaderTitle withFooterTitle:groupFooterTitle
-                                    withPropertyNames:propertyNames] autorelease];
+    return SC_Autorelease([[[self class] alloc] initWithHeaderTitle:groupHeaderTitle withFooterTitle:groupFooterTitle withPropertyNames:propertyNames]);
 }
 
 - (id)init
@@ -197,7 +225,7 @@ withObjectBindings:(NSDictionary *)bindings
 - (id)initWithHeaderTitle:(NSString *)groupHeaderTitle withFooterTitle:(NSString *)groupFooterTitle
        withPropertyNames:(NSArray *)propertyNames
 {
-    if([self init])
+    if( (self=[self init]) )
 	{
 		self.headerTitle = groupHeaderTitle;
         self.footerTitle = groupFooterTitle;
@@ -206,12 +234,14 @@ withObjectBindings:(NSDictionary *)bindings
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
     [propertyDefinitionNames release];
     
     [super dealloc];
 }
+#endif
 
 - (NSInteger)propertyNameCount
 {
@@ -265,12 +295,14 @@ withObjectBindings:(NSDictionary *)bindings
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
     [propertyGroups release];
     
     [super dealloc];
 }
+#endif
 
 - (NSInteger)groupCount
 {
@@ -338,22 +370,23 @@ withObjectBindings:(NSDictionary *)bindings
 
 + (id) definitionWithClass:(Class)_cls autoGeneratePropertyDefinitions:(BOOL)autoGenerate
 {
-	return [[[[self class] alloc] initWithClass:_cls 
-				 autoGeneratePropertyDefinitions:autoGenerate] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithClass:_cls autoGeneratePropertyDefinitions:autoGenerate]);
 }
 
 + (id) definitionWithClass:(Class)_cls withPropertyNames:(NSArray *)propertyNames
 {
-	return [[[[self class] alloc] initWithClass:_cls 
-							   withPropertyNames:propertyNames] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithClass:_cls withPropertyNames:propertyNames]);
 }
 
 + (id) definitionWithClass:(Class)_cls withPropertyNames:(NSArray *)propertyNames
 		 withPropertyTitles:(NSArray *)propertyTitles
 {
-	return [[[[self class] alloc] initWithClass:_cls 
-							   withPropertyNames:propertyNames
-							  withPropertyTitles:propertyTitles] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithClass:_cls withPropertyNames:propertyNames withPropertyTitles:propertyTitles]);
+}
+
++ (id)definitionWithClass:(Class)_cls withPropertyGroups:(SCPropertyGroupArray *)groups
+{
+    return SC_Autorelease([[[self class] alloc] initWithClass:_cls withPropertyGroups:groups]);
 }
 
 
@@ -362,18 +395,18 @@ withObjectBindings:(NSDictionary *)bindings
 	  withManagedObjectContext:(NSManagedObjectContext *)context
 		autoGeneratePropertyDefinitions:(BOOL)autoGenerate
 {
-	return [[[[self class] alloc] initWithEntityName:entityName
+	return SC_Autorelease([[[self class] alloc] initWithEntityName:entityName
 							withManagedObjectContext:context
-					 autoGeneratePropertyDefinitions:autoGenerate] autorelease];
+					 autoGeneratePropertyDefinitions:autoGenerate]);
 }
 
 + (id)definitionWithEntityName:(NSString *)entityName 
 	  withManagedObjectContext:(NSManagedObjectContext *)context
 			 withPropertyNames:(NSArray *)propertyNames
 {
-	return [[[[self class] alloc] initWithEntityName:entityName
+	return SC_Autorelease([[[self class] alloc] initWithEntityName:entityName
 							withManagedObjectContext:context
-								   withPropertyNames:propertyNames] autorelease];
+								   withPropertyNames:propertyNames]);
 }
 
 + (id)definitionWithEntityName:(NSString *)entityName
@@ -381,10 +414,19 @@ withObjectBindings:(NSDictionary *)bindings
 			 withPropertyNames:(NSArray *)propertyNames
 			withPropertyTitles:(NSArray *)propertyTitles
 {
-	return [[[[self class] alloc] initWithEntityName:entityName
+	return SC_Autorelease([[[self class] alloc] initWithEntityName:entityName
 							withManagedObjectContext:context
 								   withPropertyNames:propertyNames
-								  withPropertyTitles:propertyTitles] autorelease];
+								  withPropertyTitles:propertyTitles]);
+}
+
++ (id)definitionWithEntityName:(NSString *)entityName 
+	  withManagedObjectContext:(NSManagedObjectContext *)context
+            withPropertyGroups:(SCPropertyGroupArray *)groups
+{
+    return SC_Autorelease([[[self class] alloc] initWithEntityName:entityName
+							withManagedObjectContext:context
+                                  withPropertyGroups:groups]);
 }
 #endif
 
@@ -503,7 +545,7 @@ withObjectBindings:(NSDictionary *)bindings
 
 - (id) initWithClass:(Class)_cls autoGeneratePropertyDefinitions:(BOOL)autoGenerate
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		cls = _cls;
 		
@@ -537,7 +579,7 @@ withObjectBindings:(NSDictionary *)bindings
 - (id) initWithClass:(Class)_cls withPropertyNames:(NSArray *)propertyNames
    withPropertyTitles:(NSArray *)propertyTitles
 {
-	if([self initWithClass:_cls autoGeneratePropertyDefinitions:NO])
+	if( (self=[self initWithClass:_cls autoGeneratePropertyDefinitions:NO]) )
 	{
 		for(int i=0; i<propertyNames.count; i++)
 		{
@@ -562,6 +604,27 @@ withObjectBindings:(NSDictionary *)bindings
 	return self;
 }
 
+- (id)initWithClass:(Class)_cls withPropertyGroups:(SCPropertyGroupArray *)groups
+{
+    NSMutableArray *propertyNames = [[NSMutableArray alloc] init];
+    for(NSInteger i=0; i<groups.groupCount; i++)
+    {
+        SCPropertyGroup *propertyGroup = [groups groupAtIndex:i];
+        for(NSInteger j=0; j<propertyGroup.propertyNameCount; j++)
+            [propertyNames addObject:[propertyGroup propertyNameAtIndex:j]];
+    }
+    
+    if( (self=[self initWithClass:_cls withPropertyNames:propertyNames]) )
+    {
+        for(NSInteger i=0; i<groups.groupCount; i++)
+        {
+            [self.propertyGroups addGroup:[groups groupAtIndex:i]];
+        }
+    }
+    SC_Release(propertyNames);
+    
+    return self;
+}
 
 #ifdef _COREDATADEFINES_H
 - (id)initWithEntityName:(NSString *)entityName 
@@ -573,9 +636,9 @@ withObjectBindings:(NSDictionary *)bindings
 	
 	if(!autoGenerate)
 	{
-		[self init];
-		managedObjectContext = [context retain];
-		entity = [entityDescription retain];
+		self = [self init];
+		managedObjectContext = SC_Retain(context);
+		entity = SC_Retain(entityDescription);
 		return self;
 	}
 	//else
@@ -604,9 +667,8 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 {
 	if( (self = [self init]) )
 	{
-		managedObjectContext = [context retain];
-		entity = [[NSEntityDescription entityForName:entityName
-							  inManagedObjectContext:self.managedObjectContext] retain];
+		managedObjectContext = SC_Retain(context);
+		entity = SC_Retain([NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext]);
 		
 		for(int i=0; i<propertyNames.count; i++)
 		{
@@ -713,9 +775,34 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 	
 	return self;
 }
+
+- (id)initWithEntityName:(NSString *)entityName 
+withManagedObjectContext:(NSManagedObjectContext *)context
+      withPropertyGroups:(SCPropertyGroupArray *)groups
+{
+    NSMutableArray *propertyNames = [[NSMutableArray alloc] init];
+    for(NSInteger i=0; i<groups.groupCount; i++)
+    {
+        SCPropertyGroup *propertyGroup = [groups groupAtIndex:i];
+        for(NSInteger j=0; j<propertyGroup.propertyNameCount; j++)
+            [propertyNames addObject:[propertyGroup propertyNameAtIndex:j]];
+    }
+    
+    if( (self=[self initWithEntityName:entityName withManagedObjectContext:context withPropertyNames:propertyNames]) )
+    {
+        for(NSInteger i=0; i<groups.groupCount; i++)
+        {
+            [self.propertyGroups addGroup:[groups groupAtIndex:i]];
+        }
+    }
+    SC_Release(propertyNames);
+    
+    return self;
+}
+
 #endif
 
-
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 #ifdef _COREDATADEFINES_H	
@@ -735,10 +822,10 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 	
 	[super dealloc];
 }
-
+#endif
 - (NSString *)getUserFriendlyPropertyTitleFromName:(NSString *)propertyName
 {
-	NSMutableString *UFName = [[[NSMutableString string] retain] autorelease];
+	NSMutableString *UFName = SC_Autorelease([[NSMutableString alloc] init]);
 	
 	if(![propertyName length])
 		return UFName;
@@ -774,7 +861,7 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 {
 	if([self isValidPropertyName:propertyName])
 	{
-		[keyPropertyName release];
+		SC_Release(keyPropertyName);
 		keyPropertyName = [propertyName copy];
 	}
 }
@@ -793,7 +880,7 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 										 title:propertyTitle 
 										  type:propertyType];
 	BOOL success = [self addPropertyDefinition:propertyDefinition];
-	[propertyDefinition release];
+	SC_Release(propertyDefinition);
 	
 	return success;
 }
@@ -970,14 +1057,13 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 
 + (id)definitionWithDictionaryKeyNames:(NSArray *)keyNames
 {
-	return [[[[self class] alloc] initWithDictionaryKeyNames:keyNames] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithDictionaryKeyNames:keyNames]);
 }
 
 + (id)definitionWithDictionaryKeyNames:(NSArray *)keyNames
 						 withKeyTitles:(NSArray *)keyTitles
 {
-	return [[[[self class] alloc] initWithDictionaryKeyNames:keyNames
-											   withKeyTitles:keyTitles] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithDictionaryKeyNames:keyNames withKeyTitles:keyTitles]);
 }
 
 - (id)initWithDictionaryKeyNames:(NSArray *)keyNames
@@ -988,7 +1074,7 @@ withManagedObjectContext:(NSManagedObjectContext *)context
 - (id)initWithDictionaryKeyNames:(NSArray *)keyNames
 				   withKeyTitles:(NSArray *)keyTitles
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		for(int i=0; i<keyNames.count; i++)
 		{

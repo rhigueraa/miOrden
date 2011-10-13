@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XMLThreadedParser.h"
 #import "FilterTableView.h"
+#import "MBProgressHUD.h"
 
 @interface VistaListaRestaurants : UITableViewController<XMLThreadedParserDelegate, FilterTableViewDelegate, UIAlertViewDelegate> {
     NSString *zonaID;

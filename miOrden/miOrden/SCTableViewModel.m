@@ -1,7 +1,7 @@
 /*
  *  SCTableViewModel.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -20,7 +20,7 @@
  *
  */
 
-
+#import <objc/message.h>
 #import "SCTableViewModel.h"
 
 
@@ -52,23 +52,26 @@
 @synthesize hideSectionHeaderTitles;
 @synthesize lockCellSelection;
 @synthesize tag;
+@synthesize autoAssignDataSourceForDetailModels;
+@synthesize autoAssignDelegateForDetailModels;
 @synthesize previousActiveCell;
 @synthesize activeCell;
 @synthesize modelKeyValues;
 @synthesize commitButton;
+@synthesize swipeToDeleteActive;
 
 
 + (id)tableViewModelWithTableView:(UITableView *)_modeledTableView
 			   withViewController:(UIViewController *)_viewController
 {
-	return [[[[self class] alloc] initWithTableView:_modeledTableView
-								 withViewController:_viewController] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithTableView:_modeledTableView
+								 withViewController:_viewController]);
 }
 
 - (id)initWithTableView:(UITableView *)_modeledTableView
 	 withViewController:(UIViewController *)_viewController
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		target = nil;
 		action = nil;
@@ -89,6 +92,10 @@
 		hideSectionHeaderTitles = FALSE;
 		lockCellSelection = FALSE;
 		tag = 0;
+        
+        autoAssignDataSourceForDetailModels = FALSE;
+        autoAssignDelegateForDetailModels = FALSE;
+        
 		sections = [[NSMutableArray alloc] init];
 		previousActiveCell = nil;
 		activeCell = nil;
@@ -103,6 +110,7 @@
 			self.autoResizeForKeyboard = FALSE;
 		else
 			self.autoResizeForKeyboard = TRUE;
+        swipeToDeleteActive = FALSE;
 		
 		// Register with the shared model center
 		[[SCModelCenter sharedModelCenter] registerModel:self];
@@ -115,7 +123,7 @@
 {
 	// Unregister from the shared model center
 	[[SCModelCenter sharedModelCenter] unregisterModel:self];
-	
+#ifndef ARC_ENABLED	
 	[editButtonItem release];
 	[sectionIndexTitles release];
 	[sections release];
@@ -123,6 +131,18 @@
 	[commitButton release];
 
 	[super dealloc];
+#endif
+}
+
+- (void)configureDetailModel:(SCTableViewModel *)detailModel
+{
+    detailModel.tag = self.tag + 1;
+    detailModel.autoAssignDataSourceForDetailModels = self.autoAssignDataSourceForDetailModels;
+    detailModel.autoAssignDelegateForDetailModels = self.autoAssignDelegateForDetailModels;
+    if(self.autoAssignDataSourceForDetailModels)
+        detailModel.dataSource = self.dataSource;
+    if(self.autoAssignDelegateForDetailModels)
+        detailModel.delegate = self.delegate;
 }
 
 - (NSArray *)sectionIndexTitles
@@ -157,8 +177,13 @@
 	[previousActiveCell willDeselectCell];
 	if(previousActiveCell.selected)
 		[self.modeledTableView deselectRowAtIndexPath:[self indexPathForCell:previousActiveCell] animated:NO];
-	
-	activeCell = cell;
+	[previousActiveCell didDeselectCell];
+    
+    // make sure it's a static cell, otherwise it could be released by UITableView and should not be referenced
+	if(!cell.beingReused)
+        activeCell = cell;
+    else
+        activeCell = nil;
 	
 	NSIndexPath *indexPath = [self indexPathForCell:activeCell];
 	[self.modeledTableView scrollToRowAtIndexPath:indexPath
@@ -168,8 +193,8 @@
 
 - (void)setCommitButton:(UIBarButtonItem *)button
 {
-	[commitButton release];
-	commitButton = [button retain];
+	SC_Release(commitButton);
+	commitButton = SC_Retain(button);
 	
 	commitButton.enabled = self.valuesAreValid;
 }
@@ -189,8 +214,8 @@
 
 - (void)setEditButtonItem:(UIBarButtonItem *)barButtonItem
 {
-	[editButtonItem release];
-	editButtonItem = [barButtonItem retain];
+	SC_Release(editButtonItem);
+	editButtonItem = SC_Retain(barButtonItem);
 	
 	editButtonItem.target = self;
 	editButtonItem.action = @selector(didTapEditButtonItem);
@@ -205,7 +230,7 @@
 	}
 	
 	if(target)
-		[target performSelector:action];
+        objc_msgSend(target, action);
 }
 
 - (void)valueChangedForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -213,19 +238,16 @@
 	if(!indexPath)
 		return;
 	
-	SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+	SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
 	if(cell != self.activeCell)
 	{
 		if(self.activeCell.autoResignFirstResponder)
 			[self.activeCell resignFirstResponder];
-		if(!cell.beingReused)  // make sure it's a static cell, otherwise it could be deleted by UITableViewController and should not be referenced
-			self.activeCell = cell;
-		else
-			self.activeCell = nil;
+		self.activeCell = cell;
 	}
 	
 	if(target)
-		[target performSelector:action];
+        objc_msgSend(target, action);
 	
 	if(self.commitButton)
 		self.commitButton.enabled = self.valuesAreValid;
@@ -247,41 +269,7 @@
 {	
 	BOOL editing = !self.modeledTableView.editing;		// toggle editing state
 	
-	if(editing)
-	{
-		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
-		   && [self.delegate respondsToSelector:@selector(tableViewModelWillBeginEditing:)])
-		{
-			[self.delegate tableViewModelWillBeginEditing:self];
-		}
-	}
-	else
-	{
-		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
-		   && [self.delegate respondsToSelector:@selector(tableViewModelWillEndEditing:)])
-		{
-			[self.delegate tableViewModelWillEndEditing:self];
-		}
-	}
-	
-    [self setModeledTableViewEditing:editing animated:TRUE];
-	
-	if(editing)
-	{
-		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
-		   && [self.delegate respondsToSelector:@selector(tableViewModelDidBeginEditing:)])
-		{
-			[self.delegate tableViewModelDidBeginEditing:self];
-		}
-	}
-	else
-	{
-		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
-		   && [self.delegate respondsToSelector:@selector(tableViewModelDidEndEditing:)])
-		{
-			[self.delegate tableViewModelDidEndEditing:self];
-		}
-	}
+	[self setModeledTableViewEditing:editing animated:TRUE];
 }
 
 - (void)replaceModeledTableViewWith:(UITableView *)tableView
@@ -314,14 +302,30 @@
 	else 
 		if(self.autoSortSections)
 			[sections sortUsingSelector:@selector(compare:)];
+    
+    NSInteger sectionIndex = [sections indexOfObjectIdenticalTo:section];
+    if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+	   && [self.delegate respondsToSelector:@selector(tableViewModel:didAddSectionAtIndex:)])
+	{
+		[self.delegate tableViewModel:self didAddSectionAtIndex:sectionIndex];
+	}
 }
 
 - (void)insertSection:(SCTableViewSection *)section atIndex:(NSUInteger)index
 {
 	section.ownerTableViewModel = self;
-	for(int i=0; i<section.cellCount; i++)
-		[section cellAtIndex:i].ownerTableViewModel = self;
+	if(![section isKindOfClass:[SCArrayOfItemsSection class]])
+	{
+		for(int i=0; i<section.cellCount; i++)
+			[section cellAtIndex:i].ownerTableViewModel = self;
+	}
 	[sections insertObject:section atIndex:index];
+    
+    if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+	   && [self.delegate respondsToSelector:@selector(tableViewModel:didAddSectionAtIndex:)])
+	{
+		[self.delegate tableViewModel:self didAddSectionAtIndex:index];
+	}
 }
 
 - (SCTableViewSection *)sectionAtIndex:(NSUInteger)index
@@ -358,10 +362,18 @@
 - (void)removeSectionAtIndex:(NSUInteger)index
 {
 	[sections removeObjectAtIndex:index];
+    
+    if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+	   && [self.delegate respondsToSelector:@selector(tableViewModel:didRemoveSectionAtIndex:)])
+	{
+		[self.delegate tableViewModel:self didRemoveSectionAtIndex:index];
+	}
 }
 
 - (void)removeAllSections
 {
+    self.activeCell = nil;
+    previousActiveCell = nil;
 	[sections removeAllObjects];
 }
 
@@ -404,7 +416,7 @@
             {
                 SCObjectSection *objectSection = [[SCObjectSection alloc] initWithHeaderTitle:nil withBoundObject:object withClassDefinition:classDef usingPropertyGroup:subGroup];
                 [self addSection:objectSection];
-                [objectSection release];
+                SC_Release(objectSection);
                 
                 [subGroup removeAllPropertyNames];
             }
@@ -423,7 +435,7 @@
     {
         SCObjectSection *objectSection = [[SCObjectSection alloc] initWithHeaderTitle:nil withBoundObject:object withClassDefinition:classDef usingPropertyGroup:subGroup];
         [self addSection:objectSection];
-        [objectSection release];
+        SC_Release(objectSection);
     }
 }
 
@@ -441,7 +453,7 @@
     {
         case SCPropertyTypeObject:
         {
-            NSObject *object = [_boundObject valueForKey:propertyDef.name];
+            NSObject *object = [SCHelper valueForPropertyName:propertyDef.name inObject:_boundObject];
             
 #ifdef _COREDATADEFINES_H			
             if(!object && coreDataBound)
@@ -510,31 +522,36 @@
                 objectsSection = [SCArrayOfObjectsSection sectionWithHeaderTitle:nil withItems:objectsArray withClassDefinition:classDef];
             }
             
-            if(objectsSection)
-            {
-                [objectsSection.itemsClassDefinitions addEntriesFromDictionary:objectsAttributes.classDefinitions];
-                objectsSection.allowAddingItems = objectsAttributes.allowAddingItems;
-                objectsSection.allowDeletingItems = objectsAttributes.allowDeletingItems;
-                objectsSection.allowMovingItems = objectsAttributes.allowMovingItems;
-                objectsSection.allowEditDetailView = objectsAttributes.allowEditingItems;
-                objectsSection.allowRowSelection = objectsAttributes.allowEditingItems;
-                if([objectsAttributes.placeholderuiElement isKindOfClass:[SCTableViewCell class]])
-                    objectsSection.placeholderCell = (SCTableViewCell *)objectsAttributes.placeholderuiElement;
-                if([objectsAttributes.addNewObjectuiElement isKindOfClass:[SCTableViewCell class]])
-                {
-                    objectsSection.addNewItemCell = (SCTableViewCell *)objectsAttributes.addNewObjectuiElement;
-                    objectsSection.addNewItemCellExistsInNormalMode = objectsAttributes.addNewObjectuiElementExistsInNormalMode;
-                    objectsSection.addNewItemCellExistsInEditingMode = objectsAttributes.addNewObjectuiElementExistsInEditingMode;
-                }
-            }
-            
             section = objectsSection;
         }
+            break;
+            
+        case SCPropertyTypeSelection:
+            if(propertyDef.dataType == SCPropertyDataTypeNSNumber)
+            {
+                section = [SCSelectionSection sectionWithHeaderTitle:nil withBoundObject:_boundObject withSelectedIndexPropertyName:propertyDef.name  withItems:nil];
+            }
+            else
+                if(propertyDef.dataType == SCPropertyDataTypeNSString)
+                {
+                    section = [SCSelectionSection sectionWithHeaderTitle:nil withBoundObject:_boundObject withSelectionStringPropertyName:propertyDef.name withItems:nil];
+                }
+                else
+                    if(propertyDef.dataType == SCPropertyDataTypeNSMutableSet)
+                    {
+                        section = [SCSelectionSection sectionWithHeaderTitle:nil withBoundObject:_boundObject withSelectedIndexesPropertyName:propertyDef.name withItems:nil allowMultipleSelection:FALSE];
+                    }
+            break;
+        case SCPropertyTypeObjectSelection:
+            section = [SCObjectSelectionSection sectionWithHeaderTitle:nil withBoundObject:_boundObject withSelectedObjectPropertyName:propertyDef.name withItems:nil withItemsClassDefintion:nil];
             break;
             
         default:
             section = nil;
     }
+    
+    if(section)
+        [section setAttributesTo:propertyDef.attributes];
     
     return  section;
 }
@@ -551,6 +568,31 @@
     if(editing == self.modeledTableView.editing)
         return;
     
+    if(self.swipeToDeleteActive)
+    {
+        [self.modeledTableView setEditing:NO animated:animate];
+        swipeToDeleteActive = FALSE;
+        return;
+    }
+    
+    if(editing)
+	{
+		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+		   && [self.delegate respondsToSelector:@selector(tableViewModelWillBeginEditing:)])
+		{
+			[self.delegate tableViewModelWillBeginEditing:self];
+		}
+	}
+	else
+	{
+		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+		   && [self.delegate respondsToSelector:@selector(tableViewModelWillEndEditing:)])
+		{
+			[self.delegate tableViewModelWillEndEditing:self];
+		}
+	}
+    
+    
     [self.modeledTableView beginUpdates];
     
     // Update sections to reflect new state
@@ -566,6 +608,24 @@
     // Notify section that editing mode has changed
     for(SCTableViewSection *section in sections)
         [section editingModeDidChange];
+    
+    
+    if(editing)
+	{
+		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+		   && [self.delegate respondsToSelector:@selector(tableViewModelDidBeginEditing:)])
+		{
+			[self.delegate tableViewModelDidBeginEditing:self];
+		}
+	}
+	else
+	{
+		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+		   && [self.delegate respondsToSelector:@selector(tableViewModelDidEndEditing:)])
+		{
+			[self.delegate tableViewModelDidEndEditing:self];
+		}
+	}
 }
 
 - (SCTableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath
@@ -585,23 +645,33 @@
 	return nil;
 }
 
-- (SCTableViewCell *)cellAfterCell:(SCTableViewCell *)cell rewindIfLastCell:(BOOL)rewind
+- (NSIndexPath *)indexPathForCellAfterCell:(SCTableViewCell *)cell rewindIfLastCell:(BOOL)rewind
 {
-	if(self.sectionCount==1 && [self sectionAtIndex:0].cellCount==1)
+    if(self.sectionCount==1 && [self sectionAtIndex:0].cellCount==1)
 		return nil;		// only one cell in model
 	
 	NSIndexPath *indexPath = [self indexPathForCell:cell];
 	SCTableViewSection *cellSection = [self sectionAtIndex:indexPath.section];
 	if(indexPath.row+1 < cellSection.cellCount)
-		return [cellSection cellAtIndex:indexPath.row+1];
+		return [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
 	
 	if(indexPath.section+1 < self.sectionCount)
-		return [[self sectionAtIndex:indexPath.section+1] cellAtIndex:0];
+		return [NSIndexPath indexPathForRow:0 inSection:indexPath.section+1];
 	
 	if(!rewind)
 		return nil;
 	
-	return [[self sectionAtIndex:0] cellAtIndex:0];
+	return [NSIndexPath indexPathForRow:0 inSection:0];
+}
+
+- (SCTableViewCell *)cellAfterCell:(SCTableViewCell *)cell rewindIfLastCell:(BOOL)rewind
+{
+	NSIndexPath *nextCellIndexPath = [self indexPathForCellAfterCell:cell rewindIfLastCell:rewind];
+    
+    if(!nextCellIndexPath)
+        return nil;
+    //else
+    return (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:nextCellIndexPath];
 }
 
 - (BOOL)valuesAreValid
@@ -665,7 +735,8 @@
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return [self cellAtIndexPath:indexPath].movable;
+    BOOL movable = [self cellAtIndexPath:indexPath].movable;
+	return movable;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -747,7 +818,7 @@
 	SCTableViewSection *scSection = [self sectionAtIndex:section];
 	CGFloat height = scSection.headerHeight;
 	UIFont *headerFont = nil;
-	if(height == 0)
+	if(height==0 && scSection.headerTitle)
 	{
 		switch (tableView.style)
 		{
@@ -787,7 +858,7 @@
 	SCTableViewSection *scSection = [self sectionAtIndex:section];
 	CGFloat height = scSection.footerHeight;
 	UIFont *footerFont = nil;
-	if(height == 0)
+	if(height==0 && scSection.footerTitle)
 	{
 		switch (tableView.style)
 		{
@@ -870,9 +941,9 @@
 	if(self.lockCellSelection)
 		return nil;
 	
-	SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+	SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
 	
-	if(!cell.selectable)
+	if(!cell.selectable || !cell.enabled)
 		return nil;
 	
 	if([cell.delegate conformsToProtocol:@protocol(SCTableViewCellDelegate)]
@@ -892,7 +963,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+	SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
     
     if(!cell.enabled)
         return;
@@ -933,7 +1004,7 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+	SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
 	[cell willDeselectCell];
 	
 	return indexPath;
@@ -941,25 +1012,15 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+	SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
 	
-	if([cell.delegate conformsToProtocol:@protocol(SCTableViewCellDelegate)]
-	   && [cell.delegate respondsToSelector:@selector(didDeselectCell:)])
-	{
-		[cell.delegate didDeselectCell:cell];
-	}
-	else	
-		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
-		   && [self.delegate respondsToSelector:@selector(tableViewModel:didDeselectRowAtIndexPath:)])
-		{
-			[self.delegate tableViewModel:self didDeselectRowAtIndexPath:indexPath];
-		}
+	[cell didDeselectCell];
 }
 
 - (void)tableView:(UITableView *)tableView 
 					accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-	SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+	SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
 	
 	if([cell.delegate conformsToProtocol:@protocol(SCTableViewCellDelegate)]
 	   && [cell.delegate respondsToSelector:@selector(accessoryButtonTappedForCell:)])
@@ -998,6 +1059,21 @@
 	return deleteTitle;
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    swipeToDeleteActive = TRUE;
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    swipeToDeleteActive = FALSE;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [tableView cellForRowAtIndexPath:indexPath].shouldIndentWhileEditing;
+}
+
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
 {
     NSIndexPath *indexPath = proposedDestinationIndexPath;
@@ -1012,21 +1088,35 @@
 #pragma mark -
 #pragma mark Deferred image loading (UIScrollViewDelegate)
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+       && [self.delegate respondsToSelector:@selector(tableViewModelDidScroll:)])
+    {
+        [self.delegate tableViewModelDidScroll:self];  
+    }
+}
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate)
 	{
         if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
-		   && [self.delegate 
-			   respondsToSelector:@selector(tableViewModel:lazyLoadCell:forRowAtIndexPath:)])
+		   && [self.delegate respondsToSelector:@selector(tableViewModel:lazyLoadCell:forRowAtIndexPath:)])
 		{
             NSArray *visiblePaths = [self.modeledTableView indexPathsForVisibleRows];
             for(NSIndexPath *indexPath in visiblePaths)
             {
-                SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+                SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
                 [self.delegate tableViewModel:self lazyLoadCell:cell forRowAtIndexPath:indexPath];  
             }
 		}
+    }
+    
+    if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+       && [self.delegate respondsToSelector:@selector(tableViewModelDidEndDragging:willDecelerate:)])
+    {
+        [self.delegate tableViewModelDidEndDragging:self willDecelerate:decelerate];  
     }
 }
 
@@ -1039,7 +1129,7 @@
         NSArray *visiblePaths = [self.modeledTableView indexPathsForVisibleRows];
         for(NSIndexPath *indexPath in visiblePaths)
         {
-            SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+            SCTableViewCell *cell = (SCTableViewCell *)[self.modeledTableView cellForRowAtIndexPath:indexPath];
             [self.delegate tableViewModel:self lazyLoadCell:cell forRowAtIndexPath:indexPath];  
         }
     }
@@ -1081,6 +1171,12 @@
         keyWindowHeight = keyWindowFrame.size.width;
 		keyboardHeight = keyboardSize.width;
 	}
+    
+    UIView *tableView;
+    if([self.modeledTableView.superview isKindOfClass:[UIScrollView class]])
+        tableView = self.modeledTableView.superview;
+    else
+        tableView = self.modeledTableView;
 	
     NSTimeInterval animationDuration;
 	[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
@@ -1088,9 +1184,14 @@
 	[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
 	
 	// Determine how much overlap exists between modeledTableView and the keyboard
-    CGRect tableFrame = self.modeledTableView.frame;
-    CGPoint convertedTableOrigin = [self.modeledTableView.superview convertPoint:tableFrame.origin 
-                                                                          toView:[keyWindow.subviews objectAtIndex:0]];
+    CGRect tableFrame = tableView.frame;
+    UIView *superView;
+#ifdef __IPHONE_4_0
+    superView = keyWindow.rootViewController.view;
+#else
+    superView = [keyWindow.subviews objectAtIndex:0];
+#endif
+    CGPoint convertedTableOrigin = [tableView.superview convertPoint:tableFrame.origin toView:superView];
 	CGFloat tableLowerYCoord = convertedTableOrigin.y + tableFrame.size.height;
 	CGFloat keyboardUpperYCoord = keyWindowHeight - keyboardHeight;
 	keyboardOverlap = tableLowerYCoord - keyboardUpperYCoord;
@@ -1118,12 +1219,12 @@
 		[UIView setAnimationDelay:delay];
 		[UIView setAnimationDuration:animationDuration];
 		[UIView setAnimationCurve:animationCurve];
-		self.modeledTableView.frame = tableFrame;
+		tableView.frame = tableFrame;
 		[UIView commitAnimations];
 #else
 		[UIView animateWithDuration:animationDuration delay:delay 
 							options:UIViewAnimationOptionBeginFromCurrentState 
-						 animations:^{ self.modeledTableView.frame = tableFrame; } 
+						 animations:^{ tableView.frame = tableFrame; } 
 						 completion:^(BOOL finished){ [self tableAnimationEnded:nil finished:nil contextInfo:nil]; }];
 #endif
 #else
@@ -1134,7 +1235,7 @@
 		[UIView setAnimationDelay:delay];
 		[UIView setAnimationDuration:animationDuration];
 		[UIView setAnimationCurve:animationCurve];
-		self.modeledTableView.frame = tableFrame;
+		tableView.frame = tableFrame;
 		[UIView commitAnimations];
 #endif
 	}
@@ -1171,11 +1272,17 @@
 	{
 		keyboardHeight = keyboardSize.width;
 	}
+    
+    UIView *tableView;
+    if([self.modeledTableView.superview isKindOfClass:[UIScrollView class]])
+        tableView = self.modeledTableView.superview;
+    else
+        tableView = self.modeledTableView;
 	
     NSTimeInterval animationDuration;
 	[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
 	
-	CGRect tableFrame = self.modeledTableView.frame; 
+	CGRect tableFrame = tableView.frame; 
 	tableFrame.size.height += keyboardOverlap;
 	
 	if(keyboardHeight)
@@ -1186,19 +1293,19 @@
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationBeginsFromCurrentState:YES];
 	[UIView setAnimationDuration:animationDuration];
-	self.modeledTableView.frame = tableFrame;
+	tableView.frame = tableFrame;
 	[UIView commitAnimations];
 #else
 	[UIView animateWithDuration:animationDuration delay:0 
 						options:UIViewAnimationOptionBeginFromCurrentState 
-					 animations:^{ self.modeledTableView.frame = tableFrame; } 
+					 animations:^{ tableView.frame = tableFrame; } 
 					 completion:nil];
 #endif
 #else
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:animationDuration];
-    self.modeledTableView.frame = tableFrame;
+    tableView.frame = tableFrame;
     [UIView commitAnimations];
 #endif
 }
@@ -1285,13 +1392,14 @@
 	 withViewController:(UIViewController *)_viewController
 			  withItems:(NSMutableArray *)_items
 {
-	if([self initWithTableView:_modeledTableView withViewController:_viewController])
+	if( (self=[self initWithTableView:_modeledTableView withViewController:_viewController]) )
 	{
 		self.items = _items;  // setter will generate sections
 	}
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[tempSection release];
@@ -1302,11 +1410,19 @@
 	
 	[super dealloc];
 }
+#endif
 
 //override superclass
 - (void)reloadBoundValues
 {
-	[self generateSections];
+	if(filteredArray)
+    {
+        [self searchBar:self.searchBar textDidChange:self.searchBar.text];
+    }
+    else
+    {
+        [self generateSections];
+    }
 }
 
 - (void)generateSections
@@ -1369,6 +1485,9 @@
 	NSUInteger itemIndex = [self.items indexOfObjectIdenticalTo:item];
 	NSString *sectionHeader = [self getHeaderTitleForItemAtIndex:itemIndex];
 	
+    if(!sectionHeader)
+        return 0;
+	
 	NSUInteger sectionIndex = NSNotFound;
 	for(NSUInteger i=0; i<self.sectionCount; i++)
 		if([[self sectionAtIndex:i].headerTitle isEqualToString:sectionHeader])
@@ -1387,8 +1506,8 @@
 
 - (void)setSearchBar:(UISearchBar *)sbar
 {
-	[searchBar release];
-	searchBar = [sbar retain];
+	SC_Release(searchBar);
+	searchBar = SC_Retain(sbar);
 	searchBar.delegate = self;
 }
 
@@ -1411,8 +1530,8 @@
 
 - (void)setItems:(NSMutableArray *)array
 {
-	[items release];
-	items = [array retain];
+	SC_Release(items);
+	items = SC_Retain(array);
 	
 	[self generateSections];
 }
@@ -1518,8 +1637,8 @@
 
 - (void)setAddButtonItem:(UIBarButtonItem *)barButtonItem
 {
-	[addButtonItem release];
-	addButtonItem = [barButtonItem retain];
+	SC_Release(addButtonItem);
+	addButtonItem = SC_Retain(barButtonItem);
 	
 	addButtonItem.target = self;
 	addButtonItem.action = @selector(didTapAddButtonItem);
@@ -1527,7 +1646,13 @@
 
 - (void)didTapAddButtonItem
 {
-	// Game plan: delegate presenting the add detail view to SCArrayOfItemsSection
+    if(self.allowAddingItems)
+        [self dispatchAddNewItemEvent];
+}
+
+- (void)dispatchAddNewItemEvent
+{
+    // Game plan: delegate presenting the add detail view to SCArrayOfItemsSection
 	
 	//cancel any search in progress
 	if([self.searchBar.text length])
@@ -1542,14 +1667,24 @@
 	{
 		if(!tempSection)
 		{
-			tempSection = [[self createSectionWithHeaderTitle:nil] retain];
+			tempSection = SC_Retain([self createSectionWithHeaderTitle:nil]);
 			tempSection.ownerTableViewModel = self;
 			[self setPropertiesForSection:tempSection];
 		}
 		section = tempSection;
 	}
 	
-	[section didTapAddButtonItem];
+	[section dispatchAddNewItemEvent];
+}
+
+- (void)dispatchSelectRowAtIndexPathEvent:(NSIndexPath *)indexPath
+{
+    [(SCArrayOfItemsSection *)[self sectionAtIndex:indexPath.section] dispatchSelectRowAtIndexPathEvent:indexPath];
+}
+
+- (void)dispatchRemoveRowAtIndexPathEvent:(NSIndexPath *)indexPath
+{
+    [(SCArrayOfItemsSection *)[self sectionAtIndex:indexPath.section] dispatchRemoveRowAtIndexPathEvent:indexPath];
 }
 
 - (void)addNewItem:(NSObject *)newItem
@@ -1600,6 +1735,7 @@
 		[NSIndexPath indexPathForRow:[section.items indexOfObjectIdenticalTo:item]
 						   inSection:oldSectionIndex];
 		[section.items removeObjectAtIndex:oldIndexPath.row];
+        section.selectedCellIndexPath = nil;
 		if(section.items.count)
 		{
 			[self.modeledTableView 
@@ -1608,16 +1744,23 @@
 		}
 		else
 		{
+#ifndef ARC_ENABLED
+            // Retain and autorelease section since this method was originally called by it.
+            // This gives the calling method a chance to exit.
+            [[section retain] autorelease];
+#endif
 			[self removeSectionAtIndex:oldSectionIndex];
+            section.ownerTableViewModel = nil;
+            
 			[self.modeledTableView deleteSections:[NSIndexSet indexSetWithIndex:oldSectionIndex]
 								 withRowAnimation:UITableViewRowAnimationRight];
 		}
 		
-		[item retain];
+		SC_Retain(item);
 		[self.items removeObjectIdenticalTo:item];
 		// add the item from scratch
 		[self addNewItem:item];
-		[item release];
+		SC_Release(item);
 	}
 }
 
@@ -1625,10 +1768,16 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
 	forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	SCArrayOfItemsSection *section = (SCArrayOfItemsSection *)[self sectionAtIndex:indexPath.section];
+    NSObject *item = [section.items objectAtIndex:indexPath.row];
+    
+    // remove the item from the items array
+    [self.items removeObjectIdenticalTo:item];
+    
+    // Have the respective section remove the item
 	[super tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
 	
 	// Remove the section if empty
-	SCArrayOfItemsSection *section = (SCArrayOfItemsSection *)[self sectionAtIndex:indexPath.section];
 	if(!section.items.count)
 	{
 		[self removeSectionAtIndex:indexPath.section];
@@ -1644,6 +1793,25 @@
 
 #pragma mark -
 #pragma mark UISearchBarDelegate methods
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    if(self.lockCellSelection)
+        return FALSE;
+    
+    BOOL shouldBegin = TRUE;
+    
+    if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
+	   && [self.delegate respondsToSelector:@selector(tableViewModelSearchBarShouldBeginEditing:)])
+	{
+		shouldBegin = [self.delegate tableViewModelSearchBarShouldBeginEditing:self];
+	}
+    
+    if(shouldBegin)
+        [SCModelCenter sharedModelCenter].keyboardIssuer = self.viewController;
+        
+    return shouldBegin;
+}
 
 - (void)searchBar:(UISearchBar *)sBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
@@ -1668,7 +1836,7 @@
 	[self.searchBar resignFirstResponder];
 	self.searchBar.text = nil;
 	
-	[filteredArray release];
+	SC_Release(filteredArray);
 	filteredArray = nil;
 	[self generateSections];
 	
@@ -1739,8 +1907,8 @@
 		}
 	}
 		
-	[filteredArray release];
-	filteredArray = [resultsArray retain];
+	SC_Release(filteredArray);
+	filteredArray = SC_Retain(resultsArray);
 	
 	[self generateSections];
 	[self.modeledTableView reloadData];
@@ -1779,9 +1947,9 @@
 						withItems:(NSMutableArray *)_items
 			  withClassDefinition:(SCClassDefinition *)classDefinition
 {
-	return [[[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
+	return SC_Autorelease([[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
 										  withItems:_items 
-								withClassDefinition:classDefinition] autorelease];
+								withClassDefinition:classDefinition]);
 }
 
 + (id)tableViewModelWithTableView:(UITableView *)_modeledTableView
@@ -1789,9 +1957,9 @@
 					 withItemsSet:(NSMutableSet *)_itemsSet
 			  withClassDefinition:(SCClassDefinition *)classDefinition
 {
-	return [[[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
+	return SC_Autorelease([[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
 									   withItemsSet:_itemsSet 
-								withClassDefinition:classDefinition] autorelease];
+								withClassDefinition:classDefinition]);
 }
 
 #ifdef _COREDATADEFINES_H
@@ -1799,8 +1967,8 @@
 			   withViewController:(UIViewController *)_viewController
 		withEntityClassDefinition:(SCClassDefinition *)classDefinition
 {
-	return [[[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
-						  withEntityClassDefinition:classDefinition] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
+						  withEntityClassDefinition:classDefinition]);
 }
 
 + (id)tableViewModelWithTableView:(UITableView *)_modeledTableView
@@ -1808,9 +1976,9 @@
 		withEntityClassDefinition:(SCClassDefinition *)classDefinition
 				   usingPredicate:(NSPredicate *)predicate
 {
-	return [[[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
+	return SC_Autorelease([[[self class] alloc] initWithTableView:_modeledTableView withViewController:_viewController
 						  withEntityClassDefinition:classDefinition
-									 usingPredicate:predicate] autorelease];
+									 usingPredicate:predicate]);
 }
 #endif
 
@@ -1834,7 +2002,7 @@
 			  withItems:(NSMutableArray *)_items
 	withClassDefinition:(SCClassDefinition *)classDefinition
 {
-	if([self initWithTableView:_modeledTableView withViewController:_viewController])
+	if( (self=[self initWithTableView:_modeledTableView withViewController:_viewController]) )
 	{		
 		if(classDefinition)
 		{
@@ -1850,7 +2018,7 @@
 		   withItemsSet:(NSMutableSet *)_itemsSet
 	withClassDefinition:(SCClassDefinition *)classDefinition
 {
-	if([self initWithTableView:_modeledTableView withViewController:_viewController])
+	if( (self=[self initWithTableView:_modeledTableView withViewController:_viewController]) )
 	{	
 		if(classDefinition)
 		{
@@ -1880,17 +2048,18 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 	
 	// Create the sectionItems array
 	NSMutableArray *sectionItems = [SCHelper generateObjectsArrayForEntityClassDefinition:classDefinition
-																		   usingPredicate:self.itemsPredicate];
+																		   usingPredicate:self.itemsPredicate ascending:YES];
 	
-	[self initWithTableView:_modeledTableView withViewController:_viewController
-                  withItems:sectionItems
-        withClassDefinition:classDefinition];
+	self = [self initWithTableView:_modeledTableView withViewController:_viewController
+                         withItems:sectionItems
+               withClassDefinition:classDefinition];
     [self callCoreDataObjectsLoadedDelegate];
     
     return self;
 }
 #endif
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[itemsPredicate release];
@@ -1900,6 +2069,7 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 		
 	[super dealloc];
 }
+#endif
 
 - (void)callCoreDataObjectsLoadedDelegate
 {
@@ -1918,7 +2088,7 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 	SCClassDefinition *classDef = [self firstClassDefinition];
 	if(classDef.entity)
     {
-        self.items = [SCHelper generateObjectsArrayForEntityClassDefinition:classDef usingPredicate:self.itemsPredicate];
+        self.items = [SCHelper generateObjectsArrayForEntityClassDefinition:classDef usingPredicate:self.itemsPredicate ascending:self.sortItemsSetAscending];
         [self callCoreDataObjectsLoadedDelegate];
     }
 		
@@ -1948,8 +2118,8 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 
 -(void)setItemsSet:(NSMutableSet *)set
 {
-	[itemsSet release];
-	itemsSet = [set retain];
+	SC_Release(itemsSet);
+	itemsSet = SC_Retain(set);
 	
 	[self generateItemsArrayFromItemsSet];
 }
@@ -1957,7 +2127,10 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 -(void)setSortItemsSetAscending:(BOOL)ascending
 {
 	sortItemsSetAscending = ascending;
-	[self generateItemsArrayFromItemsSet];
+    if(self.itemsSet)
+        [self generateItemsArrayFromItemsSet];
+    else
+        [self reloadBoundValues];
 }
 
 - (void)generateItemsArrayFromItemsSet
@@ -1979,7 +2152,7 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 									initWithKey:key
 									ascending:self.sortItemsSetAscending];
 	[sortedArray sortUsingDescriptors:[NSArray arrayWithObject:descriptor]];
-	[descriptor release];
+	SC_Release(descriptor);
 	
 	self.items = sortedArray;
 }
@@ -2055,11 +2228,470 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 		}
 	}
 	
-	[filteredArray release];
-	filteredArray = [resultsArray retain];
+	SC_Release(filteredArray);
+	filteredArray = SC_Retain(resultsArray);
 	
 	[self generateSections];
 	[self.modeledTableView reloadData];
+}
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
+@interface SCSelectionModel ()
+
+- (NSInteger)itemIndexForCell:(SCTableViewCell *)cell;
+- (NSInteger)itemIndexForCellAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathForItemIndex:(NSInteger)itemIndex;
+- (void)buildSelectedItemsIndexesFromString:(NSString *)string;
+- (NSString *)buildStringFromSelectedItemsIndexes;
+
+- (void)deselectLastSelectedRow;
+- (void)dismissViewController;
+
+@end
+
+
+
+@implementation SCSelectionModel
+
+@synthesize boundObject;
+@synthesize boundPropertyName;
+@synthesize boundKey;
+@synthesize allowMultipleSelection;
+@synthesize allowNoSelection;
+@synthesize maximumSelections;
+@synthesize autoDismissViewController;
+
+
+- (id)init
+{
+	if( (self=[super init]) )
+	{
+        boundObject = nil;
+		boundPropertyName = nil;
+		boundKey = nil;
+        
+		boundToNSNumber = FALSE;
+		boundToNSString = FALSE;
+		lastSelectedRowIndexPath = nil;
+		allowAddingItems = FALSE;
+		allowDeletingItems = FALSE;
+		allowMovingItems = FALSE;
+		allowEditDetailView = FALSE;
+		
+		allowMultipleSelection = FALSE;
+		allowNoSelection = FALSE;
+		maximumSelections = 0;
+		autoDismissViewController = FALSE;
+		_selectedItemsIndexes = [[NSMutableSet alloc] init];
+	}
+	
+	return self;
+}
+
+- (id)initWithTableView:(UITableView *)_modeledTableView
+     withViewController:(UIViewController *)_viewController
+        withBoundObject:(NSObject *)object 
+withSelectedIndexPropertyName:(NSString *)propertyName 
+              withItems:(NSArray *)sectionItems
+{
+	if([self initWithTableView:_modeledTableView withViewController:_viewController withItems:[NSMutableArray arrayWithArray:sectionItems]])
+	{
+		boundObject = SC_Retain(object);
+		
+		// Only bind property name if property exists
+		BOOL propertyExists;
+		@try { [SCHelper valueForPropertyName:propertyName inObject:self.boundObject]; propertyExists = TRUE; }
+        @catch (NSException *exception) { propertyExists = FALSE; }
+		if(propertyExists)
+			boundPropertyName = [propertyName copy];
+		
+		boundToNSNumber = TRUE;
+		allowMultipleSelection = FALSE;
+		
+		[self reloadBoundValues];
+	}
+	return self;
+}
+
+- (id)initWithTableView:(UITableView *)_modeledTableView
+     withViewController:(UIViewController *)_viewController
+        withBoundObject:(NSObject *)object 
+withSelectedIndexesPropertyName:(NSString *)propertyName 
+              withItems:(NSArray *)sectionItems 
+ allowMultipleSelection:(BOOL)multipleSelection
+{
+	if([self initWithTableView:_modeledTableView withViewController:_viewController withItems:[NSMutableArray arrayWithArray:sectionItems]])
+	{
+		boundObject = SC_Retain(object);
+		
+		// Only bind property name if property exists
+		BOOL propertyExists;
+		@try { [SCHelper valueForPropertyName:propertyName inObject:self.boundObject]; propertyExists = TRUE; }
+		@catch (NSException *exception) { propertyExists = FALSE; }
+		if(propertyExists)
+			boundPropertyName = [propertyName copy];
+		
+		allowMultipleSelection = multipleSelection;
+		
+		[self reloadBoundValues];
+	}
+	return self;
+}
+
+- (id)initWithTableView:(UITableView *)_modeledTableView
+     withViewController:(UIViewController *)_viewController
+        withBoundObject:(NSObject *)object 
+withSelectionStringPropertyName:(NSString *)propertyName 
+              withItems:(NSArray *)sectionItems
+{
+	if([self initWithTableView:_modeledTableView withViewController:_viewController withItems:[NSMutableArray arrayWithArray:sectionItems]])
+	{
+		boundObject = SC_Retain(object);
+		
+		// Only bind property name if property exists
+		BOOL propertyExists;
+		@try { [SCHelper valueForPropertyName:propertyName inObject:self.boundObject]; propertyExists = TRUE; }
+		@catch (NSException *exception) { propertyExists = FALSE; }
+		if(propertyExists)
+			boundPropertyName = [propertyName copy];
+		
+		boundToNSString = TRUE;
+		
+		[self reloadBoundValues];
+	}
+	return self;
+}
+
+- (id)initWithTableView:(UITableView *)_modeledTableView
+     withViewController:(UIViewController *)_viewController
+           withBoundKey:(NSString *)key 
+ withSelectedIndexValue:(NSNumber *)selectedIndexValue 
+              withItems:(NSArray *)sectionItems
+{
+	if( (self=[self initWithTableView:_modeledTableView withViewController:_viewController withItems:[NSMutableArray arrayWithArray:sectionItems]]) )
+	{
+		boundKey = [key copy];
+		self.boundValue = selectedIndexValue;
+		boundToNSNumber = TRUE;
+		allowMultipleSelection = FALSE;
+		
+		[self reloadBoundValues];
+	}
+	return self;
+}
+
+- (id)initWithTableView:(UITableView *)_modeledTableView
+     withViewController:(UIViewController *)_viewController
+           withBoundKey:(NSString *)key 
+withSelectedIndexesValue:(NSMutableSet *)selectedIndexesValue 
+              withItems:(NSArray *)sectionItems 
+ allowMultipleSelection:(BOOL)multipleSelection
+{
+	if( (self=[self initWithTableView:_modeledTableView withViewController:_viewController withItems:[NSMutableArray arrayWithArray:sectionItems]]) )
+	{
+		boundKey = [key copy];
+		self.boundValue = selectedIndexesValue;
+		allowMultipleSelection = multipleSelection;
+		
+		[self reloadBoundValues];
+	}
+	return self;
+}
+
+- (id)initWithTableView:(UITableView *)_modeledTableView
+     withViewController:(UIViewController *)_viewController
+           withBoundKey:(NSString *)key 
+withSelectionStringValue:(NSString *)selectionStringValue 
+              withItems:(NSArray *)sectionItems
+{
+	if( (self=[self initWithTableView:_modeledTableView withViewController:_viewController withItems:[NSMutableArray arrayWithArray:sectionItems]]) )
+	{
+		boundKey = [key copy];
+		self.boundValue = selectionStringValue;
+		
+		boundToNSString = TRUE;
+		
+		[self reloadBoundValues];
+	}
+	return self;
+}
+
+#ifndef ARC_ENABLED
+- (void)dealloc
+{
+    [boundObject release];
+	[boundPropertyName release];
+	[boundKey release];
+	[_selectedItemsIndexes release];
+	[lastSelectedRowIndexPath release];
+	[super dealloc];
+}
+#endif
+
+- (void)setBoundValue:(id)value
+{
+	if(self.boundObject && self.boundPropertyName)
+	{
+		[self.boundObject setValue:value forKey:self.boundPropertyName];
+	}
+	else
+		if(self.boundKey)
+		{
+			[self.modelKeyValues setValue:value forKey:self.boundKey];
+		}
+}
+
+- (NSObject *)boundValue
+{
+	if(self.boundObject && self.boundPropertyName)
+	{
+		return [SCHelper valueForPropertyName:self.boundPropertyName inObject:self.boundObject];
+	}
+	//else
+	if(self.boundKey)
+	{
+		NSObject *val = [self.modelKeyValues valueForKey:self.boundKey];
+        return val;
+	}
+	//else
+	return nil;
+}
+
+- (NSInteger)itemIndexForCell:(SCTableViewCell *)cell
+{
+    return [self.items indexOfObject:cell.textLabel.text];
+}
+
+- (NSInteger)itemIndexForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCTableViewCell *cell = [self cellAtIndexPath:indexPath];
+    return [self itemIndexForCell:cell];
+}
+
+- (NSIndexPath *)indexPathForItemIndex:(NSInteger)itemIndex
+{
+    for(NSInteger i=0; i<self.sectionCount; i++)
+    {
+        SCTableViewSection *section = [self sectionAtIndex:i];
+        for(NSInteger j=0; j<section.cellCount; j++)
+        {
+            SCTableViewCell *cell = [section cellAtIndex:j];
+            if([self.items indexOfObject:cell.textLabel.text] == itemIndex)
+                return [NSIndexPath indexPathForRow:j inSection:i];
+        }
+    }
+    return nil;
+}
+
+- (void)buildSelectedItemsIndexesFromString:(NSString *)string
+{
+	NSArray *selectionStrings = [string componentsSeparatedByString:@";"];
+	
+	[self.selectedItemsIndexes removeAllObjects];
+	for(NSString *selectionString in selectionStrings)
+	{
+		int index = [self.items indexOfObject:selectionString];
+		if(index != NSNotFound)
+			[self.selectedItemsIndexes addObject:[NSNumber numberWithInt:index]];
+	}
+}
+
+- (NSString *)buildStringFromSelectedItemsIndexes
+{
+	NSMutableArray *selectionStrings = [NSMutableArray arrayWithCapacity:[self.selectedItemsIndexes count]];
+	for(NSNumber *index in self.selectedItemsIndexes)
+	{
+		[selectionStrings addObject:[self.items objectAtIndex:[index intValue]]];
+	}
+	
+	return [selectionStrings componentsJoinedByString:@";"];
+}
+
+// override superclass
+- (void)setItems:(NSMutableArray *)_items
+{
+    [super setItems:_items];
+    
+    [self reloadBoundValues];
+}
+
+// override superclass
+- (void)reloadBoundValues
+{
+    [super reloadBoundValues];
+    
+    if(boundToNSNumber)
+    {
+        if(self.boundValue)
+			[self.selectedItemsIndexes addObject:self.boundValue];
+		
+		if((self.boundObject || self.boundKey) && !self.boundValue)
+			self.boundValue = [NSNumber numberWithInt:-1];
+    }
+    else
+        if(boundToNSString)
+        {
+            if([self.boundValue isKindOfClass:[NSString class]] && self.items)
+            {
+                [self buildSelectedItemsIndexesFromString:(NSString *)self.boundValue];
+            }
+        }
+        else
+        {
+            if((self.boundObject || self.boundKey) && !self.boundValue)
+                self.boundValue = [NSMutableSet set];   //Empty set
+        }
+}
+
+// override superclass method
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if([self.selectedItemsIndexes containsObject:[NSNumber numberWithInt:[self itemIndexForCellAtIndexPath:indexPath]]])
+	{
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		cell.textLabel.textColor = [UIColor colorWithRed:50.0f/255 green:79.0f/255 blue:133.0f/255 alpha:1];
+	}
+	else
+	{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+		cell.textLabel.textColor = [UIColor blackColor];
+	}
+	cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+}
+
+- (void)deselectLastSelectedRow
+{
+	[self.modeledTableView deselectRowAtIndexPath:lastSelectedRowIndexPath animated:YES];
+}
+
+// override superclass method
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{	
+    NSNumber *itemIndex = [NSNumber numberWithInt:[self itemIndexForCellAtIndexPath:indexPath]];
+	UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+	
+	SC_Release(lastSelectedRowIndexPath);
+	lastSelectedRowIndexPath = SC_Retain(indexPath);
+	
+	if([self.selectedItemsIndexes containsObject:itemIndex])
+	{
+		if(!self.allowNoSelection && self.selectedItemsIndexes.count==1)
+		{
+			[self performSelector:@selector(deselectLastSelectedRow) withObject:nil afterDelay:0.05];
+			
+			if(self.autoDismissViewController)
+				[self performSelector:@selector(dismissViewController) withObject:nil afterDelay:0.4];
+			return;
+		}
+		
+		//uncheck cell and exit method
+		[self.selectedItemsIndexes removeObject:itemIndex];
+		if(boundToNSNumber)
+			self.boundValue = self.selectedItemIndex;
+		else
+			if(boundToNSString)
+				self.boundValue = [self buildStringFromSelectedItemsIndexes];
+		selectedCell.accessoryType = UITableViewCellAccessoryNone;
+		selectedCell.textLabel.textColor = [UIColor blackColor];
+		[self valueChangedForSectionAtIndex:indexPath.section];
+		[self performSelector:@selector(deselectLastSelectedRow) withObject:nil afterDelay:0.05];
+		return;
+	}
+	
+	// Make sure not to exceed maximumSelections
+	if(self.allowMultipleSelection && self.maximumSelections!=0 && self.selectedItemsIndexes.count==self.maximumSelections)
+	{
+		[self performSelector:@selector(deselectLastSelectedRow) withObject:nil afterDelay:0.05];
+		
+		if(self.autoDismissViewController)
+			[self performSelector:@selector(dismissViewController) withObject:nil afterDelay:0.4];
+		return;
+	}
+	
+	if(!self.allowMultipleSelection && self.selectedItemsIndexes.count)
+	{
+		NSIndexPath *oldIndexPath = [self indexPathForItemIndex:[(NSNumber *)[self.selectedItemsIndexes anyObject] intValue]];
+        [self.selectedItemsIndexes removeAllObjects];
+		UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
+		oldCell.accessoryType = UITableViewCellAccessoryNone;
+		oldCell.textLabel.textColor = [UIColor blackColor];
+	}
+	
+	//check selected cell
+	[self.selectedItemsIndexes addObject:itemIndex];
+	if(boundToNSNumber)
+		self.boundValue = self.selectedItemIndex;
+	else
+		if(boundToNSString)
+			self.boundValue = [self buildStringFromSelectedItemsIndexes];
+	selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+	selectedCell.textLabel.textColor = [UIColor colorWithRed:50.0f/255 green:79.0f/255 blue:133.0f/255 alpha:1];
+	
+	[self valueChangedForSectionAtIndex:indexPath.section];
+	
+	[self performSelector:@selector(deselectLastSelectedRow) withObject:nil afterDelay:0.1];
+	
+	if(self.autoDismissViewController)
+	{
+		if(!self.allowMultipleSelection || self.maximumSelections==0 
+		   || self.maximumSelections==self.selectedItemsIndexes.count || self.items.count==self.selectedItemsIndexes.count)
+			[self performSelector:@selector(dismissViewController) withObject:nil afterDelay:0.4];
+	}
+    
+}
+
+- (void)dismissViewController
+{
+	if([self.viewController isKindOfClass:[SCTableViewController class]])
+	{
+		[(SCTableViewController *)self.viewController 
+		 dismissWithCancelValue:FALSE doneValue:TRUE];
+	}
+}
+
+- (NSMutableSet *)selectedItemsIndexes
+{
+	if( (self.boundObject || self.boundKey) && !(boundToNSNumber || boundToNSString))
+		return (NSMutableSet *)self.boundValue;
+	//else
+	return _selectedItemsIndexes;
+}
+
+- (void)setSelectedItemIndex:(NSNumber *)number
+{
+	NSNumber *num = [number copy];
+	
+	if(boundToNSNumber)
+		self.boundValue = num;
+	
+	[self.selectedItemsIndexes removeAllObjects];
+	if([number intValue] >= 0)
+		[self.selectedItemsIndexes addObject:num];
+	
+	SC_Release(num);
+}
+
+- (NSNumber *)selectedItemIndex
+{
+	NSNumber *index = [self.selectedItemsIndexes anyObject];
+	
+	if(index)
+		return index;
+	//else
+	return [NSNumber numberWithInt:-1];
 }
 
 @end

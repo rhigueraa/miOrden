@@ -1,7 +1,7 @@
 /*
  *  SCGlobals.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -25,6 +25,20 @@
 #import "SCTableViewModel.h"
 
 
+
+
+@implementation UINavigationController(KeyboardDismiss)
+
+- (BOOL)disablesAutomaticKeyboardDismissal
+{
+    return NO;
+}
+
+@end
+
+
+
+
 @implementation SCHelper
 
 + (double)systemVersion
@@ -43,6 +57,10 @@
 
 + (BOOL)isViewInsidePopover:(UIView *)view
 {
+#ifndef __IPHONE_3_2
+    return FALSE;
+#endif
+    
 	BOOL inPopover = FALSE;
 	while (view.superview)
 	{
@@ -78,7 +96,8 @@
 }
 
 + (NSMutableArray *)generateObjectsArrayForEntityClassDefinition:(SCClassDefinition *)classDef
-										   usingPredicate:(NSPredicate *)predicate
+                                                  usingPredicate:(NSPredicate *)predicate
+                                                       ascending:(BOOL)ascending
 {
 	NSMutableArray *objectsArray = nil;
 	
@@ -96,7 +115,7 @@
 			key = classDef.keyPropertyName;
 		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] 
 											initWithKey:key 
-											ascending:YES];
+											ascending:ascending];
 		NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 		[fetchRequest setSortDescriptors:sortDescriptors];
 		
@@ -104,9 +123,9 @@
 													   executeFetchRequest:fetchRequest
 													   error:NULL]];
 		
-		[sortDescriptor release];
-		[sortDescriptors release];
-		[fetchRequest release];
+		SC_Release(sortDescriptor);
+		SC_Release(sortDescriptors);
+		SC_Release(fetchRequest);
 	}
 #endif
 	
@@ -223,12 +242,13 @@
 	return self;
 }
 
-- (void) dealloc
+- (void)dealloc
 {
 	[self unregisterKeyboardNotifications];
 	CFRelease(modelsSet);
-	
+#ifndef ARC_ENABLED
 	[super dealloc];
+#endif
 }
 
 - (void)registerForKeyboardNotifications
@@ -249,7 +269,7 @@
 	if(!self.keyboardIssuer)
 		return;
 	
-	for(SCTableViewModel *model in (id)modelsSet)
+	for(SCTableViewModel *model in (__SC_IDCAST)modelsSet)
 		if(model.viewController == self.keyboardIssuer)
 			[model keyboardWillShow:aNotification];
 }
@@ -259,7 +279,7 @@
 	if(!self.keyboardIssuer)
 		return;
 	
-	for(SCTableViewModel *model in (id)modelsSet)
+	for(SCTableViewModel *model in (__SC_IDCAST)modelsSet)
 		if(model.viewController == self.keyboardIssuer)
 			[model keyboardWillHide:aNotification];
 }
@@ -268,17 +288,17 @@
 
 - (void)registerModel:(SCTableViewModel *)model
 {
-    CFSetAddValue(modelsSet, model);
+    CFSetAddValue(modelsSet, (__SC_CONSTVOIDCAST)model);
 }
 
 - (void)unregisterModel:(SCTableViewModel *)model
 {
-    CFSetRemoveValue(modelsSet, model);
+    CFSetRemoveValue(modelsSet, (__SC_CONSTVOIDCAST)model);
 }
 
 - (SCTableViewModel *)modelForViewController:(UIViewController *)viewController
 {
-    for(SCTableViewModel *model in (id)modelsSet)
+    for(SCTableViewModel *model in (__SC_IDCAST)modelsSet)
         if(model.viewController == viewController)
             return model;
     

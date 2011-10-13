@@ -78,6 +78,9 @@ static NSString *priceKey = @"user_price";
     [super viewWillAppear:animated];
     carrito = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"] retain];
     [self.tableView reloadData];
+    
+    currentRestaurant = [[[NSUserDefaults standardUserDefaults] valueForKey:@"currentRestaurant"] retain];
+    
     NSLog(@"Carrito is: %@",carrito);
 }
 
@@ -106,12 +109,18 @@ static NSString *priceKey = @"user_price";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [carrito count];
+    if (section == 0) {
+        return [carrito count];
+    }
+    else{
+        return 3;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -123,16 +132,69 @@ static NSString *priceKey = @"user_price";
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
-    cell.textLabel.text = [[carrito objectAtIndex:indexPath.row] objectForKey:nameKey];
-    NSString *detailText;
-    if ([[[carrito objectAtIndex:indexPath.row] objectForKey:@"extrasPrice"] floatValue]>0) {
-        detailText = [NSString stringWithFormat:@"$%@ + $%.2f",[[carrito objectAtIndex:indexPath.row] objectForKey:priceKey],[[[carrito objectAtIndex:indexPath.row] objectForKey:@"extrasPrice"] floatValue]];
+    //Items
+    if (indexPath.section == 0) {
+        cell.textLabel.text = [[carrito objectAtIndex:indexPath.row] objectForKey:nameKey];
+        NSString *detailText;
+        if ([[[carrito objectAtIndex:indexPath.row] objectForKey:@"extrasPrice"] floatValue]>0) {
+            detailText = [NSString stringWithFormat:@"$%@ + $%.2f",[[carrito objectAtIndex:indexPath.row] objectForKey:priceKey],[[[carrito objectAtIndex:indexPath.row] objectForKey:@"extrasPrice"] floatValue]];
+        }
+        else{
+            detailText = [NSString stringWithFormat:@"$%@",[[carrito objectAtIndex:indexPath.row] objectForKey:priceKey]];
+        }
+        cell.detailTextLabel.text = detailText;
     }
     else{
-        detailText = [NSString stringWithFormat:@"$%@",[[carrito objectAtIndex:indexPath.row] objectForKey:priceKey]];
+        //Resumen
+        switch (indexPath.row) {
+            case 0:
+                //Sub total
+                cell.textLabel.text = @"Sub Total";
+                float tot = 0;
+                for (NSDictionary* item in carrito) {
+                    tot+=[[item objectForKey:@"extrasPrice"] floatValue];
+                    tot+=[[item objectForKey:priceKey] floatValue];
+                }
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"$%.2f",tot];
+                break;
+            case 1:
+                //envío
+                cell.textLabel.text = @"Envío";
+                if([[currentRestaurant valueForKey:@"tipo_envio"]isEqualToString:@"porcentaje"]){
+                    float tot = 0;
+                    for (NSDictionary* item in carrito) {
+                        tot+=[[item objectForKey:@"extrasPrice"] floatValue];
+                        tot+=[[item objectForKey:priceKey] floatValue];
+                    }   
+                    float costoEnvioTotal = tot*([[currentRestaurant valueForKey:@"costo_envio"] intValue]/100);
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"$%d.00",costoEnvioTotal];
+                }
+                else
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"$%d.00",[[currentRestaurant valueForKey:@"costo_envio"] intValue]];
+                break;
+            case 2:
+                //Total
+                cell.textLabel.text = @"Total";
+                float costoEnvioTotal;
+                float totalI;
+                totalI = 0;
+                for (NSDictionary* item in carrito) {
+                    totalI+=[[item objectForKey:@"extrasPrice"] floatValue];
+                    totalI+=[[item objectForKey:priceKey] floatValue];
+                }   
+                if([[currentRestaurant valueForKey:@"tipo_envio"]isEqualToString:@"porcentaje"]){
+                    costoEnvioTotal = totalI*([[currentRestaurant valueForKey:@"costo_envio"] intValue]/100);
+                }
+                else
+                    costoEnvioTotal = [[currentRestaurant valueForKey:@"costo_envio"] intValue];
+                
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"$%.2f",costoEnvioTotal+totalI];
+                
+                break;
+            default:
+                break;
+        }
     }
-    cell.detailTextLabel.text = detailText;
     return cell;
 }
 
@@ -150,7 +212,12 @@ static NSString *priceKey = @"user_price";
         tot+=[[item objectForKey:@"extrasPrice"] floatValue];
         tot+=[[item objectForKey:priceKey] floatValue];
     }
-    self.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+    if (tot>0) {
+        self.tabBarItem.badgeValue = [NSString stringWithFormat:@"$%.2f",tot];
+    }
+    else{
+        self.tabBarItem.badgeValue = nil;
+    }
 }
 
 @end

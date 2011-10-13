@@ -1,7 +1,7 @@
 /*
  *  SCTableViewController.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -72,10 +72,11 @@
 
 - (id)initWithStyle:(UITableViewStyle)style withNavigationBarType:(SCNavigationBarType)type
 {
-	[self initWithStyle:style];
-	
-	self.navigationBarType = type;
-	
+	if( (self = [self initWithStyle:style]) )
+    {
+        self.navigationBarType = type;
+    }
+        
 	return self;
 }
 
@@ -149,11 +150,15 @@
 {
 	[super viewWillAppear:animated];
 	
-    // Inherit owner's background
     SCTableViewModel *ownerModel = [[SCModelCenter sharedModelCenter] modelForViewController:self.ownerViewController];
-    if(self.tableView.style!=UITableViewStylePlain && ownerModel.modeledTableView.style!=UITableViewStylePlain)
+    
+    if(ownerModel)
     {
-        self.tableView.backgroundColor = ownerModel.modeledTableView.backgroundColor;
+        // Inherit owner's background
+        if(self.tableView.style!=UITableViewStylePlain && ownerModel.modeledTableView.style!=UITableViewStylePlain)
+        {
+            self.tableView.backgroundColor = ownerModel.modeledTableView.backgroundColor;
+        }
     }
     
 	if(self.navigationBarType==SCNavigationBarTypeAddEditRight && !toolbarAdded)
@@ -170,17 +175,17 @@
 								   target:nil
 								   action:nil];
 		[buttons addObject:spacer];
-		[spacer release];
+		SC_Release(spacer);
 		[buttons addObject:self.editButton];
 		
 		// put the buttons in the toolbar
 		[buttonsToolbar setItems:buttons animated:NO];
-		[buttons release];
+		SC_Release(buttons);
 		
 		// place the toolbar into the navigation bar
 		UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithCustomView:buttonsToolbar];
 		self.navigationItem.rightBarButtonItem = toolbarButton;
-		[toolbarButton release];
+		SC_Release(toolbarButton);
 		
 		toolbarAdded = TRUE;
 	}
@@ -226,6 +231,7 @@
 	return [self.ownerViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc 
 {
     [tableViewModel release];
@@ -236,17 +242,18 @@
 	[buttonsToolbar release];
 	[super dealloc];
 }
+#endif
 
 - (void)setNavigationBarType:(SCNavigationBarType)barType
 {
 	navigationBarType = barType;
 	
 	// Reset buttons
-	[addButton release];
+	SC_Release(addButton);
 	addButton = nil;
-	[cancelButton release];
+	SC_Release(cancelButton);
 	cancelButton = nil;
-	[doneButton release];
+	SC_Release(doneButton);
 	doneButton = nil;
     
     // Setup self.editButton
@@ -274,53 +281,53 @@
 		{
 			case SCNavigationBarTypeAddLeft:
 				navItem.leftBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				break;
 			case SCNavigationBarTypeAddRight:
 				navItem.rightBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				break;
 			case SCNavigationBarTypeEditLeft:
 				navItem.leftBarButtonItem = self.editButton;
 				break;
 			case SCNavigationBarTypeEditRight:
 				navItem.rightBarButtonItem = self.editButton;
-                cancelButton = [tempCancelButton retain];
+                cancelButton = SC_Retain(tempCancelButton);
                 cancelButton.action = @selector(editingModeCancelButtonAction);
 				break;
 			case SCNavigationBarTypeAddRightEditLeft:
 				navItem.rightBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				navItem.leftBarButtonItem = self.editButton;
 				break;
 			case SCNavigationBarTypeAddLeftEditRight:
 				navItem.leftBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				navItem.rightBarButtonItem = self.editButton;
 				break;
 			case SCNavigationBarTypeDoneLeft:
 				navItem.leftBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				break;
 			case SCNavigationBarTypeDoneRight:
 				navItem.rightBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				break;
 			case SCNavigationBarTypeDoneLeftCancelRight:
 				navItem.leftBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				navItem.rightBarButtonItem = tempCancelButton;
-				cancelButton = [tempCancelButton retain];
+				cancelButton = SC_Retain(tempCancelButton);
 				break;
 			case SCNavigationBarTypeDoneRightCancelLeft:
 				navItem.rightBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				navItem.leftBarButtonItem = tempCancelButton;
-				cancelButton = [tempCancelButton retain];
+				cancelButton = SC_Retain(tempCancelButton);
 				break;
 			case SCNavigationBarTypeAddEditRight:
 			{
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				addButton.style = UIBarButtonItemStyleBordered;
 				
 				// Add the toolbar later (on viewWillAppear) when the toolbar style can be determined
@@ -331,9 +338,9 @@
 				break;
 		}
 		
-		[tempAddButton release];
-		[tempCancelButton release];
-		[tempDoneButton release];
+		SC_Release(tempAddButton);
+		SC_Release(tempCancelButton);
+		SC_Release(tempDoneButton);
 	}
 }
 
@@ -354,6 +361,12 @@
 
 - (void)editButtonAction
 {
+    if(self.tableViewModel.swipeToDeleteActive)
+    {
+        [self.tableViewModel setModeledTableViewEditing:NO animated:TRUE];
+        return;
+    }
+    
     BOOL editing = !self.tableView.editing;
     
     if(self.navigationBarType == SCNavigationBarTypeEditRight)
@@ -367,6 +380,8 @@
                 section = [self.tableViewModel sectionAtIndex:0];
             if(![section isKindOfClass:[SCArrayOfItemsSection class]])
                 self.navigationItem.leftBarButtonItem = self.cancelButton;
+            
+            self.tableViewModel.commitButton = self.editButton;
         }
         else
         {
@@ -375,6 +390,9 @@
                 SCTableViewSection *section = [self.tableViewModel sectionAtIndex:i];
                 [section commitCellChanges];
             }
+            
+            self.tableViewModel.commitButton = nil;
+            self.editButton.enabled = TRUE;  // in case user taps 'Cancel' while button disabled
             
             self.navigationItem.leftBarButtonItem = nil;
             [self.navigationItem setHidesBackButton:FALSE animated:FALSE];

@@ -120,7 +120,12 @@
     }
 
     cell.textLabel.text = [[itemList objectAtIndex:indexPath.row] valueForKey:@"title"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"$%@",[[itemList objectAtIndex:indexPath.row] valueForKey:@"user_price"]];
+    if ([[[itemList objectAtIndex:indexPath.row] valueForKey:@"user_price"] floatValue]>0) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"$%@",[[itemList objectAtIndex:indexPath.row] valueForKey:@"user_price"]];
+    }
+    else{
+        cell.detailTextLabel.text = @"";
+    }
     
     return cell;
 }

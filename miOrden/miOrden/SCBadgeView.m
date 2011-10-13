@@ -1,7 +1,7 @@
 /*
  *  SCBadgeView.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -34,8 +34,8 @@
 	if( (self = [super initWithFrame:aRect]) )
 	{
 		text = nil;
-		font = [[UIFont boldSystemFontOfSize: 16] retain];
-		color = [[UIColor colorWithRed:140.0f/255 green:153.0f/255 blue:180.0f/255 alpha:1] retain];
+		font = SC_Retain([UIFont boldSystemFontOfSize: 16]);
+		color = SC_Retain([UIColor colorWithRed:140.0f/255 green:153.0f/255 blue:180.0f/255 alpha:1]);
 		
 		self.backgroundColor = [UIColor clearColor];
 	}
@@ -43,6 +43,7 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[text release];
@@ -51,6 +52,7 @@
 	
 	[super dealloc];
 }
+#endif
 
 // overrides superclass
 - (void)drawRect:(CGRect)rect
@@ -100,15 +102,15 @@
 
 - (void)setColor:(UIColor *)_color
 {
-	[color release];
-	color = [_color retain];
+	SC_Release(color);
+	color = SC_Retain(_color);
 	
 	[self setNeedsDisplay];
 }
 
 - (void)setText:(NSString *)_text
 {
-	[text release];
+	SC_Release(text);
 	text = [_text copy];
 	
 	[self setNeedsDisplay];
@@ -116,8 +118,8 @@
 
 - (void)setFont:(UIFont *)_font
 {
-	[font release];
-	font = [_font retain];
+	SC_Release(font);
+	font = SC_Retain(_font);
 	
 	[self setNeedsDisplay];
 }
