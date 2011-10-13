@@ -1,7 +1,7 @@
 /*
  *  SCClassDefinition.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -95,7 +95,7 @@ typedef enum
  */
 @interface SCPropertyDefinition : NSObject
 {
-	SCClassDefinition *ownerClassDefinition;
+	__SC_WEAK SCClassDefinition *ownerClassDefinition;
 	SCPropertyDataType dataType;
 	BOOL dataReadOnly;
 	NSString *name;
@@ -156,7 +156,7 @@ typedef enum
  *
  * @warning Important: This property gets set automatically by the framework, you should never set this property manually. 
  */
-@property (nonatomic, assign) SCClassDefinition *ownerClassDefinition;
+@property (nonatomic, SC_WEAK) SCClassDefinition *ownerClassDefinition;
 
 /** The name of the property associated with the property definition. */
 @property (nonatomic, readonly) NSString *name;
@@ -174,7 +174,7 @@ typedef enum
  The attibutes set associated with the type of the property. Property attributes gives the user the ability
  to further customize the user interface element that will be generated for the given property type. 
  */
-@property (nonatomic, retain) SCPropertyAttributes *attributes;
+@property (nonatomic, SC_STRONG) SCPropertyAttributes *attributes;
 
 /** 
  The type of the property while in editing mode. Property types determines which user interface element will
@@ -187,7 +187,7 @@ typedef enum
  The attibutes set associated with the editingModetype of the property. Property attributes gives the user the ability
  to further customize the user interface element that will be generated for the given property editingModetype. 
  */
-@property (nonatomic, retain) SCPropertyAttributes *editingModeAttributes;
+@property (nonatomic, SC_STRONG) SCPropertyAttributes *editingModeAttributes;
 
 /** Set to TRUE if property is a required property. Default: FALSE. */
 @property (nonatomic, readwrite) BOOL required;
@@ -244,7 +244,10 @@ typedef enum
  */
 @interface  SCCustomPropertyDefinition : SCPropertyDefinition
 {
-	NSObject *uiElement;
+    NSObject *uiElement; //deprecated
+    
+    __SC_WEAK Class uiElementClass;
+    NSString *uiElementNibName;
 	NSDictionary *objectBindings;
 }
 
@@ -254,6 +257,7 @@ typedef enum
 
 /** Allocates and returns an initialized 'SCCustomPropertyDefinition' given a property name and a custom user interface element to generate.
  *
+ *  @warning Depricated in STV 2.1, use definitionWithName:withuiElementClass:withObjectBindings instead.
  *	@param propertyName The name of the property.
  *	@param element The custom user interface element that will be generated.
  *	@param bindings This dictionary specifies how each of the uiElement's custom controls binds itself to the class definition's properties. Each dictionary key should be the tag string value of one of the uiElement's custom controls, and the value should be the name of the class definition's property that is bound to that control. 
@@ -261,6 +265,17 @@ typedef enum
  */
 + (id)definitionWithName:(NSString *)propertyName 
 		   withuiElement:(NSObject *)element
+	  withObjectBindings:(NSDictionary *)bindings __attribute__((deprecated));
+
+/** Allocates and returns an initialized 'SCCustomPropertyDefinition' given a property name and a class of the  custom user interface element to generate.
+ *
+ *	@param propertyName The name of the property.
+ *	@param elementClass The class of the custom user interface element that will be generated.
+ *	@param bindings This dictionary specifies how each of the uiElement's custom controls binds itself to the class definition's properties. Each dictionary key should be the tag string value of one of the uiElement's custom controls, and the value should be the name of the class definition's property that is bound to that control. 
+ *	@warning IMPORTANT: All control tags must be greater than zero.
+ */
++ (id)definitionWithName:(NSString *)propertyName 
+      withuiElementClass:(Class)elementClass
 	  withObjectBindings:(NSDictionary *)bindings;
 
 /** Allocates and returns an initialized 'SCCustomPropertyDefinition' given a property name and the name of the nib file containing the custom user interface element to generate.
@@ -276,6 +291,7 @@ typedef enum
 
 /** Returns an initialized 'SCCustomPropertyDefinition' given a property name and a custom user interface element to generate.
  *
+ *  @warning Depricated in STV 2.1, use initWithName:withuiElementClass:withObjectBindings instead.
  *	@param propertyName The name of the property.
  *	@param element The custom user interface element that will be generated.
  *	@param bindings This dictionary specifies how each of the uiElement's custom controls binds itself to the class definition's properties. Each dictionary key should be the tag string value of one of the uiElement's custom controls, and the value should be the name of the class definition's property that is bound to that control. 
@@ -283,7 +299,18 @@ typedef enum
  */
 - (id)initWithName:(NSString *)propertyName 
 	 withuiElement:(NSObject *)element
-withObjectBindings:(NSDictionary *)bindings;
+withObjectBindings:(NSDictionary *)bindings __attribute__((deprecated));
+
+/** Returns an initialized 'SCCustomPropertyDefinition' given a property name and a class of the  custom user interface element to generate.
+ *
+ *	@param propertyName The name of the property.
+ *	@param elementClass The class of the custom user interface element that will be generated.
+ *	@param bindings This dictionary specifies how each of the uiElement's custom controls binds itself to the class definition's properties. Each dictionary key should be the tag string value of one of the uiElement's custom controls, and the value should be the name of the class definition's property that is bound to that control. 
+ *	@warning IMPORTANT: All control tags must be greater than zero.
+ */
+- (id)initWithName:(NSString *)propertyName 
+    withuiElementClass:(Class)elementClass
+    withObjectBindings:(NSDictionary *)bindings;
 
 /** Returns an initialized 'SCCustomPropertyDefinition' given a property name and the name of the nib file containing the custom user interface element to generate.
  *
@@ -301,8 +328,16 @@ withObjectBindings:(NSDictionary *)bindings;
 /// @name Configuration
 //////////////////////////////////////////////////////////////////////////////////////////
 
-/** The custom user interface element the property will generate. */
-@property (nonatomic, readonly) NSObject *uiElement;
+/** Deprecated in STV 2.1, use uiElementClass instead. */
+@property (nonatomic, readonly) NSObject *uiElement __attribute__((deprecated));
+
+/** The class of the custom user interface element the property will generate. 
+ *
+ *  @warning No need to set this property if uiElementNibName contains a valid value. */
+@property (nonatomic, SC_WEAK) Class uiElementClass;
+
+/** The Nib name of the custom user interface element the property will generate. */
+@property (nonatomic, copy) NSString *uiElementNibName;
 
 /** 
  This dictionary specifies how each
@@ -312,7 +347,7 @@ withObjectBindings:(NSDictionary *)bindings;
  name of the class definition's property that is bound to that control. 
  @warning IMPORTANT: All control tags must be greater than zero.
  */
-@property (nonatomic, retain) NSDictionary *objectBindings;
+@property (nonatomic, SC_STRONG) NSDictionary *objectBindings;
 
 @end
 
@@ -480,7 +515,7 @@ withObjectBindings:(NSDictionary *)bindings;
 	NSString *titlePropertyNameDelimiter;
 	NSString *descriptionPropertyName;
 	NSString *orderAttributeName;
-	id uiElementDelegate;
+	__SC_WEAK id uiElementDelegate;
     
     SCPropertyGroup *defaultPropertyGroup;
     SCPropertyGroupArray *propertyGroups;
@@ -523,6 +558,13 @@ withObjectBindings:(NSDictionary *)bindings;
 + (id)definitionWithClass:(Class)_cls withPropertyNames:(NSArray *)propertyNames
 		withPropertyTitles:(NSArray *)propertyTitles;
 
+/** Allocates and returns an initialized 'SCClassDefinition' given a class and an SCPropertyGroupArray.
+ *
+ *	@param _cls A class for which the definition will be extended.
+ *	@param groups A collection of property groups. 
+ */
++ (id)definitionWithClass:(Class)_cls withPropertyGroups:(SCPropertyGroupArray *)groups;
+
 /** Allocates and returns an initialized 'SCClassDefinition' given a class and the option to auto generate property definitions for the given class.
  
  The method will also generate user friendly property titles from the names of 
@@ -555,6 +597,13 @@ withObjectBindings:(NSDictionary *)bindings;
  */
 - (id)initWithClass:(Class)_cls withPropertyNames:(NSArray *)propertyNames
   withPropertyTitles:(NSArray *)propertyTitles;
+
+/** Returns an initialized 'SCClassDefinition' given a class and an SCPropertyGroupArray.
+ *
+ *	@param _cls A class for which the definition will be extended.
+ *	@param groups A collection of property groups. 
+ */
+- (id)initWithClass:(Class)_cls withPropertyGroups:(SCPropertyGroupArray *)groups;
 
 
 #ifdef _COREDATADEFINES_H
@@ -606,6 +655,17 @@ withObjectBindings:(NSDictionary *)bindings;
 			 withPropertyNames:(NSArray *)propertyNames
 			withPropertyTitles:(NSArray *)propertyTitles;
 
+/** Allocates and returns an initialized 'SCClassDefinition' given a Core Data entity name and an SCPropertyGroupArray.
+ * 
+ *	@param entityName The name of the entity for which the definition will be extended.
+ *	@param context The managed object context of the entity.
+ *	@param groups A collection of property groups. 
+ *	@warning Note: This method is used when creating an extended class definition for Core Data's managed object.
+ */
++ (id)definitionWithEntityName:(NSString *)entityName 
+	  withManagedObjectContext:(NSManagedObjectContext *)context
+            withPropertyGroups:(SCPropertyGroupArray *)groups;
+
 /** Returns an initialized 'SCClassDefinition' given a Core Data entity name and the option to auto generate property definitions for the given entity's properties.
  
  The method will also generate user friendly property titles from the names of 
@@ -654,6 +714,17 @@ withObjectBindings:(NSDictionary *)bindings;
 		 withPropertyNames:(NSArray *)propertyNames
 		withPropertyTitles:(NSArray *)propertyTitles;
 
+/** Returns an initialized 'SCClassDefinition' given a Core Data entity name and an SCPropertyGroupArray.
+ * 
+ *	@param entityName The name of the entity for which the definition will be extended.
+ *	@param context The managed object context of the entity.
+ *	@param groups A collection of property groups. 
+ *	@warning Note: This method is used when creating an extended class definition for Core Data's managed object.
+ */
+- (id)initWithEntityName:(NSString *)entityName 
+withManagedObjectContext:(NSManagedObjectContext *)context
+      withPropertyGroups:(SCPropertyGroupArray *)groups;
+
 #endif
 
 
@@ -670,12 +741,12 @@ withObjectBindings:(NSDictionary *)bindings;
 /** The entity associated with the definition. 
  *  @warning Note: Only applicable when class definition is initialized with an entity name. 
  */
-@property (nonatomic, readonly, retain) NSEntityDescription *entity;
+@property (nonatomic, readonly, SC_STRONG) NSEntityDescription *entity;
 
 /** The managed object context of the entity associated with the definition. 
  *  @warning Note: Only applicable when class definition is initialized with an entity name. 
  */
-@property (nonatomic, readonly, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, readonly, SC_STRONG) NSManagedObjectContext *managedObjectContext;
 #endif
 
 /**	The string name of cls or entity */
@@ -727,7 +798,7 @@ withObjectBindings:(NSDictionary *)bindings;
 @property (nonatomic, copy) NSString *descriptionPropertyName;
 
 /** The delegate for the user interface elements that will be generated for the property definitions. */
-@property (nonatomic, assign) id uiElementDelegate;
+@property (nonatomic, SC_WEAK) id uiElementDelegate;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Managing Property Definitions

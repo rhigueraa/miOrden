@@ -1,7 +1,7 @@
 /*
  *  SCBadgeView.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -21,7 +21,7 @@
  */
 
 #import <Foundation/Foundation.h>
-
+#import "SCGlobals.h"
 
 /****************************************************************************************/
 /*	class SCBadgeView	*/
@@ -42,12 +42,12 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The color of the badge. */
-@property (nonatomic, retain) UIColor *color;
+@property (nonatomic, SC_STRONG) UIColor *color;
 
 /** The text displayed by the badge. */
 @property (nonatomic, copy) NSString *text;
 
 /** The font of the text. */
-@property (nonatomic, retain) UIFont *font;
+@property (nonatomic, SC_STRONG) UIFont *font;
 
 @end

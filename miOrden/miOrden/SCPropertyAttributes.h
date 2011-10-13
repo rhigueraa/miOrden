@@ -1,7 +1,7 @@
 /*
  *  SCPropertyAttributes.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -22,7 +22,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "SCGlobals.h"
 
 /****************************************************************************************/
 /*	class SCPropertyAttributes	*/
@@ -45,7 +45,7 @@
 }
 
 /** The image view assigned to the generated UI element. */ 
-@property (nonatomic, retain) UIImageView *imageView;
+@property (nonatomic, SC_STRONG) UIImageView *imageView;
 
 /** 
  The array of image views assigned to the detail elements of the generated UI element.
@@ -53,7 +53,7 @@
  The property is applicable to property definitions of type SCPropertyTypeSelection,
  SCPropertyTypeObject, and SCPropertyTypeArrayOfObjects. 
  */
-@property (nonatomic, retain) NSArray *imageViewArray;
+@property (nonatomic, SC_STRONG) NSArray *imageViewArray;
 
 /** When TRUE, the generated user interface element will expand its content in the current view, instead of generating its own detail view. Default: FALSE. 
  *  @warning Note: Not applicable for all property definition types.
@@ -131,6 +131,9 @@
 @interface SCTextFieldAttributes : SCPropertyAttributes
 {
 	NSString *placeholder;
+    BOOL secureTextEntry;
+    UITextAutocorrectionType autocorrectionType;
+    UITextAutocapitalizationType autocapitalizationType;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -143,11 +146,29 @@
  */
 + (id)attributesWithPlaceholder:(NSString *)_placeholder;
 
+/** Allocates and returns an initialized 'SCTextFieldAttributes'.
+ *
+ *	@param _placeholder The placeholder of the generated UITextField control. Set to nil to ignore.
+ *  @param secure Identifies whether the text field should hide the text being entered.
+ *  @param autocorrection The auto-correction style for the text field.
+ *  @param autocapitalization The auto-capitalization style for the text field.
+ */
++ (id)attributesWithPlaceholder:(NSString *)_placeholder secureTextEntry:(BOOL)secure autocorrectionType:(UITextAutocorrectionType)autocorrection autocapitalizationType:(UITextAutocapitalizationType)autocapitalization;
+
 /** Returns an initialized 'SCTextFieldAttributes'.
  *
  *	@param _placeholder The placeholder of the generated UITextField control. Set to nil to ignore.
  */
 - (id)initWithPlaceholder:(NSString *)_placeholder;
+
+/** Returns an initialized 'SCTextFieldAttributes'.
+ *
+ *	@param _placeholder The placeholder of the generated UITextField control. Set to nil to ignore.
+ *  @param secure Identifies whether the text field should hide the text being entered.
+ *  @param autocorrection The auto-correction style for the text field.
+ *  @param autocapitalization The auto-capitalization style for the text field.
+ */
+- (id)initWithPlaceholder:(NSString *)_placeholder secureTextEntry:(BOOL)secure autocorrectionType:(UITextAutocorrectionType)autocorrection autocapitalizationType:(UITextAutocapitalizationType)autocapitalization;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Configuration
@@ -155,6 +176,15 @@
 
 /** The placeholder of the generated UITextField control. Set to nil to ignore. */
 @property (nonatomic, copy) NSString *placeholder;
+
+/** Identifies whether the text field should hide the text being entered. Default: FALSE. */
+@property (nonatomic, readwrite) BOOL secureTextEntry;
+
+/** The auto-correction style for the text field. Default: UITextAutocorrectionTypeDefault. */
+@property (nonatomic, readwrite) UITextAutocorrectionType autocorrectionType;
+
+/** The auto-capitalization style for the text field. Default: UITextAutocapitalizationTypeSentences. */
+@property (nonatomic, readwrite) UITextAutocapitalizationType autocapitalizationType;
 
 @end
 
@@ -172,6 +202,7 @@
 	NSNumber *minimumValue;
 	NSNumber *maximumValue;
 	BOOL allowFloatValue;
+    NSNumberFormatter *numberFormatter;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -229,6 +260,8 @@
 /** Determines if the generated numeric text field control allows float values. */
 @property (nonatomic, readwrite) BOOL allowFloatValue;
 
+/** The number formatter responsible for converting the numeric value to a string and vice versa. **/
+@property (nonatomic, readonly) NSNumberFormatter *numberFormatter;
 
 @end
 
@@ -313,7 +346,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The segment titles of the generated UISegmentedControl. Set to nil to ignore. */
-@property (nonatomic, retain) NSArray *segmentTitlesArray;
+@property (nonatomic, SC_STRONG) NSArray *segmentTitlesArray;
 
 @end
 
@@ -374,7 +407,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The date formatter used to display the date of generated control. Set to nil to ignore. */
-@property (nonatomic, retain) NSDateFormatter *dateFormatter;
+@property (nonatomic, SC_STRONG) NSDateFormatter *dateFormatter;
 
 /** The date picker mode. Default:UIDatePickerModeDateAndTime. */
 @property (nonatomic, readwrite) UIDatePickerMode datePickerMode;
@@ -456,7 +489,7 @@
 			hideDetailViewNavigationBar:(BOOL)hideNavBar;
 
 /** The items of the generated selection control. Set to nil to ignore. */
-@property (nonatomic, retain) NSArray *items;
+@property (nonatomic, SC_STRONG) NSArray *items;
 
 /** Determines if the generated selection control allows multiple selection. */
 @property (nonatomic, readwrite) BOOL allowMultipleSelection;
@@ -487,10 +520,10 @@
 @property (nonatomic) BOOL allowEditingItems;
 
 /** The user interface element that is used to add new objects when selected. This object is typically of type SCTableViewCell. Set to nil to ignore. Default:nil. */
-@property (nonatomic, retain) NSObject *placeholderuiElement;
+@property (nonatomic, SC_STRONG) NSObject *placeholderuiElement;
 
 /** The uiElement that is displayed when no items are available to display. This object is typically of type SCTableViewCell. Set to nil to ignore. Default:nil. */
-@property (nonatomic, retain) NSObject *addNewObjectuiElement;
+@property (nonatomic, SC_STRONG) NSObject *addNewObjectuiElement;
 
 @end
 
@@ -574,13 +607,13 @@
  The class definition of the entity whose objects are to be presented for selection. 
  Property should be set to a valid value. 
  */
-@property (nonatomic, retain) SCClassDefinition *itemsEntityClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *itemsEntityClassDefinition;
 
 /** Set this to the class definition of the intermediate entity between the property's class definition and the itemsEntityClassDefinition. This is useful in complex many-to-many relationships where you have created an intermediate entity between you main two entities. Default: nil. */
-@property (nonatomic, retain) SCClassDefinition *intermediateEntityClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *intermediateEntityClassDefinition;
 
 /** The predicate used to filter the selection items. Set to nil to ignore. Default:nil */
-@property (nonatomic, retain) NSPredicate *itemsPredicate;
+@property (nonatomic, SC_STRONG) NSPredicate *itemsPredicate;
 
 
 @end
@@ -757,10 +790,10 @@
 @property (nonatomic) BOOL allowEditingItems;
 
 /** The uiElement that is displayed when no items are available to display. This object is typically of type SCTableViewCell. Set to nil to ignore. Default:nil. */
-@property (nonatomic, retain) NSObject *addNewObjectuiElement;
+@property (nonatomic, SC_STRONG) NSObject *addNewObjectuiElement;
 
 /** The user interface element that is used to add new objects when selected. This object is typically of type SCTableViewCell. Set to nil to ignore. Default:nil. */
-@property (nonatomic, retain) NSObject *placeholderuiElement;
+@property (nonatomic, SC_STRONG) NSObject *placeholderuiElement;
 
 /** Determines if uiElement is displayed in 'Normal Mode'. Default: TRUE. */
 @property (nonatomic) BOOL addNewObjectuiElementExistsInNormalMode;

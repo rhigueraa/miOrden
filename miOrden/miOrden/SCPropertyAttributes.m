@@ -1,7 +1,7 @@
 /*
  *  SCPropertyAttributes.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -41,6 +41,7 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[imageView release];
@@ -48,6 +49,7 @@
 	
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -68,8 +70,8 @@
 + (id)attributesWithMinimumHeight:(CGFloat)minHeight maximumHeight:(CGFloat)maxHeight
 					   autoResize:(BOOL)_autoResize editable:(BOOL)_editable
 {
-	return [[[[self class] alloc] initWithMinimumHeight:minHeight maximumHeight:maxHeight 
-											 autoResize:_autoResize editable:_editable] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithMinimumHeight:minHeight maximumHeight:maxHeight 
+											 autoResize:_autoResize editable:_editable]);
 }
 
 - (id)init
@@ -87,7 +89,7 @@
 - (id)initWithMinimumHeight:(CGFloat)minHeight maximumHeight:(CGFloat)maxHeight
 				 autoResize:(BOOL)_autoResize editable:(BOOL)_editable
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.minimumHeight = minHeight;
 		self.maximumHeight = maxHeight;
@@ -97,10 +99,12 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -113,10 +117,18 @@
 @implementation SCTextFieldAttributes
 
 @synthesize placeholder;
+@synthesize secureTextEntry;
+@synthesize autocorrectionType;
+@synthesize autocapitalizationType;
 
 + (id)attributesWithPlaceholder:(NSString *)_placeholder
 {
-	return [[[[self class] alloc] initWithPlaceholder:_placeholder] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithPlaceholder:_placeholder]);
+}
+
++ (id)attributesWithPlaceholder:(NSString *)_placeholder secureTextEntry:(BOOL)secure autocorrectionType:(UITextAutocorrectionType)autocorrection autocapitalizationType:(UITextAutocapitalizationType)autocapitalization
+{
+    return SC_Autorelease([[[self class] alloc] initWithPlaceholder:_placeholder secureTextEntry:secure autocorrectionType:autocorrection autocapitalizationType:autocapitalization]);
 }
 
 - (id)init
@@ -124,24 +136,41 @@
 	if( (self = [super init]) )
 	{
 		placeholder = nil;		// will be ignored
+        secureTextEntry = FALSE;
+        autocorrectionType = UITextAutocorrectionTypeDefault;
+        autocapitalizationType = UITextAutocapitalizationTypeSentences;
 	}
 	return self;
 }
 
 - (id)initWithPlaceholder:(NSString *)_placeholder
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.placeholder = _placeholder;
 	}
 	return self;
 }
 
+- (id)initWithPlaceholder:(NSString *)_placeholder secureTextEntry:(BOOL)secure autocorrectionType:(UITextAutocorrectionType)autocorrection autocapitalizationType:(UITextAutocapitalizationType)autocapitalization
+{
+    if( (self=[self init]) )
+	{
+		self.placeholder = _placeholder;
+        self.secureTextEntry = secure;
+        self.autocorrectionType = autocorrection;
+        self.autocapitalizationType = autocapitalization;
+	}
+	return self;
+}
+
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[placeholder release];
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -156,20 +185,21 @@
 @synthesize minimumValue;
 @synthesize maximumValue;
 @synthesize allowFloatValue;
+@synthesize numberFormatter;
 
 + (id)attributesWithMinimumValue:(NSNumber *)minValue maximumValue:(NSNumber *)maxValue
 				 allowFloatValue:(BOOL)allowFloat
 {
-	return [[[[self class] alloc] initWithMinimumValue:minValue maximumValue:maxValue 
-									   allowFloatValue:allowFloat] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithMinimumValue:minValue maximumValue:maxValue 
+									   allowFloatValue:allowFloat]);
 }
 
 + (id)attributesWithMinimumValue:(NSNumber *)minValue maximumValue:(NSNumber *)maxValue
 				 allowFloatValue:(BOOL)allowFloat placeholder:(NSString *)_placeholder
 {
-	return [[[[self class] alloc] initWithMinimumValue:minValue maximumValue:maxValue 
+	return SC_Autorelease([[[self class] alloc] initWithMinimumValue:minValue maximumValue:maxValue 
 									   allowFloatValue:allowFloat
-										   placeholder:_placeholder] autorelease];
+										   placeholder:_placeholder]);
 }
 
 - (id)init
@@ -179,6 +209,9 @@
 		minimumValue = nil;		// will be ignored
 		maximumValue = nil;		// will be ignored
 		allowFloatValue = TRUE;
+        
+        numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
 	}
 	return self;
 }
@@ -186,7 +219,7 @@
 - (id)initWithMinimumValue:(NSNumber *)minValue maximumValue:(NSNumber *)maxValue
 		   allowFloatValue:(BOOL)allowFloat
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.maximumValue = maxValue;
 		self.minimumValue = minValue;
@@ -198,7 +231,7 @@
 - (id)initWithMinimumValue:(NSNumber *)minValue maximumValue:(NSNumber *)maxValue
 		   allowFloatValue:(BOOL)allowFloat placeholder:(NSString *)_placeholder
 {
-	if([self initWithPlaceholder:_placeholder])
+	if( (self=[self initWithPlaceholder:_placeholder]) )
 	{
 		self.maximumValue = maxValue;
 		self.minimumValue = minValue;
@@ -207,12 +240,16 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[minimumValue release];
 	[maximumValue release];
+    [numberFormatter release];
+    
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -229,8 +266,7 @@
 
 + (id)attributesWithMinimumValue:(float)minValue maximumValue:(float)maxValue
 {
-	return [[[[self class] alloc] initWithMinimumValue:minValue maximumValue:maxValue]
-			autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithMinimumValue:minValue maximumValue:maxValue]);
 }
 
 - (id)init
@@ -245,7 +281,7 @@
 
 - (id)initWithMinimumValue:(float)minValue maximumValue:(float)maxValue
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.minimumValue = minValue;
 		self.maximumValue = maxValue;
@@ -253,10 +289,12 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -272,7 +310,7 @@
 
 + (id)attributesWithSegmentTitlesArray:(NSArray *)titles
 {
-	return [[[[self class] alloc] initWithSegmentTitlesArray:titles] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithSegmentTitlesArray:titles]);
 }
 
 - (id)init
@@ -286,18 +324,20 @@
 
 - (id)initWithSegmentTitlesArray:(NSArray *)titles
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.segmentTitlesArray = titles;
 	}
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[segmentTitlesArray release];
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -315,16 +355,16 @@
 
 + (id)attributesWithDateFormatter:(NSDateFormatter *)formatter
 {
-	return [[[[self class] alloc] initWithDateFormatter:formatter] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithDateFormatter:formatter]);
 }
 
 + (id)attributesWithDateFormatter:(NSDateFormatter *)formatter
 				   datePickerMode:(UIDatePickerMode)mode
 	displayDatePickerInDetailView:(BOOL)inDetailView
 {
-	return [[[[self class] alloc] initWithDateFormatter:formatter
+	return SC_Autorelease([[[self class] alloc] initWithDateFormatter:formatter
 										 datePickerMode:mode
-						  displayDatePickerInDetailView:inDetailView] autorelease];
+						  displayDatePickerInDetailView:inDetailView]);
 }
 
 - (id)init
@@ -340,7 +380,7 @@
 
 - (id)initWithDateFormatter:(NSDateFormatter *)formatter
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.dateFormatter = formatter;
 	}
@@ -351,7 +391,7 @@
 			 datePickerMode:(UIDatePickerMode)mode
 	displayDatePickerInDetailView:(BOOL)inDetailView
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.dateFormatter = formatter;
 		self.datePickerMode = mode;
@@ -360,11 +400,13 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[dateFormatter release];
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -392,18 +434,18 @@
 + (id)attributesWithItems:(NSArray *)_items allowMultipleSelection:(BOOL)allowMultipleSel
 		 allowNoSelection:(BOOL)allowNoSel
 {
-	return [[[[self class] alloc] initWithItems:_items allowMultipleSelection:allowMultipleSel
-							   allowNoSelection:allowNoSel] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithItems:_items allowMultipleSelection:allowMultipleSel
+							   allowNoSelection:allowNoSel]);
 }
 
 + (id)attributesWithItems:(NSArray *)_items allowMultipleSelection:(BOOL)allowMultipleSel
 		 allowNoSelection:(BOOL)allowNoSel autoDismissDetailView:(BOOL)autoDismiss
 			hideDetailViewNavigationBar:(BOOL)hideNavBar
 {
-	return [[[[self class] alloc] initWithItems:_items allowMultipleSelection:allowMultipleSel
+	return SC_Autorelease([[[self class] alloc] initWithItems:_items allowMultipleSelection:allowMultipleSel
 							   allowNoSelection:allowNoSel 
 						  autoDismissDetailView:autoDismiss
-					hideDetailViewNavigationBar:hideNavBar] autorelease];
+					hideDetailViewNavigationBar:hideNavBar]);
 }
 
 - (id)init
@@ -431,7 +473,7 @@
 - (id)initWithItems:(NSArray *)_items allowMultipleSelection:(BOOL)allowMultipleSel
    allowNoSelection:(BOOL)allowNoSel
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.items = _items;
 		self.allowMultipleSelection = allowMultipleSel;
@@ -444,7 +486,7 @@
    allowNoSelection:(BOOL)allowNoSel autoDismissDetailView:(BOOL)autoDismiss
 		hideDetailViewNavigationBar:(BOOL)hideNavBar
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.items = _items;
 		self.allowMultipleSelection = allowMultipleSel;
@@ -455,6 +497,7 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[items release];
@@ -463,6 +506,7 @@
     
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -481,9 +525,9 @@
                         allowMultipleSelection:(BOOL)allowMultipleSel
 							  allowNoSelection:(BOOL)allowNoSel
 {
-	return [[[[self class] alloc] initWithItemsEntityClassDefinition:classDefinition
+	return SC_Autorelease([[[self class] alloc] initWithItemsEntityClassDefinition:classDefinition
                                               allowMultipleSelection:allowMultipleSel
-													allowNoSelection:allowNoSel] autorelease];
+													allowNoSelection:allowNoSel]);
 }
 
 + (id)attributesWithItemsEntityClassDefinition:(SCClassDefinition *)classDefinition 
@@ -491,10 +535,10 @@
 						allowMultipleSelection:(BOOL)allowMultipleSel
 							  allowNoSelection:(BOOL)allowNoSel
 {
-	return [[[[self class] alloc] initWithItemsEntityClassDefinition:classDefinition
+	return SC_Autorelease([[[self class] alloc] initWithItemsEntityClassDefinition:classDefinition
 										  withItemsTitlePropertyName:titlePropertyName
 											  allowMultipleSelection:allowMultipleSel
-													allowNoSelection:allowNoSel] autorelease];
+													allowNoSelection:allowNoSel]);
 }
 
 - (id)init
@@ -513,7 +557,7 @@
                   allowMultipleSelection:(BOOL)allowMultipleSel
 						allowNoSelection:(BOOL)allowNoSel
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		self.itemsEntityClassDefinition = classDefinition;
 		self.allowMultipleSelection = allowMultipleSel;
@@ -527,7 +571,7 @@
 				  allowMultipleSelection:(BOOL)allowMultipleSel
 						allowNoSelection:(BOOL)allowNoSel
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		classDefinition.titlePropertyName = titlePropertyName;
         self.itemsEntityClassDefinition = classDefinition;
@@ -537,6 +581,7 @@
 	return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[itemsEntityClassDefinition release];
@@ -545,6 +590,7 @@
 
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -560,12 +606,12 @@
 
 + (id)attributesWithObjectClassDefinition:(SCClassDefinition *)classDefinition
 {
-	return [[[[self class] alloc] initWithObjectClassDefinition:classDefinition] autorelease];
+	return SC_Autorelease([[[self class] alloc] initWithObjectClassDefinition:classDefinition]);
 }
 
 + (id)attributesWithObjectClassDefinition:(SCClassDefinition *)classDefinition expandContentInCurrentView:(BOOL)expandContent
 {
-    return [[[[self class] alloc] initWithObjectClassDefinition:classDefinition expandContentInCurrentView:expandContent] autorelease];
+    return SC_Autorelease([[[self class] alloc] initWithObjectClassDefinition:classDefinition expandContentInCurrentView:expandContent]);
 }
 
 - (id)init
@@ -579,7 +625,7 @@
 
 - (id)initWithObjectClassDefinition:(SCClassDefinition *)classDefinition
 {
-	if([self init])
+	if( (self=[self init]) )
 	{
 		if(classDefinition)
 			[self.classDefinitions setValue:classDefinition forKey:classDefinition.className];
@@ -589,18 +635,20 @@
 
 - (id)initWithObjectClassDefinition:(SCClassDefinition *)classDefinition expandContentInCurrentView:(BOOL)expandContent
 {
-    if([self initWithObjectClassDefinition:classDefinition])
+    if( (self=[self initWithObjectClassDefinition:classDefinition]) )
     {
         self.expandContentInCurrentView = expandContent;
     }
     return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
 	[classDefinitions release];
 	[super dealloc];
 }
+#endif
 
 @end
 
@@ -627,10 +675,10 @@
 						 allowAddingItems:(BOOL)allowAdding allowDeletingItems:(BOOL)allowDeleting
 						 allowMovingItems:(BOOL)allowMoving
 {
-	return [[[[self class] alloc] initWithObjectClassDefinition:classDefinition
+	return SC_Autorelease([[[self class] alloc] initWithObjectClassDefinition:classDefinition
 											   allowAddingItems:allowAdding
 											 allowDeletingItems:allowDeleting
-											   allowMovingItems:allowMoving] autorelease];
+											   allowMovingItems:allowMoving]);
 }
 
 + (id)attributesWithObjectClassDefinition:(SCClassDefinition *)classDefinition
@@ -641,7 +689,7 @@
   addNewObjectuiElementExistsInNormalMode:(BOOL)existsInNormalMode 
  addNewObjectuiElementExistsInEditingMode:(BOOL)existsInEditingMode
 {
-    return [[[[self class] alloc] initWithObjectClassDefinition:classDefinition
+    return SC_Autorelease([[[self class] alloc] initWithObjectClassDefinition:classDefinition
 											   allowAddingItems:allowAdding
 											 allowDeletingItems:allowDeleting
 											   allowMovingItems:allowMoving 
@@ -649,7 +697,7 @@
                                            placeholderuiElement:placeholderUI
                                           addNewObjectuiElement:newObjectUI 
                         addNewObjectuiElementExistsInNormalMode:existsInNormalMode 
-                       addNewObjectuiElementExistsInEditingMode:existsInEditingMode] autorelease];
+                       addNewObjectuiElementExistsInEditingMode:existsInEditingMode]); 
 }
 
 - (id)init
@@ -672,7 +720,7 @@
 				   allowAddingItems:(BOOL)allowAdding allowDeletingItems:(BOOL)allowDeleting
 				   allowMovingItems:(BOOL)allowMoving
 {
-	if([self initWithObjectClassDefinition:classDefinition])
+	if( (self=[self initWithObjectClassDefinition:classDefinition]) )
 	{
 		allowAddingItems = allowAdding;
 		allowDeletingItems = allowDeleting;
@@ -689,7 +737,7 @@
 addNewObjectuiElementExistsInNormalMode:(BOOL)existsInNormalMode 
 addNewObjectuiElementExistsInEditingMode:(BOOL)existsInEditingMode
 {
-    if([self initWithObjectClassDefinition:classDefinition allowAddingItems:allowAdding allowDeletingItems:allowDeleting allowMovingItems:allowMoving])
+    if( (self=[self initWithObjectClassDefinition:classDefinition allowAddingItems:allowAdding allowDeletingItems:allowDeleting allowMovingItems:allowMoving]) )
     {
         self.expandContentInCurrentView = expandContent;
         self.placeholderuiElement = placeholderUI;
@@ -700,6 +748,7 @@ addNewObjectuiElementExistsInEditingMode:(BOOL)existsInEditingMode
     return self;
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc
 {
     [placeholderuiElement release];
@@ -707,6 +756,7 @@ addNewObjectuiElementExistsInEditingMode:(BOOL)existsInEditingMode
     
     [super dealloc];
 }
+#endif
 
 @end
 

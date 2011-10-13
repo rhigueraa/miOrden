@@ -1,7 +1,7 @@
 /*
  *  SCViewController.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -48,8 +48,8 @@
 {
 	BOOL toolbarAdded;  //internal
 	
-	UIViewController *ownerViewController;
-	id delegate;
+	__SC_WEAK UIViewController *ownerViewController;
+	__SC_WEAK id delegate;
 	UITableView *tableView;
 	SCTableViewModel *tableViewModel;
 	SCNavigationBarType navigationBarType;
@@ -72,10 +72,10 @@
  This can optionally be set if the user wishes to display a table view in the view controller. 
  @warning Note: If the table view is added programmatically, then the user also needs to add it to
  the view controller's view. */
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, SC_STRONG) IBOutlet UITableView *tableView;
 
 /** This can optionally be set if the user wishes to associate a table view model to tableView. */
-@property (nonatomic, retain) SCTableViewModel *tableViewModel;
+@property (nonatomic, SC_STRONG) SCTableViewModel *tableViewModel;
 
 /** The type of the navigation bar. */
 @property (nonatomic, readwrite) SCNavigationBarType navigationBarType;
@@ -122,14 +122,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The object that acts as the delegate of 'SCViewController'. The object must adopt the SCViewControllerDelegate protocol. */
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, SC_WEAK) id delegate;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Internal Properties & Methods (should only be used by the framework or when subclassing)
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The view controller's owner (used internally) */
-@property (nonatomic, assign) UIViewController *ownerViewController;
+@property (nonatomic, SC_WEAK) UIViewController *ownerViewController;
 
 /** 
  Method gets called when the Cancel button is tapped. If what you want is to get notified

@@ -1,7 +1,7 @@
 /*
  *  SCViewController.m
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -156,17 +156,17 @@
 								   target:nil
 								   action:nil];
 		[buttons addObject:spacer];
-		[spacer release];
+		SC_Release(spacer);
 		[buttons addObject:self.editButton];
 		
 		// put the buttons in the toolbar
 		[buttonsToolbar setItems:buttons animated:NO];
-		[buttons release];
+		SC_Release(buttons);
 		
 		// place the toolbar into the navigation bar
 		UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithCustomView:buttonsToolbar];
 		self.navigationItem.rightBarButtonItem = toolbarButton;
-		[toolbarButton release];
+		SC_Release(toolbarButton);
 		
 		toolbarAdded = TRUE;
 	}
@@ -212,6 +212,7 @@
 	return [self.ownerViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
 
+#ifndef ARC_ENABLED
 - (void)dealloc 
 {
 	[tableView release];
@@ -223,20 +224,25 @@
 	[buttonsToolbar release];
 	[super dealloc];
 }
+#endif
 
 - (void)setNavigationBarType:(SCNavigationBarType)barType
 {
 	navigationBarType = barType;
 	
 	// Reset buttons
-	[addButton release];
+	SC_Release(addButton);
 	addButton = nil;
-	[cancelButton release];
+	SC_Release(cancelButton);
 	cancelButton = nil;
-	[doneButton release];
+	SC_Release(doneButton);
 	doneButton = nil;
-		
-	if(self.navigationItem && self.navigationBarType!=SCNavigationBarTypeNone)
+    
+    // Setup self.editButton
+    self.editButton.target = self;
+    self.editButton.action = @selector(editButtonAction);
+	
+	if(self.navigationItem && navigationBarType!=SCNavigationBarTypeNone)
 	{
 		UIBarButtonItem *tempAddButton = [[UIBarButtonItem alloc] 
 										  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd 
@@ -253,68 +259,70 @@
 		
 		UINavigationItem *navItem = self.navigationItem;
 		
-		switch (self.navigationBarType)
+		switch (navigationBarType)
 		{
 			case SCNavigationBarTypeAddLeft:
 				navItem.leftBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				break;
 			case SCNavigationBarTypeAddRight:
 				navItem.rightBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				break;
 			case SCNavigationBarTypeEditLeft:
 				navItem.leftBarButtonItem = self.editButton;
 				break;
 			case SCNavigationBarTypeEditRight:
 				navItem.rightBarButtonItem = self.editButton;
+                cancelButton = SC_Retain(tempCancelButton);
+                cancelButton.action = @selector(editingModeCancelButtonAction);
 				break;
 			case SCNavigationBarTypeAddRightEditLeft:
 				navItem.rightBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				navItem.leftBarButtonItem = self.editButton;
 				break;
 			case SCNavigationBarTypeAddLeftEditRight:
 				navItem.leftBarButtonItem = tempAddButton;
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				navItem.rightBarButtonItem = self.editButton;
 				break;
 			case SCNavigationBarTypeDoneLeft:
 				navItem.leftBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				break;
 			case SCNavigationBarTypeDoneRight:
 				navItem.rightBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				break;
 			case SCNavigationBarTypeDoneLeftCancelRight:
 				navItem.leftBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				navItem.rightBarButtonItem = tempCancelButton;
-				cancelButton = [tempCancelButton retain];
+				cancelButton = SC_Retain(tempCancelButton);
 				break;
 			case SCNavigationBarTypeDoneRightCancelLeft:
 				navItem.rightBarButtonItem = tempDoneButton;
-				doneButton = [tempDoneButton retain];
+				doneButton = SC_Retain(tempDoneButton);
 				navItem.leftBarButtonItem = tempCancelButton;
-				cancelButton = [tempCancelButton retain];
+				cancelButton = SC_Retain(tempCancelButton);
 				break;
 			case SCNavigationBarTypeAddEditRight:
 			{
-				addButton = [tempAddButton retain];
+				addButton = SC_Retain(tempAddButton);
 				addButton.style = UIBarButtonItemStyleBordered;
 				
 				// Add the toolbar later (on viewWillAppear) when the toolbar style can be determined
 			}
 				break;
-				
+                
 			default:
 				break;
 		}
 		
-		[tempAddButton release];
-		[tempCancelButton release];
-		[tempDoneButton release];
+		SC_Release(tempAddButton);
+		SC_Release(tempCancelButton);
+		SC_Release(tempDoneButton);
 	}
 }
 

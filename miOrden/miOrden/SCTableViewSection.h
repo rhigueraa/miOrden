@@ -1,7 +1,7 @@
 /*
  *  SCTableViewSection.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -37,7 +37,7 @@
 {	
     BOOL coreDataBound;		// internal
     
-	SCTableViewModel *ownerTableViewModel;
+	__SC_WEAK SCTableViewModel *ownerTableViewModel;
 	NSObject *boundObject;
 	NSString *boundPropertyName;
 	NSString *boundKey;
@@ -99,7 +99,7 @@
 /** The owner table view model of the section. 
  *
  * @warning Important: This property gets set automatically by the section's owner, you should never set this property manually */
-@property (nonatomic, assign) SCTableViewModel *ownerTableViewModel;
+@property (nonatomic, SC_WEAK) SCTableViewModel *ownerTableViewModel;
 
 /** The section header title. */
 @property (nonatomic, copy) NSString *headerTitle;
@@ -108,7 +108,7 @@
 @property (nonatomic) CGFloat headerHeight;
 
 /** The section header view. This can be any subclass of UIView (e.g. UILabel or UIImageView). The section automatically adjusts the height of its header to accommodate this view. */
-@property (nonatomic, retain) UIView *headerView;
+@property (nonatomic, SC_STRONG) UIView *headerView;
 
 /** The section footer title. */
 @property (nonatomic, copy) NSString *footerTitle;
@@ -117,10 +117,10 @@
 @property (nonatomic) CGFloat footerHeight;
 
 /** The section footer view. This can be any subclass of UIView (e.g. UILabel or UIImageView). The section automatically adjusts the height of its footer to accommodate this view. */
-@property (nonatomic, retain) UIView *footerView;
+@property (nonatomic, SC_STRONG) UIView *footerView;
 
 /** Set this property to an array of UIImageView objects to be set to each of the section's cells. */
-@property (nonatomic, retain) NSArray *cellsImageViews;
+@property (nonatomic, SC_STRONG) NSArray *cellsImageViews;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Managing Cells
@@ -188,13 +188,20 @@
 @property (nonatomic, readonly) NSString *boundKey;
 
 /** Provides subclasses with the framework to bind an SCTableViewSection to a value */
-@property (nonatomic, retain) NSObject *boundValue;
+@property (nonatomic, SC_STRONG) NSObject *boundValue;
 
 /** Method called internally whenever the modeledTableView's editing mode is about to change. */
 - (void)editingModeWillChange;
 
 /** Method called internally whenever the modeledTableView's editing mode has changed. */
 - (void)editingModeDidChange;
+
+/** 
+ Method should be overridden by subclasses to support property attributes. 
+ 
+ The method should be able to set the subclass' specific attributes to its corresponding SCPropertyAttributes subclass. */
+- (void) setAttributesTo:(SCPropertyAttributes *)attributes;
+
 
 @end
 
@@ -304,10 +311,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The class definition of the section's bound object. */
-@property (nonatomic, retain) SCClassDefinition *boundObjectClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *boundObjectClassDefinition;
 
 /** The section's bound object's group of properties that are rendered into cells. */
-@property (nonatomic, retain) SCPropertyGroup *propertyGroup;
+@property (nonatomic, SC_STRONG) SCPropertyGroup *propertyGroup;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Internal Methods (should only be used by the framework or when subclassing)
@@ -348,10 +355,13 @@
 @interface SCArrayOfItemsSection : SCTableViewSection <SCTableViewControllerDelegate>
 {
 	//internal
-	SCTableViewModel *tempDetailModel;
+	SCTableViewModel *tempCustomDetailModel;
+    SCTableViewModel *activeDetailModel;  // the current active detail model
 	NSMutableArray *cellReuseIdentifiers;
     CGFloat cachedCellHeight;
 	NSObject *tempItem;		//used for temporarily storing newly added items
+    SCTableViewCell *lastAccessedCell;  // used for optimization
+    NSUInteger lastAccessedCellIndex;   // used for optimization
 	
 	NSMutableArray *items;
 	UITableViewCellAccessoryType itemsAccessoryType;
@@ -361,6 +371,7 @@
 	BOOL allowEditDetailView;
 	BOOL allowRowSelection;
 	BOOL autoSelectNewItemCell;
+    SCNavigationBarType detailViewNavigationBarType;
 	BOOL detailViewModal;
 #ifdef __IPHONE_3_2	
 	UIModalPresentationStyle detailViewModalPresentationStyle;
@@ -424,7 +435,7 @@
  from the user interface by setting the allowAddingItems, allowDeletingItems, allowMovingItems,
  and allowEditDetailView properties. 
  */
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, SC_STRONG) NSMutableArray *items;
 
 /** The accessory type of the generated cells. */
 @property (nonatomic, readwrite) UITableViewCellAccessoryType itemsAccessoryType;
@@ -456,6 +467,9 @@
 /** Allows/disables automatic cell selection of newly created items. Default: TRUE. */
 @property (nonatomic, readwrite) BOOL autoSelectNewItemCell;
 
+/** The navigation bar type of the cell's detail view. Default: SCNavigationBarTypeDoneRightCancelLeft. Set to SCNavigationBarTypeNone to have a simple back button navigation. */
+@property (nonatomic, readwrite) SCNavigationBarType detailViewNavigationBarType;
+
 /**	
  If TRUE, the detail view always appears as a modal view. If FALSE and a navigation controller
  exists, the detail view is pushed to the navigation controller's stack, otherwise the view
@@ -473,8 +487,7 @@
 /**	The view style of the detail view's table. Default: UITableViewStyleGrouped. */
 @property (nonatomic, readwrite) UITableViewStyle detailTableViewStyle;
 
-/** Indicates whether the bar at the bottom of the screen is hidden when the section's detail view is pushed. Default: TRUE. 
- *	@warning Note: Only applicable to cells with detail views. */
+/** Indicates whether the bar at the bottom of the screen is hidden when the section's detail view is pushed. Default: TRUE. */
 @property (nonatomic, readwrite) BOOL detailViewHidesBottomBar;
 
 /**	
@@ -484,7 +497,7 @@
  
  @see addNewItemCell
  */
-@property (nonatomic, retain) UIBarButtonItem *addButtonItem;
+@property (nonatomic, SC_STRONG) UIBarButtonItem *addButtonItem;
 
 /**	
  If TRUE, the 'SCArrayOfItemsSection' will calculate and cache the cell height from only the first cell, thus achieving
@@ -500,13 +513,13 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** When set to a valid cell object, 'placeholderCell' will be displayed when no items exist in the section. As soon as any items are added, this cell automatically disappears. Default: nil. */
-@property (nonatomic, retain) SCTableViewCell *placeholderCell;
+@property (nonatomic, SC_STRONG) SCTableViewCell *placeholderCell;
 
 /** 
  When set to a valid cell object, 'addNewItemCell' will be displayed as the last cell of the section, and will add a new item to the section whenever it gets tapped by the user. This cell can be used as an alternative to addButtonItem. Default: nil.
  @see addButtonItem
  */
-@property (nonatomic, retain) SCTableViewCell *addNewItemCell;
+@property (nonatomic, SC_STRONG) SCTableViewCell *addNewItemCell;
 
 /** When TRUE, addNewItemCell will be displayed in Normal Mode. Default: TRUE. */
 @property (nonatomic, readwrite) BOOL addNewItemCellExistsInNormalMode;
@@ -531,6 +544,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Internal Properties & Methods (should only be used by the framework or when subclassing)
 //////////////////////////////////////////////////////////////////////////////////////////
+
+/** Called internally by framework to store the currently selected cell index path. */
+@property (nonatomic, SC_STRONG) NSIndexPath *selectedCellIndexPath;
 
 /**	Subclasses should use this property when creating new dequeable cells */
 @property (nonatomic, readonly) NSString *cellIdentifier;
@@ -747,7 +763,7 @@
  @warning Note: Only applicable when the section is defined using a Core Data class definition.
  @warning Important: The section's reloadBoundValues method should be always called after a predicate has been changed.
  */
-@property (nonatomic, retain) NSPredicate *itemsPredicate;
+@property (nonatomic, SC_STRONG) NSPredicate *itemsPredicate;
 
 /**	
  Contains all the different class definitions of all the objects in the items array. Each
@@ -761,7 +777,7 @@
 
 /** The mutable set of objects that the section will use to generate its cells. 
  *  @warning Note: This property should only be set when representing a Core Data relationship. */
-@property (nonatomic, retain) NSMutableSet *itemsSet;
+@property (nonatomic, SC_STRONG) NSMutableSet *itemsSet;
 
 /** If TRUE,  objects in itemsSet are sorted ascendingly, otherwise they're sorted descendingly.
  *	@warning Note: Only applicable if itemsSet has been assigned. */
@@ -781,7 +797,7 @@
 /****************************************************************************************/ 
 /**
  This class functions as an SCTableViewModel section that is able to provide selection functionality. 
- The cells in this section represent different items	that the end-user can select from, and they
+ The cells in this section represent different items that the end-user can select from, and they
  are generated from NSStrings in its items array. Once a cell is selected, a checkmark appears next
  to it, similar to Apple's Settings application where a user selects a Ringtone for their
  iPhone. The section can be configured to allow multiple selection and to allow no selection at all.
@@ -1037,7 +1053,7 @@ withSelectedIndexPropertyName:(NSString *)propertyName
  *	@warning Note: Only applicable when allowMultipleSelection is TRUE. Default: 0. */
 @property (nonatomic, readwrite) NSUInteger maximumSelections;
 
-/** If TRUE, the section allows automatically dismisses the current view controller when a value is selected. Default: FALSE. */
+/** If TRUE, the section automatically dismisses the current view controller when a value is selected. Default: FALSE. */
 @property (nonatomic, readwrite) BOOL autoDismissViewController;
 
 
@@ -1143,7 +1159,7 @@ withSelectedIndexPropertyName:(NSString *)propertyName
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** Set this to the class definition of the intermediate entity between the bound object's class definition and the itemsEntityClassDefinition. This is useful in complex many-to-many relationships where you have created an intermediate entity between you main two entities. Default: nil. */
-@property (nonatomic, retain) SCClassDefinition *intermediateEntityClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *intermediateEntityClassDefinition;
 
 
 @end

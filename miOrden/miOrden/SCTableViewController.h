@@ -1,7 +1,7 @@
 /*
  *  SCTableViewController.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -50,8 +50,8 @@
 	BOOL toolbarAdded;  //internal
 	
 	SCTableViewModel *tableViewModel;
-	UIViewController *ownerViewController;
-	id delegate;
+	__SC_WEAK UIViewController *ownerViewController;
+	__SC_WEAK id delegate;
 	SCNavigationBarType navigationBarType;
 	UINavigationBar *navigationBar;
 	UIBarButtonItem *addButton;
@@ -127,14 +127,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The object that acts as the delegate of 'SCTableViewController'. The object must adopt the SCTableViewControllerDelegate protocol. */
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, SC_WEAK) id delegate;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Internal Properties & Methods (should only be used by the framework or when subclassing)
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The view controller's owner (used internally) */
-@property (nonatomic, assign) UIViewController *ownerViewController;
+@property (nonatomic, SC_WEAK) UIViewController *ownerViewController;
 
 /** 
  Method gets called when the Cancel button is tapped. If what you want is to get notified

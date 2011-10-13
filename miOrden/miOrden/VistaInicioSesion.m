@@ -66,7 +66,7 @@
     UIImage *imagenInicio = [UIImage imageNamed:@"boton_iniciar_sesion.png"];
     
     UIImageView *inicioConImagen = [[UIImageView alloc]initWithImage:imagenInicio];
-    inicioConImagen.contentMode = UIViewContentModeScaleAspectFit;
+    inicioConImagen.contentMode = UIViewContentModeScaleToFill;
     [iniciar.contentView addSubview:inicioConImagen];
     
     

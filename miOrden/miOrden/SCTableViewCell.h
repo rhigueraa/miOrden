@@ -1,7 +1,7 @@
 /*
  *  SCTableViewCell.h
  *  Sensible TableView
- *  Version: 2.1 beta
+ *  Version: 2.1.6
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -53,12 +53,12 @@
  */
 @interface SCTableViewCell : UITableViewCell
 {
-	SCTableViewModel *tempDetailModel; //used internally
+	SCTableViewModel *tempCustomDetailModel; //used internally
 	NSString *reuseId; //used internally
 	
-	SCTableViewModel *ownerTableViewModel;
-	id ownerViewControllerDelegate; 
-	id delegate;
+	__SC_WEAK SCTableViewModel *ownerTableViewModel;
+	__SC_WEAK id ownerViewControllerDelegate; 
+	__SC_WEAK id delegate;
 	NSObject *boundObject;
 	NSString *boundPropertyName;
 	NSString *boundKey;
@@ -74,6 +74,7 @@
 	UITableViewCellEditingStyle cellEditingStyle;
 	SCBadgeView *badgeView;
 	NSString *detailViewTitle;
+    SCNavigationBarType detailViewNavigationBarType;
 	BOOL detailViewModal;
 #ifdef __IPHONE_3_2	
 	UIModalPresentationStyle detailViewModalPresentationStyle;
@@ -147,14 +148,14 @@
 /** The owner table view model of the cell. 
  *
  * @warning Important: This property gets set automatically by the framework, you should never set this property manually */
-@property (nonatomic, assign) SCTableViewModel *ownerTableViewModel;
+@property (nonatomic, SC_WEAK) SCTableViewModel *ownerTableViewModel;
 
 /** The object that acts as the delegate of 'SCTableViewCell'. The object must adopt the SCTableViewCellDelegate protocol. 
  */
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, SC_WEAK) id delegate;
 
 /** The cell's bound object (see class overview). */
-@property (nonatomic, retain) NSObject *boundObject;
+@property (nonatomic, SC_STRONG) NSObject *boundObject;
 
 /** The cell's bound property name (see class overview). */
 @property (nonatomic, copy) NSString *boundPropertyName;
@@ -186,6 +187,11 @@
  */
 @property (nonatomic, copy) NSString *detailViewTitle;
 
+/** The navigation bar type of the cell's detail view. Default: SCNavigationBarTypeDoneRightCancelLeft. Set to SCNavigationBarTypeNone to have a simple back button navigation.
+ *	@warning Note: Only applicable to cells with detail views. 
+ */
+@property (nonatomic, readwrite) SCNavigationBarType detailViewNavigationBarType;
+
 /**	
  If TRUE, the cell's detail view always appears as a modal view. If FALSE and a navigation controller
  exists, the detail view is pushed to the navigation controller's stack, otherwise the view
@@ -209,7 +215,7 @@
 /** Set this property to an array of UIImageView objects to be set to each of the cell's detail cells. 
  *	@warning Note: Only applicable to cells with detail views. 
  */
-@property (nonatomic, retain) NSArray *detailCellsImageViews;
+@property (nonatomic, SC_STRONG) NSArray *detailCellsImageViews;
 
 /** Indicates whether the bar at the bottom of the screen is hidden when the cell's detail view is pushed. Default: TRUE. 
  *	@warning Note: Only applicable to cells with detail views. 
@@ -289,10 +295,10 @@
  subclasses from all the details of dealing with the bound object or the bound key directly.
  Subclasses should just set boundValue to their value and 'SCTableViewCell' will take care of the rest. 
  */
-@property (nonatomic, retain) NSObject *boundValue;
+@property (nonatomic, SC_STRONG) NSObject *boundValue;
 
 /** Property used internally by framework to manage custom detail models. */
-@property (nonatomic, retain) SCTableViewModel *tempDetailModel;
+@property (nonatomic, SC_STRONG) SCTableViewModel *tempCustomDetailModel;
 
 /** Property used internally by framework to change reuseIdentifier after the cell has been created. */
 @property (nonatomic, copy) NSString *reuseId;
@@ -339,8 +345,11 @@
  */
 - (void)didSelectCell;
 
-/**	Method gets called internally whenever the cell gets deselected. */
+/**	Method gets called internally whenever the cell is about to be deselected. */
 - (void)willDeselectCell;
+
+/**	Method gets called internally whenever the cell is deselected. */
+- (void)didDeselectCell;
 
 /** 
  Method should be overridden by subclasses to support property attributes. 
@@ -457,7 +466,7 @@
  
  @warning Note: This method overrides its counterpart in SCTableViewModelDelegate.
  */
-- (NSString *)newImageNameForCell:(SCTableViewCell *)cell;
+- (NSString *)imageNameForCell:(SCTableViewCell *)cell;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// @name Managing Cell's detail view
@@ -873,6 +882,7 @@
 	NSNumber *maximumValue;
 	BOOL allowFloatValue;
 	BOOL displayZeroAsBlank;
+    NSNumberFormatter *numberFormatter;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -890,6 +900,21 @@
 
 /** If TRUE, an empty space is displayed if the bound value equals zero. Default: FALSE. */
 @property (nonatomic, readwrite) BOOL displayZeroAsBlank;
+
+/** The number formatter responsible for converting the cell's numeric value to a string and vice versa. **/
+@property (nonatomic, readonly) NSNumberFormatter *numberFormatter;
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+/// @name Creation and Initialization
+//////////////////////////////////////////////////////////////////////////////////////////
+
++ (id)cellWithText:(NSString *)cellText withPlaceholder:(NSString *)placeholder
+      withBoundKey:(NSString *)key withTextFieldNumericValue:(NSNumber *)textFieldNumericValue;
+
+- (id)initWithText:(NSString *)cellText withPlaceholder:(NSString *)placeholder
+      withBoundKey:(NSString *)key withTextFieldNumericValue:(NSNumber *)textFieldNumericValue;
+
 
 @end
 
@@ -1149,7 +1174,7 @@
 @property (nonatomic, readonly) UIDatePicker *datePicker;
 
 /** Set to customize how the cell display's the selected date. */
-@property (nonatomic, retain) NSDateFormatter *dateFormatter;
+@property (nonatomic, SC_STRONG) NSDateFormatter *dateFormatter;
 
 /** If TRUE, the cell displays the selected date in a left aligned label. Default: TRUE. */
 @property (nonatomic, readwrite) BOOL displaySelectedDate;
@@ -1192,7 +1217,9 @@
 	// Internal
 	UIImage *cachedImage;  
 	UIImageView *detailImageView; 
+#ifdef __IPHONE_3_2
 	UIPopoverController *popover;
+#endif
 	
 	UIImagePickerController *imagePickerController;
 	NSString *placeholderImageName;
@@ -1292,7 +1319,7 @@
 
 
 /** The name of the selected image. */
-@property (nonatomic, retain) NSString *selectedImageName;
+@property (nonatomic, copy) NSString *selectedImageName;
 
 
 /** Resets the clearImageButton default layer styles such as corneRadius and borderWidth. */
@@ -1461,7 +1488,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The selection items array. All array elements must be of NSString type. */
-@property (nonatomic, retain) NSArray *items;
+@property (nonatomic, SC_STRONG) NSArray *items;
 
 /** This property reflects the current cell's selection. You can set this property to define the cell's selection.
  
@@ -1521,11 +1548,11 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** When set to a valid cell object, 'placeholderCell' will be displayed when no items exist in the generated section. As soon as any items are added, this cell automatically disappears. Default: nil. */
-@property (nonatomic, retain) SCTableViewCell *placeholderCell;
+@property (nonatomic, SC_STRONG) SCTableViewCell *placeholderCell;
 
 /** When set to a valid cell object, 'addNewItemCell' will be displayed as the last cell of the generated section, and will add a new item to the section whenever it gets tapped by the user. This cell can be used as an alternative to addButtonItem. Default: nil.
  */
-@property (nonatomic, retain) SCTableViewCell *addNewItemCell;
+@property (nonatomic, SC_STRONG) SCTableViewCell *addNewItemCell;
 
 
 
@@ -1587,10 +1614,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // ** The class definition of the selection items. */
-@property (nonatomic, retain) SCClassDefinition *itemsClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *itemsClassDefinition;
 
 /** Set this to the class definition of the intermediate entity between the bound object's class definition and the itemsEntityClassDefinition. This is useful in complex many-to-many relationships where you have created an intermediate entity between you main two entities. Default: nil. */
-@property (nonatomic, retain) SCClassDefinition *intermediateEntityClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *intermediateEntityClassDefinition;
 
 
 @end
@@ -1658,7 +1685,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** The class definition of the bound object. */
-@property (nonatomic, retain) SCClassDefinition *objectClassDefinition;
+@property (nonatomic, SC_STRONG) SCClassDefinition *objectClassDefinition;
 
 /** 
  The bound object title that will appear in the cell's textLabel.
@@ -1784,12 +1811,12 @@
  from the user interface by setting the allowAddingItems, allowDeletingItems, allowMovingItems,
  and allowEditDetailView properties.
  */
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, SC_STRONG) NSMutableArray *items;
 
 /** The mutable set of objects that the cell will use to generate its detail view. 
  *  @warning Note: This property should only be set when representing a Core Data relationship. 
  */
-@property (nonatomic, retain) NSMutableSet *itemsSet;
+@property (nonatomic, SC_STRONG) NSMutableSet *itemsSet;
 
 /** If TRUE,  objects in itemsSet are sorted ascendingly, otherwise they're sorted descendingly.
  *	@warning Note: Only applicable if itemsSet has been assigned. 
@@ -1833,12 +1860,12 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /** When set to a valid cell object, 'placeholderCell' will be displayed when no items exist in the generated section. As soon as any items are added, this cell automatically disappears. Default: nil. */
-@property (nonatomic, retain) SCTableViewCell *placeholderCell;
+@property (nonatomic, SC_STRONG) SCTableViewCell *placeholderCell;
 
 /** 
  When set to a valid cell object, 'addNewItemCell' will be displayed as the last cell of the generated section, and will add a new item to the section whenever it gets tapped by the user. This cell can be used as an alternative to the section's addButtonItem. Default: nil.
  */
-@property (nonatomic, retain) SCTableViewCell *addNewItemCell;
+@property (nonatomic, SC_STRONG) SCTableViewCell *addNewItemCell;
 
 /** When TRUE, addNewItemCell will be displayed in Normal Mode. Default: TRUE. */
 @property (nonatomic, readwrite) BOOL addNewItemCellExistsInNormalMode;
