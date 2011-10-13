@@ -54,7 +54,7 @@ static NSString *priceKey = @"user_price";
     
     carrito = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"] retain];
     self.title = @"Carrito";
-    UIBarButtonItem *comprar = [[UIBarButtonItem alloc] initWithTitle:@"Comprar" style:UIBarButtonItemStyleBordered target:self action:@selector(comprar)];
+    UIBarButtonItem *comprar = [[UIBarButtonItem alloc] initWithTitle:@"Ordenar" style:UIBarButtonItemStyleBordered target:self action:@selector(comprar)];
     self.navigationItem.rightBarButtonItem = comprar;
     [comprar release];
 

@@ -10,6 +10,7 @@
 #import "ATPagingView.h"
 #import <MapKit/MapKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "XMLThreadedParser.h"
 
 typedef enum {
     restaurantStateOpen,

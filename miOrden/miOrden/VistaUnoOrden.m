@@ -63,7 +63,7 @@
     
     
         
-    direcciones = [[NSArray alloc] init];
+    
    
     
     
@@ -182,7 +182,8 @@
         cell.textLabel.text = [[direcciones objectAtIndex:indexPath.row] valueForKey:@"title_loc"];
         NSString *cadena = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",[[direcciones objectAtIndex:indexPath.row] valueForKey:@"address"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"colony"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"delegation"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"state"],[[direcciones objectAtIndex:indexPath.row] valueForKey:@"telephone"]];
         cell.detailTextLabel.numberOfLines = 5;
-        cell.detailTextLabel.text = cadena;   
+        cell.detailTextLabel.text = cadena;
+        
         
     }else{
         cell.detailTextLabel.text = nil;

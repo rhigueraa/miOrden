@@ -125,6 +125,7 @@
 		E8CFDF3A13CDF38400F06E73 /* SCTableViewSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3013CDF38400F06E73 /* SCTableViewSection.m */; };
 		E8CFDF3B13CDF38400F06E73 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF3213CDF38400F06E73 /* SCViewController.m */; };
 		E8CFDF4B13CE000300F06E73 /* VistaRegistro.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */; };
+		E8D569C61446040800BB5093 /* VistaNuevaResenia.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D569C41446040800BB5093 /* VistaNuevaResenia.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -336,6 +337,8 @@
 		E8CFDF3213CDF38400F06E73 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		E8CFDF4913CE000300F06E73 /* VistaRegistro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaRegistro.h; sourceTree = "<group>"; };
 		E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaRegistro.m; sourceTree = "<group>"; };
+		E8D569C31446040800BB5093 /* VistaNuevaResenia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaNuevaResenia.h; sourceTree = "<group>"; };
+		E8D569C41446040800BB5093 /* VistaNuevaResenia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaNuevaResenia.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -890,6 +893,8 @@
 			children = (
 				E899AFE113D4AEC600B688A7 /* VistaResenias.h */,
 				E899AFE213D4AEC600B688A7 /* VistaResenias.m */,
+				E8D569C31446040800BB5093 /* VistaNuevaResenia.h */,
+				E8D569C41446040800BB5093 /* VistaNuevaResenia.m */,
 			);
 			name = "Reseñas";
 			sourceTree = "<group>";
@@ -1102,6 +1107,7 @@
 				BCD4291414169E8800FA2142 /* UIImage+JSRetinaAdditions.m in Sources */,
 				BCB9CC71141EB6BA00B040D9 /* FilterTableView.m in Sources */,
 				BC3A098C142547BC0049C57E /* CustomActionNavigationController.m in Sources */,
+				E8D569C61446040800BB5093 /* VistaNuevaResenia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,7 +1232,7 @@
 					../Three20/src,
 				);
 				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lxml2",
@@ -1260,7 +1266,7 @@
 					../Three20/src,
 				);
 				INFOPLIST_FILE = "miOrden/miOrden-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lxml2",

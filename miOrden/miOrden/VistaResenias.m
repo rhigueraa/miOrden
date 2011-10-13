@@ -7,7 +7,7 @@
 //
 
 #import "VistaResenias.h"
-
+#import "VistaNuevaResenia.h"
 
 @implementation VistaResenias
 @synthesize currentRestaurant, resenias;
@@ -48,18 +48,25 @@
     [self.tableView endUpdates];
 }
 
+-(void) nuevaResenia{
+    VistaNuevaResenia  *resenia = [[VistaNuevaResenia alloc] initWithStyle:UITableViewStyleGrouped];
+    resenia.title  = @"Nueva Reseña";
+    resenia.currentRestaurant = self.currentRestaurant;
+    [self.navigationController pushViewController:resenia animated:YES];
+    [resenia release];
+    
+}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevaResenia)];
+    self.navigationItem.rightBarButtonItem = nueva;
     resenias = [[NSMutableDictionary alloc] init];
     self.title = @"Reseñas";
-    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
-    parser.delegate = self;
-    
-    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
-    //[parser parseXMLat:[NSURL URLWithString:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=1"] withKey:@"review"];
+   
     
     resenias = [[NSMutableDictionary alloc] init];
     
@@ -80,6 +87,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    NSLog(@"id: %@", [currentRestaurant  valueForKey:@"id"]);
+   // NSString *cadena = @"http://www.miorden.com/demo/iphone/reviewlist.php?id=1";
+    
+    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
+    //[parser parseXMLat:[NSURL URLWithString:cadena ] withKey:@"review"];
 }
 
 - (void)viewDidAppear:(BOOL)animated

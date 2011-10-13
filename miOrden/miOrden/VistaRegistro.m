@@ -34,23 +34,63 @@
 }
 
 -(void)confirmar{
-    datos = [[NSDictionary alloc] init];
+     datos = [[NSMutableDictionary alloc] init];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nameKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"lastNameKey"] forKey:@"lastNameKey"];
-     [datos setValue:[tableModel.modelKeyValues valueForKey:@"phoneKey"] forKey:@"phoneKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"emailKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"confirmaEmailKey"] forKey:@"confirmaEmailKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"passwordKey"] forKey:@"passwordKey"];
+     [datos setValue:[tableModel.modelKeyValues valueForKey:@"confirmaPasswordKey"] forKey:@"confirmaPasswordKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"birthKey"] forKey:@"birthKey"];
-     [datos setValue:[tableModel.modelKeyValues valueForKey:@"sexKey"] forKey:@"genderKey"];
+    
+    if([[sexo segmentedControl]selectedSegmentIndex] == 0){
+        [datos setValue:@"Mujer" forKey:@"genderKey"];
+    }else{
+        [datos setValue:@"Hombre" forKey:@"genderKey"];
+    }
+    
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"terminosKey"] forKey:@"terminosKey"];
      [datos setValue:[tableModel.modelKeyValues valueForKey:@"newsKey"] forKey:@"newsKey"];
     
+    NSString *email = [datos valueForKey:@"emailKey"];
+    NSString *confirmaEmail = [datos valueForKey:@"confirmaEmailKey"];
+    NSString *password = [datos valueForKey:@"passwordKey"];
+    NSString *confirmaPassword = [datos valueForKey:@"confirmaPasswordKey"];
+    
+    NSDateFormatter *fecha = [[NSDateFormatter alloc]init];
+    fecha.timeStyle = NSDateFormatterNoStyle;
+    [fecha setDateFormat:@"yyyy-MM-dd"];
+    NSDate *fechaa = [datos valueForKey:@"birthKey"];
+    NSString *fechaFinal = [fecha stringFromDate:fechaa];
+    NSLog(@"Fecah es: %@", fechaFinal);
+    
+    NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],fechaFinal, [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
+    
+    
+    if([email isEqual:confirmaEmail] && [password isEqual:confirmaPassword] && [[datos valueForKey:@"terminosKey"] isEqual:@"1"]){
+        
+        XMLThreadedParser *parser = [[XMLThreadedParser alloc]init];
+        parser.delegate = self;
+        
+        cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        
+        
+      
+        
+    }else{
+        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
+        [alerta show];
+        [alerta release];
+       
+
+    }
+       
     
     
     
-    UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Confirmación" message:@"Revisa que todos tus datos sean correctos" delegate:nil cancelButtonTitle:@"Enviar" otherButtonTitles:@"Cancelar",nil];
-    [alerta show];
-    [alerta release];
+    
+    
+    
     
 }
 
@@ -68,20 +108,27 @@
     [tableModel addSection:section];
     SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"enter name" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
      SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
-    SCNumericTextFieldCell *celular = [[SCNumericTextFieldCell alloc] initWithText:@"Celular" withPlaceholder:@"enter phone" withBoundKey:@"phoneKey" withTextFieldTextValue:nil];
      SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
     SCTextFieldCell *confirmaEmail = [[SCTextFieldCell alloc] initWithText:@"eMail" withPlaceholder:@"Confirma tu eMail" withBoundKey:@"confirmaEmailKey" withTextFieldTextValue:nil];
      SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
     SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"PassWord" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
+    
+    pass.textField.secureTextEntry = YES;
+    confirmaPass.textField.secureTextEntry = YES;
+    
     SCDateCell *fechaNacimiento = [[SCDateCell alloc] initWithText:@"Nacimiento" withBoundKey:@"birthKey" withDateValue:nil];
+    fechaNacimiento.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    [fechaNacimiento.dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    fechaNacimiento.datePicker.datePickerMode = UIDatePickerModeDate;
+    
     NSArray *sex = [[NSArray alloc] initWithObjects:@"F",@"M", nil];
-    SCSegmentedCell *sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
-    SCSwitchCell *terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
-     SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:-1]]; 
+    sexo = [[SCSegmentedCell alloc] initWithText:@"Sexo" withBoundKey:@"sexKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:sex];
+    terminos = [[SCSwitchCell alloc] initWithText:@"Acepto Terminos" withBoundKey:@"terminosKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
+     SCSwitchCell *news = [[SCSwitchCell alloc] initWithText:@"NewsLetter" withBoundKey:@"newsKey" withSwitchOnValue:[NSNumber numberWithInt:1]]; 
                                                                            
     [section addCell:nombre];
     [section addCell:apellido];
-    [section addCell:celular];
+   
     [section addCell:email];
     [section addCell:confirmaEmail];
     [section addCell:pass];
@@ -207,6 +254,15 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    
 }
 
 @end

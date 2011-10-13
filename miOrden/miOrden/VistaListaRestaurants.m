@@ -15,7 +15,7 @@
 #import "VistaCarrito.h"
 
 @implementation VistaListaRestaurants
-@synthesize laDir, zonaID;
+@synthesize laDir, zonaID, zonaID2;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -115,7 +115,9 @@
         [filter release];
     }
 
-}
+        //[parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"restaurant"];
+    }
+
 
 - (void)viewDidUnload
 {

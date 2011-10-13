@@ -46,23 +46,26 @@
     arregloUserId = [[NSMutableArray alloc] init];
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
     SCTableViewSection *section1 = [SCTableViewSection sectionWithHeaderTitle:@"Inicio de Sesión"];
-    SCTextFieldCell *email = [SCTextFieldCell cellWithText:@"eMail" withPlaceholder:@"enter eMail" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *email = [SCTextFieldCell cellWithText:@"Email" withPlaceholder:@"ingresa tu Email" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
     email.textField.keyboardType = UIKeyboardTypeEmailAddress;
-    SCTextFieldCell *pass = [SCTextFieldCell cellWithText:@"Password" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *pass = [SCTextFieldCell cellWithText:@"Contraseña" withPlaceholder:@"ingresa tu Contraseña" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
     pass.textField.secureTextEntry = YES;
     [tableModel addSection:section1];
     [section1 addCell:email];
     [section1 addCell:pass];
     
-    SCTableViewSection *section2 = [SCTableViewSection sectionWithHeaderTitle:nil];
+    
     recordar = [[SCSwitchCell alloc]initWithText:@"Recordarme?"];
     recordar.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    [section2 addCell:recordar];
+    [section1 addCell:recordar];
     
     SCTableViewSection *section3 = [SCTableViewSection section];
     SCTableViewCell *iniciar = [[SCTableViewCell alloc]initWithText:@"Iniciar Sesión"];
     iniciar.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    section3.footerTitle = @"¿Olvidaste tu Contraseña ? ¡Presiona Aquí!";
+    
     [section3 addCell:iniciar];
     
     SCTableViewSection *section4 = [SCTableViewSection section];
@@ -70,7 +73,7 @@
     registro.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [section4 addCell:registro];
     
-    [tableModel addSection:section2];
+    
     [tableModel addSection:section3];
     [tableModel addSection:section4];
     
@@ -182,14 +185,16 @@
 #pragma mark - Table view delegate
 
 - (void)tableViewModel:(SCTableViewModel *)tableViewModel didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 3){
+    if(indexPath.section == 2){
         
         
         
         
         VistaRegistro *registro = [[VistaRegistro alloc] initWithStyle:UITableViewStyleGrouped];
         [self.navigationController pushViewController:registro animated:YES];
-    }else if(indexPath.section == 2){
+        [registro release];
+        
+    }else if(indexPath.section == 1){
         
         XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
         parser.delegate = self;
@@ -199,7 +204,7 @@
         NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/login.php?username=%@&password=%@",username,pass];
         
         [parser parseXMLat:[NSURL URLWithString:cadena]withKey:@"user_id"];
-        NSLog(@"%@",cadena);
+        
         
     }
     
@@ -232,12 +237,6 @@
         [alerta show];
         [alerta release];
     }else{
-        NSLog(@"%@",ID);
-        /*
-        alerta = [[UIAlertView alloc] initWithTitle:@"Bienvenido" message:@"MiOrden.com te da la bienvenida" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
-        [alerta show];
-        [alerta release];
-         */
         if(recordar.switchControl.on){
             NSUserDefaults *loginDefault = [NSUserDefaults standardUserDefaults];
             [loginDefault setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"userKey"];

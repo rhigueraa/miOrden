@@ -184,6 +184,7 @@
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
     direcciones = [array retain];
     [self.tableView reloadData];
+    NSLog(@"%@", direcciones);
 }
 
 @end

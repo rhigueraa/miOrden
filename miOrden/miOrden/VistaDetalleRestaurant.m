@@ -75,6 +75,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
     
     currentRestaurantState = restaurantStateUnknown;
     
@@ -167,6 +168,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [pagedVIew reloadData];
     [table deselectRowAtIndexPath:[table indexPathForSelectedRow] animated:YES];
+    XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
+    parser.delegate = self;
+    // NSString *cadena = @"http://www.miorden.com/demo/iphone/reviewlist.php?id=1";
+    [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];
+    //[parser parseXMLat:[NSURL URLWithString:cadena ] withKey:@"review"];
+
 }
 
 - (void)viewDidUnload
@@ -233,6 +240,7 @@
     }
     else{
         cell.textLabel.textAlignment = UITextAlignmentLeft;
+        
     }
     
     if (tableView == table){
@@ -240,6 +248,8 @@
         if(indexPath.row == 1){
             cell.imageView.image = [UIImage imageNamed:@"estrellitas.png"];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d reseñas", numeroResenias];
+            
+                       
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else{
             cell.textLabel.text = @"Ver menú"; 
@@ -369,7 +379,7 @@
             detailVIew.editable = NO;
             detailVIew.text = [NSString stringWithFormat:@"Descripción:\n%@\nNotas:\n%@\n",[currentRestaurant valueForKey:@"description"],[currentRestaurant valueForKey:@"special_note"]];
             detailVIew.font = [UIFont systemFontOfSize:17];
-            
+            detailVIew.editable = NO;
             return detailVIew;
         }
             
@@ -398,6 +408,19 @@
                
     }
     return view;
+}
+
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    numeroResenias = [[array retain]count];
+    NSLog(@"Número de reseñas: %d", numeroResenias);
+
+    [self.table beginUpdates];
+    [self.table reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.table endUpdates];
 }
 
 

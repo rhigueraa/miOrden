@@ -20,4 +20,5 @@
 }
 @property(assign) NSDictionary *laDir;
 @property(nonatomic,retain) NSString *zonaID;
+@property(nonatomic,retain) NSString *zonaID2;
 @end

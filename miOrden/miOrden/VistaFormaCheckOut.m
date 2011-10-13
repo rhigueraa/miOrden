@@ -21,6 +21,7 @@
 
 - (void)dealloc
 {
+    [tableModel release];
     [listaRfc release];
     [super dealloc];
 }
@@ -52,33 +53,38 @@
     UIBarButtonItem *enviar = [[UIBarButtonItem alloc] initWithTitle:@"Enviar" style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
     self.navigationItem.rightBarButtonItem = enviar;
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
-    SCTableViewSection *section = [SCTableViewSection sectionWithHeaderTitle:@"Datos del Registro"];
+    section = [SCTableViewSection sectionWithHeaderTitle:@"Datos del Registro"];
     [tableModel addSection:section];
     
-    SCNumericTextFieldCell *personas = [[SCNumericTextFieldCell alloc] initWithText:@"Personas" withPlaceholder:@"# de Personas" withBoundKey:@"personasKey" withTextFieldTextValue:nil];
+    SCNumericTextFieldCell *personas = [[SCNumericTextFieldCell alloc] initWithText:@"Personas" withPlaceholder:@"¿Para cuántas personas?" withBoundKey:@"personasKey" withTextFieldTextValue:nil];
     NSArray *temp = [[NSArray alloc] initWithObjects:@"Inmediato",@"Futuro", nil];
-    SCSegmentedCell *tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:temp];
+    tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:temp];
     [temp release];
-    SCDateCell *fecha =  [[SCDateCell alloc] initWithText:@"Fecha" withBoundKey:@"fechaKey" withDateValue:nil];
-    SCTableViewCell *tipoPago =[[SCTableViewCell alloc] initWithText:@"Pago" withBoundKey:@"tipoPagoKey" withValue:nil];
-    UISegmentedControl *segmetnedPayments = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"cash.png"],[UIImage imageNamed:@"visa.png"],[UIImage imageNamed:@"mastercard.png"],[UIImage imageNamed:@"amex.png"], nil]];
-    segmetnedPayments.frame = CGRectMake(0, 0, 200, 38);
-    tipoPago.accessoryView = segmetnedPayments;
-    SCNumericTextFieldCell *cambio = [[SCNumericTextFieldCell alloc] initWithText:@"Cambio de" withPlaceholder:@"billete del que desea cambio" withBoundKey:@"cambioKey" withTextFieldTextValue:nil];
-    SCTextFieldCell *comentario = [[SCTextFieldCell alloc] initWithText:@"Comentario" withPlaceholder:@"introduzca un comentario" withBoundKey:@"comentarioKey" withTextFieldTextValue:nil];
-    SCTableViewCell *favs = [[SCTableViewCell alloc] initWithText:@"¿Favoritos?" withBoundKey:@"favoritosKey" withValue:nil];
-    favs.accessoryType = UITableViewCellAccessoryCheckmark;
-    favs.selectionStyle = UITableViewCellSelectionStyleNone;
-    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"introduzca el nombre" withBoundKey:@"nombreKey" withTextFieldTextValue:nil];
-    SCSelectionCell *factura = [[SCSelectionCell alloc] initWithText:@"Factura" withBoundKey:@"facturaKey" withSelectedIndexValue:[NSNumber numberWithInt:-1] withItems:listaRfc];    
+    
+//    SCTableViewCell *tipoPago =[[SCTableViewCell alloc] initWithText:@"Pago" withBoundKey:@"tipoPagoKey" withValue:nil];
+//   segmetnedPayments = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"cash.png"],[UIImage imageNamed:@"visa.png"],[UIImage imageNamed:@"mastercard.png"],[UIImage imageNamed:@"amex.png"], nil]];
+//    segmetnedPayments.frame = CGRectMake(0, 0, 200, 38);
+//    tipoPago.accessoryView = segmetnedPayments;
+    
+    tipoPago = [[SCSegmentedCell alloc]initWithText:@"Pago" withBoundKey:@"tipoPagoKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:[NSArray arrayWithObjects:[UIImage imageNamed:@"cash.png"],[UIImage imageNamed:@"visa.png"],[UIImage imageNamed:@"mastercard.png"],[UIImage imageNamed:@"amex.png"], nil]];
+    
+    
+    SCTextFieldCell *comentario = [[SCTextFieldCell alloc] initWithText:@"Observaciones" withPlaceholder:@"La puerta es roja" withBoundKey:@"comentarioKey" withTextFieldTextValue:nil];
+    favs = [[SCSwitchCell alloc] initWithText:@"Agregar a Favoritos?" withBoundKey:@"favoritosKey" withSwitchOnValue:[NSNumber numberWithInt:0]];
+    
+    
+    factura = [[SCSwitchCell alloc] initWithText:@"Requieres Factura?" withBoundKey:@"switchFacturaKey" withSwitchOnValue:[NSNumber numberWithInt:0]];
+    
+    
+    
     [section addCell:personas];
     [section addCell:tipo];
-    [section addCell:fecha];
+   
     [section addCell:tipoPago];
-    [section addCell:cambio];
+ 
     [section addCell:comentario];
     [section addCell:favs];
-    [section addCell:nombre];
+    
     [section addCell:factura];
     
     
@@ -190,6 +196,73 @@
 */
 
 #pragma mark - Table view delegate
+- (void)tableViewModel:(SCTableViewModel *)tableViewModel valueChangedForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 3 || indexPath.row ==2){
+        if (tipoPago.segmentedControl.selectedSegmentIndex ==  0){
+             if([[[section cellAtIndex:2]boundKey]isEqualToString:@"fechaKey"] ){
+                 if(![[[section cellAtIndex:4]boundKey]isEqualToString:@"cambioKey"] && ![[[section cellAtIndex:3]boundKey]isEqualToString:@"cambioKey"]){
+                 SCSelectionCell *cambio = [[SCSelectionCell alloc] initWithText:@"Cambio" withBoundKey:@"cambioKey" withSelectedIndexValue:[NSNumber numberWithInt:-1] withItems:[NSArray arrayWithObjects:@"$100",@"$200",@"$500",@"$1000", nil]];
+            [section insertCell:cambio atIndex:4];
+             [self.tableView reloadData];
+                 }
+             }else{
+                 if(![[[section cellAtIndex:4]boundKey]isEqualToString:@"cambioKey"] && ![[[section cellAtIndex:3]boundKey]isEqualToString:@"cambioKey"]){
+                  SCSelectionCell *cambio = [[SCSelectionCell alloc] initWithText:@"Cambio" withBoundKey:@"cambioKey" withSelectedIndexValue:[NSNumber numberWithInt:-1] withItems:[NSArray arrayWithObjects:@"$100",@"$200",@"$500",@"$1000", nil]];
+                 [section insertCell:cambio atIndex:3];
+                 [self.tableView reloadData];
+                 }
+             }
+        }else if(tipoPago.segmentedControl.selectedSegmentIndex !=  0){
+            if([[[section cellAtIndex:2]boundKey]isEqualToString:@"fechaKey"]){
+                if([[[section cellAtIndex:4]boundKey]isEqualToString:@"cambioKey"]){
+                                [section removeCellAtIndex:4];
+                                [self.tableView reloadData];
+                }
+                
+            }else{
+                 if([[[section cellAtIndex:3]boundKey]isEqualToString:@"cambioKey"]){
+                [section removeCellAtIndex:3];
+                [self.tableView reloadData];
+                 }
+                
+            }
+        }
+        
+    }else if(indexPath.row == 1){
+        if(tipo.segmentedControl.selectedSegmentIndex == 1){
+            SCDateCell *fecha =  [[SCDateCell alloc] initWithText:@"Fecha" withBoundKey:@"fechaKey" withDateValue:nil];
+            [section insertCell:fecha atIndex:2];
+            [self.tableView reloadData];
+            
+        }else if(tipo.segmentedControl.selectedSegmentIndex == 0){
+            if([[[section cellAtIndex:2]boundKey]isEqualToString:@"fechaKey"]){
+                [section removeCellAtIndex:2];
+                [self.tableView reloadData];
+            }
+            
+        }
+    }else if(indexPath.row == 5 || indexPath.row == 6 || indexPath.row == 7){
+       
+        if([[[tableViewModel cellAtIndexPath:indexPath]boundKey]isEqualToString:@"switchFacturaKey"]){
+            if(factura.switchControl.on && ![[[section cellAtIndex:section.cellCount-1]boundKey]isEqualToString:@"facturaKey"]){
+                SCSelectionCell *rfcs = [[SCSelectionCell alloc]initWithText:@"Selecciona un RFC" withBoundKey:@"facturaKey" withSelectedIndexValue:[NSNumber numberWithInt:-1] withItems:listaRfc];
+                [section insertCell:rfcs atIndex:section.cellCount];
+                [self.tableView reloadData];
+           
+            
+            }else{
+                [section removeCellAtIndex:section.cellCount-1];
+                [self.tableView reloadData];
+              
+            }
+          
+            
+        }
+    }
+    
+    
+
+}
 
 - (void)tableViewModel:(SCTableViewModel *)tableViewModel didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.row == 5){
