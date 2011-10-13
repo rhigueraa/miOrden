@@ -441,7 +441,7 @@
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
     numeroResenias = [[array retain]count];
-    NSLog(@"Número de reseñas: %d", numeroResenias);
+   
 
     [self.table beginUpdates];
     [self.table reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];

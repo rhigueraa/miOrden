@@ -38,7 +38,7 @@
     cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     [parser parseXMLat:[NSURL URLWithString:cadena] withKey:@"review_id"];
     
-    NSLog(@"%@",cadena);
+   
     
 }
 - (void)viewDidLoad

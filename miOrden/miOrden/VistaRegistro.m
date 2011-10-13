@@ -63,7 +63,7 @@
     [fecha setDateFormat:@"yyyy-MM-dd"];
     NSDate *fechaa = [datos valueForKey:@"birthKey"];
     NSString *fechaFinal = [fecha stringFromDate:fechaa];
-    NSLog(@"Fecah es: %@", fechaFinal);
+
     
     NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],fechaFinal, [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
     
