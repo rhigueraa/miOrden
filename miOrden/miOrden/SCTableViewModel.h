@@ -1,7 +1,7 @@
 /*
  *  SCTableViewModel.h
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -54,6 +54,8 @@
 @interface SCTableViewModel : NSObject <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {
 	//internal
+    NSIndexPath *lastReturnedCellIndexPath;     // used for optimization
+    SCTableViewCell *lastReturnedCell;          // used for optimization
 	__SC_WEAK id target;
 	SEL action;
 	__SC_WEAK SCTableViewModel *masterModel;
@@ -299,6 +301,9 @@
 
 /** Property is used internally by the framework to set the master model in a master-detail relationship. */
 @property (nonatomic, SC_WEAK) SCTableViewModel *masterModel;
+
+/** Warning: Method must only be called internally by the framework. */
+- (void)clearLastReturnedCellData;
 
 /** Warning: Method must only be called internally by the framework. */
 - (void)configureDetailModel:(SCTableViewModel *)detailModel;

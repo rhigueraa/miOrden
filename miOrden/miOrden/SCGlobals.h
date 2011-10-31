@@ -1,7 +1,7 @@
 /*
  *  SCGlobals.h
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -74,6 +74,15 @@
 #define __has_feature(x) 0 // For compatibility with non-clang compilers.
 #endif
 
+#if __has_feature(objc_arc)
+#define ARC_ENABLED
+#endif
+
+
+#ifdef ARC_ENABLED
+#define NS_CONSUMED
+#endif
+
 #ifndef NS_CONSUMED
 #if __has_feature(attribute_ns_consumed)
 #define NS_CONSUMED __attribute__((ns_consumed))
@@ -82,9 +91,6 @@
 #endif
 #endif
 
-#if __has_feature(objc_arc)
-#define ARC_ENABLED
-#endif
 
 #ifdef ARC_ENABLED
 

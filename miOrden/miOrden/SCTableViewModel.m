@@ -1,7 +1,7 @@
 /*
  *  SCTableViewModel.m
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -73,6 +73,8 @@
 {
 	if( (self=[self init]) )
 	{
+        lastReturnedCellIndexPath = nil;
+        lastReturnedCell = nil;
 		target = nil;
 		action = nil;
 		masterModel = nil;
@@ -124,6 +126,8 @@
 	// Unregister from the shared model center
 	[[SCModelCenter sharedModelCenter] unregisterModel:self];
 #ifndef ARC_ENABLED	
+    [lastReturnedCellIndexPath release];
+    [lastReturnedCell release];
 	[editButtonItem release];
 	[sectionIndexTitles release];
 	[sections release];
@@ -132,6 +136,17 @@
 
 	[super dealloc];
 #endif
+}
+
+- (void)clearLastReturnedCellData
+{
+    if(lastReturnedCellIndexPath)
+    {
+        SC_Release(lastReturnedCellIndexPath);
+        lastReturnedCellIndexPath = nil;
+        SC_Release(lastReturnedCell);
+        lastReturnedCell = nil;
+    }
 }
 
 - (void)configureDetailModel:(SCTableViewModel *)detailModel
@@ -292,6 +307,12 @@
 		for(int i=0; i<section.cellCount; i++)
 			[section cellAtIndex:i].ownerTableViewModel = self;
 	}
+    else
+    {
+        SCArrayOfItemsSection *itemsSection = (SCArrayOfItemsSection *)section;
+        itemsSection.placeholderCell.ownerTableViewModel = self;
+        itemsSection.addNewItemCell.ownerTableViewModel = self;
+    }
 	[sections addObject:section];
 	
 	if([self.dataSource conformsToProtocol:@protocol(SCTableViewModelDataSource)]
@@ -575,6 +596,8 @@
         return;
     }
     
+    [self clearLastReturnedCellData];
+    
     if(editing)
 	{
 		if([self.delegate conformsToProtocol:@protocol(SCTableViewModelDelegate)]
@@ -630,7 +653,27 @@
 
 - (SCTableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath
 {
-	return [[self sectionAtIndex:indexPath.section] cellAtIndex:indexPath.row];
+    BOOL needsOptimization = FALSE;
+    SCTableViewSection *section = [self sectionAtIndex:indexPath.section];
+    if([section isKindOfClass:[SCArrayOfItemsSection class]])
+        needsOptimization = TRUE;
+    
+    if(needsOptimization && lastReturnedCellIndexPath && indexPath.section==lastReturnedCellIndexPath.section && indexPath.row==lastReturnedCellIndexPath.row)
+    {
+        return lastReturnedCell;
+    }
+    //else
+    [self clearLastReturnedCellData];
+    
+    SCTableViewCell *cell = [section cellAtIndex:indexPath.row];
+    
+    if(needsOptimization)
+    {
+        lastReturnedCellIndexPath = SC_Retain(indexPath);
+        lastReturnedCell = SC_Retain(cell);
+    }
+    
+	return cell;
 }
 
 - (NSIndexPath *)indexPathForCell:(SCTableViewCell *)cell
@@ -699,6 +742,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
+    [self clearLastReturnedCellData];
+    
     return [self sectionAtIndex:section].cellCount;
 }
 
@@ -1188,6 +1233,8 @@
     UIView *superView;
 #ifdef __IPHONE_4_0
     superView = keyWindow.rootViewController.view;
+    if(!superView)
+        superView = [keyWindow.subviews objectAtIndex:0];
 #else
     superView = [keyWindow.subviews objectAtIndex:0];
 #endif
@@ -1721,6 +1768,8 @@
 
 - (void)itemModified:(NSObject *)item inSection:(SCArrayOfItemsSection *)section
 {
+    [self clearLastReturnedCellData];
+    
 	NSUInteger oldSectionIndex = [self indexForSection:section];
 	NSUInteger newSectionIndex = [self getSectionIndexForItem:item];
 	
@@ -1768,6 +1817,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
 	forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self clearLastReturnedCellData];
+    
 	SCArrayOfItemsSection *section = (SCArrayOfItemsSection *)[self sectionAtIndex:indexPath.section];
     NSObject *item = [section.items objectAtIndex:indexPath.row];
     

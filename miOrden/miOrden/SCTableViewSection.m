@@ -1,7 +1,7 @@
 /*
  *  SCTableViewSection.m
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -945,8 +945,6 @@
         
         enableCellHeightCaching = TRUE;
         cachedCellHeight = 0;
-        lastAccessedCell = nil;
-        lastAccessedCellIndex = NSNotFound;
         
         placeholderCell = nil;
         addNewItemCell = nil;
@@ -970,7 +968,6 @@
 #ifndef ARC_ENABLED
 - (void)dealloc
 {
-    [lastAccessedCell release];
     [tempCustomDetailModel release];
 	[cellReuseIdentifiers release];
 	[items release];
@@ -1131,10 +1128,7 @@
 // override superclass method
 - (SCTableViewCell *)cellAtIndex:(NSUInteger)index
 {
-    if(lastAccessedCellIndex == index)
-        return lastAccessedCell;
-    
-	SCTableViewCell *cell = [self unconfiguredCellAtIndex:index];
+    SCTableViewCell *cell = [self unconfiguredCellAtIndex:index];
 	
 	if([cell.delegate conformsToProtocol:@protocol(SCTableViewCellDelegate)]
 	   && [cell.delegate respondsToSelector:@selector(willConfigureCell:)])
@@ -1151,10 +1145,6 @@
 			[self.ownerTableViewModel.delegate tableViewModel:self.ownerTableViewModel willConfigureCell:cell 
 											forRowAtIndexPath:indexPath];
 		}
-	
-    lastAccessedCellIndex = index;
-    SC_Release(lastAccessedCell);
-    lastAccessedCell = SC_Retain(cell);
     
     return cell;
 }
@@ -1166,6 +1156,12 @@
 	if(indexPath.section == [self.ownerTableViewModel indexForSection:self])
 		return indexPath.row;
 	return NSNotFound;
+}
+
+// override superclass method
+- (void)reloadBoundValues
+{
+    [self.ownerTableViewModel clearLastReturnedCellData];
 }
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath *)indexPath
@@ -1294,7 +1290,10 @@
 		[tempCustomDetailModel setTargetForModelModifiedEvent:self action:@selector(tempDetailModelModified)];
 		[self buildDetailTableModel:tempCustomDetailModel	
 							forItem:[self.items objectAtIndex:indexPath.row]];
-		[tempCustomDetailModel sectionAtIndex:0].commitCellChangesLive = TRUE;
+		for(int i=0; i<tempCustomDetailModel.sectionCount; i++)
+        {
+            [tempCustomDetailModel sectionAtIndex:i].commitCellChangesLive = TRUE;
+        }
         
         if([selectedCell.delegate conformsToProtocol:@protocol(SCTableViewCellDelegate)]
            && [selectedCell.delegate respondsToSelector:@selector(detailViewWillAppearForCell:withDetailTableViewModel:)])
@@ -1532,6 +1531,8 @@
 
 - (void)dispatchRemoveRowAtIndexPathEvent:(NSIndexPath *)indexPath
 {	
+    [self.ownerTableViewModel clearLastReturnedCellData];
+    
 	if( (self.selectedCellIndexPath.section==indexPath.section &&  self.selectedCellIndexPath.row==indexPath.row) && tempCustomDetailModel)
 	{
 		UITableView *detailTableView = tempCustomDetailModel.modeledTableView;
@@ -1771,7 +1772,9 @@
 // override superclass method
 - (void)addNewItem:(NSObject *)newItem
 {
-	[items addObject:newItem];
+	[self.ownerTableViewModel clearLastReturnedCellData];
+    
+    [items addObject:newItem];
 	
 	NSUInteger sectionIndex = [self.ownerTableViewModel indexForSection:self];
 	NSIndexPath *newRowIndexPath = [NSIndexPath indexPathForRow:items.count-1 inSection:sectionIndex];
@@ -2106,21 +2109,21 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 }
 #endif
 
-#ifndef ARC_ENABLED
 - (void)dealloc
 {
-	[itemsPredicate release];
-	[itemsClassDefinitions release];
-	[itemsSet release];
-	
 	if(coreDataBound)
 	{
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
 	}
+    
+#ifndef ARC_ENABLED    
+    [itemsPredicate release];
+	[itemsClassDefinitions release];
+	[itemsSet release];
 	
 	[super dealloc];
-}
 #endif
+}
 
 //overrides superclass
 - (void)setAttributesTo:(SCPropertyAttributes *)attributes
@@ -2147,6 +2150,8 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 // override superclass method
 - (void)reloadBoundValues
 {
+    [super reloadBoundValues];
+    
 #ifdef _COREDATADEFINES_H
 	SCClassDefinition *classDef = [self firstClassDefinition];
 	if(classDef.entity)
@@ -2368,6 +2373,7 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 	NSIndexPath *newRowIndexPath = [NSIndexPath indexPathForRow:newItemIndex inSection:sectionIndex];
 	NSArray *indexPaths = [NSArray arrayWithObject:newRowIndexPath];
     
+    [self.ownerTableViewModel clearLastReturnedCellData];
 	[self.ownerTableViewModel.modeledTableView beginUpdates];
     if(self.items.count==1 && self.placeholderCell)
         [self.ownerTableViewModel.modeledTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
@@ -2632,6 +2638,7 @@ withEntityClassDefinition:(SCClassDefinition *)classDefinition
 	{
 		NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:modifiedObjectIndex 
 													   inSection:self.selectedCellIndexPath.section];
+        [self.ownerTableViewModel clearLastReturnedCellData];
 		[self.ownerTableViewModel.modeledTableView beginUpdates];
 		[self.ownerTableViewModel.modeledTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedCellIndexPath]
 														 withRowAnimation:UITableViewRowAnimationLeft];
