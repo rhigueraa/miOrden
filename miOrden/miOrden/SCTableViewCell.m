@@ -1,7 +1,7 @@
 /*
  *  SCTableViewCell.m
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -4710,7 +4710,10 @@
 			self.tempCustomDetailModel.masterModel = self.ownerTableViewModel;
 			[self.tempCustomDetailModel setTargetForModelModifiedEvent:self action:@selector(tempDetailModelModified)];
 			[self addObjectSectionToModel:self.tempCustomDetailModel];
-			[self.tempCustomDetailModel sectionAtIndex:0].commitCellChangesLive = TRUE;
+            for(int i=0; i<self.tempCustomDetailModel.sectionCount; i++)
+            {
+                [self.tempCustomDetailModel sectionAtIndex:i].commitCellChangesLive = TRUE;
+            }
 			[detailTableViewModel.modeledTableView reloadData];
 			
 			return;

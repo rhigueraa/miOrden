@@ -1,7 +1,7 @@
 /*
  *  SCGlobals.m
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -66,7 +66,7 @@
 	{
 		NSString *sviewClassName = [NSString stringWithCString:object_getClassName(view.superview)
 													  encoding:NSASCIIStringEncoding];
-		if([sviewClassName isEqualToString:@"UIPopoverView"])
+		if([sviewClassName rangeOfString:@"UIPopoverView"].location != NSNotFound)
 		{
 			inPopover = TRUE;
 			break;

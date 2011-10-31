@@ -1,7 +1,7 @@
 /*
  *  SCTableViewSection.h
  *  Sensible TableView
- *  Version: 2.1.6
+ *  Version: 2.1.7
  *
  *
  *	THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY UNITED STATES 
@@ -360,8 +360,6 @@
 	NSMutableArray *cellReuseIdentifiers;
     CGFloat cachedCellHeight;
 	NSObject *tempItem;		//used for temporarily storing newly added items
-    SCTableViewCell *lastAccessedCell;  // used for optimization
-    NSUInteger lastAccessedCellIndex;   // used for optimization
 	
 	NSMutableArray *items;
 	UITableViewCellAccessoryType itemsAccessoryType;

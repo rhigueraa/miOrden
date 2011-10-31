@@ -62,17 +62,20 @@
     
     SCTableViewSection *section3 = [SCTableViewSection section];
     SCTableViewCell *iniciar = [[SCTableViewCell alloc]initWithText:@"Iniciar Sesión"];
-    iniciar.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    iniciar.textLabel.textColor = [UIColor whiteColor];
+    //iniciar.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     UIImage *imagenInicio = [UIImage imageNamed:@"boton_iniciar_sesion.png"];
     
     UIImageView *inicioConImagen = [[UIImageView alloc]initWithImage:imagenInicio];
+    [inicioConImagen setFrame:CGRectMake(0, 0, 300, 45)];
     inicioConImagen.contentMode = UIViewContentModeScaleToFill;
-    [iniciar.contentView addSubview:inicioConImagen];
+    [iniciar.contentView insertSubview:inicioConImagen atIndex:0];
+    //[iniciar.contentView addSubview:inicioConImagen];
     
     
     
     
-    section3.footerTitle = @"¿Olvidaste tu Contraseña ? ¡Presiona Aquí!";
+    section3.footerTitle = @"¿Olvidaste tu Contraseña? \n ¡Presiona Aquí!";
     
     [inicioConImagen release];
     
@@ -80,14 +83,16 @@
     
     SCTableViewSection *section4 = [SCTableViewSection section];
     SCTableViewCell *registro = [[SCTableViewCell alloc]initWithText:@"¡Registrarme!"];
+    registro.textLabel.textColor = [UIColor whiteColor];
     UIImage *imagenregistro = [UIImage imageNamed:@"boton_registrate.png"];
     UIImageView *registroConImagen = [[UIImageView alloc]initWithImage:imagenregistro];
+    [registroConImagen setFrame:CGRectMake(0, 0, 300, 45)];
     registroConImagen.contentMode = UIViewContentModeScaleAspectFit;
-    [registro.contentView addSubview:registroConImagen];
-    
+    //[registro.contentView addSubview:registroConImagen];
+    [registro.contentView insertSubview:registroConImagen atIndex:0];
     [registroConImagen release];
     
-    registro.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //registro.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [section4 addCell:registro];
     
     
@@ -242,7 +247,7 @@
 
 
 -(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
-    arregloUserId = [array retain];
+    arregloUserId = [array mutableCopy];
     UIAlertView *alerta;
     ID = [[arregloUserId objectAtIndex:0]valueForKey:@"text"];
     if([ID isEqualToString:@"0"]){
