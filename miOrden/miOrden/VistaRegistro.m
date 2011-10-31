@@ -68,6 +68,8 @@
     
     NSString *cadena = [NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/register.php?password=%@&email=%@&name=%@&surname=%@&dob=%@&gender=%@&newsletter=%@", [datos valueForKey:@"passwordKey"], [datos valueForKey:@"emailKey"], [datos valueForKey:@"nameKey"], [datos valueForKey:@"lastNameKey"],fechaFinal, [datos valueForKey:@"genderKey"], [datos valueForKey:@"newsKey"]];
     
+    
+    
     BOOL flag;
     for (NSString *key in datos) {
         if([datos valueForKey:key])
