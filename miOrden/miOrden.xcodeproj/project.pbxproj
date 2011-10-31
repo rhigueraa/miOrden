@@ -84,10 +84,13 @@
 		E805A9B613CE540900A96038 /* VistaNuevoRFC.m in Sources */ = {isa = PBXBuildFile; fileRef = E805A9B513CE540900A96038 /* VistaNuevoRFC.m */; };
 		E861897913CF414E003BA7AE /* VistaMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E861897713CF414E003BA7AE /* VistaMenu.m */; };
 		E861897A13CF414E003BA7AE /* VistaMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E861897813CF414E003BA7AE /* VistaMenu.xib */; };
+		E86D74CC144DFAF400C8A8F5 /* VistaPerfil.m in Sources */ = {isa = PBXBuildFile; fileRef = E86D74CB144DFAF400C8A8F5 /* VistaPerfil.m */; };
 		E890A7FD13CF6F96001B9291 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E890A7FC13CF6F96001B9291 /* MapKit.framework */; };
 		E890A80213CF7386001B9291 /* VistaResumen.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80113CF7386001B9291 /* VistaResumen.m */; };
 		E890A80513CF75F9001B9291 /* VistaTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = E890A80413CF75F9001B9291 /* VistaTicket.m */; };
 		E899AFE313D4AEC600B688A7 /* VistaResenias.m in Sources */ = {isa = PBXBuildFile; fileRef = E899AFE213D4AEC600B688A7 /* VistaResenias.m */; };
+		E8B2B6F9144DFD2000F9217D /* VistaTerminos.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B2B6F7144DFD2000F9217D /* VistaTerminos.m */; };
+		E8B2B6FA144DFD2000F9217D /* VistaTerminos.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B2B6F8144DFD2000F9217D /* VistaTerminos.xib */; };
 		E8B8107F13D109A600BF03B8 /* VistaCarrito.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8107D13D109A600BF03B8 /* VistaCarrito.m */; };
 		E8B8108013D109A600BF03B8 /* VistaCarrito.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */; };
 		E8B8108613D10E3800BF03B8 /* VistaFormaCheckOut.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B8108513D10E3800BF03B8 /* VistaFormaCheckOut.m */; };
@@ -273,6 +276,8 @@
 		E861897613CF414E003BA7AE /* VistaMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaMenu.h; sourceTree = "<group>"; };
 		E861897713CF414E003BA7AE /* VistaMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaMenu.m; sourceTree = "<group>"; };
 		E861897813CF414E003BA7AE /* VistaMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaMenu.xib; sourceTree = "<group>"; };
+		E86D74CA144DFAF400C8A8F5 /* VistaPerfil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaPerfil.h; sourceTree = "<group>"; };
+		E86D74CB144DFAF400C8A8F5 /* VistaPerfil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaPerfil.m; sourceTree = "<group>"; };
 		E890A7FC13CF6F96001B9291 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E890A80013CF7386001B9291 /* VistaResumen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaResumen.h; sourceTree = "<group>"; };
 		E890A80113CF7386001B9291 /* VistaResumen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaResumen.m; sourceTree = "<group>"; };
@@ -280,6 +285,9 @@
 		E890A80413CF75F9001B9291 /* VistaTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaTicket.m; sourceTree = "<group>"; };
 		E899AFE113D4AEC600B688A7 /* VistaResenias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaResenias.h; sourceTree = "<group>"; };
 		E899AFE213D4AEC600B688A7 /* VistaResenias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaResenias.m; sourceTree = "<group>"; };
+		E8B2B6F6144DFD2000F9217D /* VistaTerminos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaTerminos.h; sourceTree = "<group>"; };
+		E8B2B6F7144DFD2000F9217D /* VistaTerminos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaTerminos.m; sourceTree = "<group>"; };
+		E8B2B6F8144DFD2000F9217D /* VistaTerminos.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaTerminos.xib; sourceTree = "<group>"; };
 		E8B8107C13D109A600BF03B8 /* VistaCarrito.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaCarrito.h; sourceTree = "<group>"; };
 		E8B8107D13D109A600BF03B8 /* VistaCarrito.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaCarrito.m; sourceTree = "<group>"; };
 		E8B8107E13D109A600BF03B8 /* VistaCarrito.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VistaCarrito.xib; sourceTree = "<group>"; };
@@ -611,6 +619,9 @@
 				E8CFDF1C13CDF1AF00F06E73 /* VistaInicioSesion.m */,
 				E8CFDF4913CE000300F06E73 /* VistaRegistro.h */,
 				E8CFDF4A13CE000300F06E73 /* VistaRegistro.m */,
+				E8B2B6F6144DFD2000F9217D /* VistaTerminos.h */,
+				E8B2B6F7144DFD2000F9217D /* VistaTerminos.m */,
+				E8B2B6F8144DFD2000F9217D /* VistaTerminos.xib */,
 			);
 			name = "Vista Inicio Sesion";
 			sourceTree = "<group>";
@@ -628,6 +639,8 @@
 				E805A9B213CE505E00A96038 /* VistaNuevaDir.m */,
 				E805A9B413CE540900A96038 /* VistaNuevoRFC.h */,
 				E805A9B513CE540900A96038 /* VistaNuevoRFC.m */,
+				E86D74CA144DFAF400C8A8F5 /* VistaPerfil.h */,
+				E86D74CB144DFAF400C8A8F5 /* VistaPerfil.m */,
 			);
 			name = "Perfil y Cuenta";
 			sourceTree = "<group>";
@@ -1030,6 +1043,7 @@
 				BC0AC7B31446480D00B58ADA /* cerrado@2x.png in Resources */,
 				E8E8B354144686BE00555A55 /* boton_iniciar_sesion.png in Resources */,
 				E8E8B355144686BE00555A55 /* boton_registrate.png in Resources */,
+				E8B2B6FA144DFD2000F9217D /* VistaTerminos.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1136,6 +1150,8 @@
 				BC3E25DC14476F3B00AF88CB /* SCTableViewModel.m in Sources */,
 				BC3E25DD14476F3B00AF88CB /* SCTableViewSection.m in Sources */,
 				BC3E25DE14476F3B00AF88CB /* SCViewController.m in Sources */,
+				E86D74CC144DFAF400C8A8F5 /* VistaPerfil.m in Sources */,
+				E8B2B6F9144DFD2000F9217D /* VistaTerminos.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

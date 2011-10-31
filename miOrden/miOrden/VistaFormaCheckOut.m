@@ -66,6 +66,7 @@
     [tableModel addSection:section];
     
     SCNumericTextFieldCell *personas = [[SCNumericTextFieldCell alloc] initWithText:@"Personas" withPlaceholder:@"¿Para cuántas personas?" withBoundKey:@"personasKey" withTextFieldTextValue:nil];
+    personas.textField.keyboardType = UIKeyboardTypeNumberPad;
     NSArray *temp = [[NSArray alloc] initWithObjects:@"Inmediato",@"Futuro", nil];
     tipo = [[SCSegmentedCell alloc] initWithText:@"Envío" withBoundKey:@"envioKey" withSelectedSegmentIndexValue:[NSNumber numberWithInt:-1] withSegmentTitlesArray:temp];
     [temp release];

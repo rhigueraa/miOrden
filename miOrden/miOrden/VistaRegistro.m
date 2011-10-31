@@ -7,6 +7,7 @@
 //
 
 #import "VistaRegistro.h"
+#import "VistaTerminos.h"
 
 
 @implementation VistaRegistro
@@ -252,16 +253,13 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+- (void)tableViewModel:(SCTableViewModel *)tableViewModel didSelectRowAtIndexPath:(NSIndexPath *)indexPath{   
+    if(indexPath.section == 0 && indexPath.row == 8){
+        VistaTerminos *terms = [[VistaTerminos alloc]init];
+        [self.navigationController pushViewController:terms animated:YES];
+        [terms release];
+        
+    }
 }
 -(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
     

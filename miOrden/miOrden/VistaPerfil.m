@@ -1,21 +1,15 @@
 //
-//  VistaCuentaPerfil.m
+//  VistaPerfil.m
 //  miOrden
 //
-//  Created by Rodrigo Higuera on 7/13/11.
+//  Created by Rodrigo Higuera on 10/18/11.
 //  Copyright 2011 ITAM. All rights reserved.
 //
 
-#import "VistaCuentaPerfil.h"
 #import "VistaPerfil.h"
-#import "VistaListaDirecciones.h"
-#import "VistaListaRFC.h"
-#import "VistaInicioSesion.h"
-#import "VistaNuevaDir.h"
-#import "VistaNuevoRFC.h"
 
 
-@implementation VistaCuentaPerfil
+@implementation VistaPerfil
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -24,11 +18,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,11 +29,48 @@
 }
 
 #pragma mark - View lifecycle
+-(void)confirmar{
+    datos = [[NSMutableDictionary alloc] init];
+    [datos setValue:[tableModel.modelKeyValues valueForKey:@"nameKey"] forKey:@"nameKey"];
+    [datos setValue:[tableModel.modelKeyValues valueForKey:@"lastNameKey"] forKey:@"lastNameKey"];
+    [datos setValue:[tableModel.modelKeyValues valueForKey:@"emailKey"] forKey:@"emailKey"];
+ 
+    [datos setValue:[tableModel.modelKeyValues valueForKey:@"passwordKey"] forKey:@"passwordKey"];
+    [datos setValue:[tableModel.modelKeyValues valueForKey:@"confirmaPasswordKey"] forKey:@"confirmaPasswordKey"];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title =@"Mi Cuenta";
+    [super viewDidLoad];
+    self.title =@"Perfil";
+  
+    
+    UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Enviar" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmar)];
+    self.navigationItem.rightBarButtonItem = confirm;
+    tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
+    SCTableViewSection *section = [SCTableViewSection sectionWithHeaderTitle:@"Datos del Registro"];
+    [tableModel addSection:section];
+    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"enter name" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *apellido = [[SCTextFieldCell alloc] initWithText:@"Apellido" withPlaceholder:@"enter apellido" withBoundKey:@"lastNameKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *email = [[SCTextFieldCell alloc] initWithText:@"Email" withPlaceholder:@"escribe tu Email" withBoundKey:@"emailKey" withTextFieldTextValue:nil];
+    email.userInteractionEnabled = NO;
+    email.editable = NO;
+  
+    SCTextFieldCell *pass = [[SCTextFieldCell alloc] initWithText:@"Contraseña" withPlaceholder:@"enter password" withBoundKey:@"passwordKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *confirmaPass = [[SCTextFieldCell alloc] initWithText:@"Contraseña" withPlaceholder:@"Confirma tu Pass" withBoundKey:@"confirmaPasswordKey" withTextFieldTextValue:nil];
+    
+    pass.textField.secureTextEntry = YES;
+    confirmaPass.textField.secureTextEntry = YES;
+    
+    [section addCell:nombre];
+    [section addCell:apellido];
+    
+    [section addCell:email];
+   
+    [section addCell:pass];
+    [section addCell:confirmaPass];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -55,6 +81,8 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    [tableModel release];
+    
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -87,16 +115,7 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 3;
-}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if(section == 0) return 2;
-    else return 1;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -108,26 +127,7 @@
     }
     
     // Configure the cell...
-    switch (indexPath.section) {
-        case 0:
-            if(indexPath.row == 0){
-            cell.textLabel.text = @"Direcciones";
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }else{
-                cell.textLabel.text = @"RFC's";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-            break;
-        case 1:
-            cell.textLabel.text = @"Ver Perfil";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            break;
-        case 2:
-            cell.textLabel.text = @"Cerrar Sesión";
-            
-        default:
-            break;
-    }
+    
     return cell;
 }
 
@@ -171,55 +171,9 @@
 */
 
 #pragma mark - Table view delegate
--(void) nuevaDir{
-    VistaNuevaDir *nuevaDir = [[VistaNuevaDir alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:nuevaDir animated:YES];
-    [nuevaDir release];
-}
 
--(void) nuevoRFC{
-    VistaNuevoRFC *nuevoRFC = [[VistaNuevoRFC alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:nuevoRFC animated:YES];
-    [nuevoRFC release];
-}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0){
-        if(indexPath.row == 0){
-            VistaListaDirecciones *dirs = [[VistaListaDirecciones alloc] initWithStyle:UITableViewStyleGrouped];
-            UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevaDir)];
-            dirs.navigationItem.rightBarButtonItem = nueva;
-            [self.navigationController pushViewController:dirs animated:YES];
-            [dirs release];
-        }else{
-            VistaListaRFC *rfcs = [[VistaListaRFC alloc] initWithStyle:UITableViewStyleGrouped];
-            UIBarButtonItem *nueva = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(nuevoRFC)];
-            rfcs.navigationItem.rightBarButtonItem = nueva;
-
-            [self.navigationController pushViewController:rfcs animated:YES];
-            [rfcs release];
-        }
-    }else if(indexPath.section == 1){
-        VistaPerfil *datos = [[VistaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
-        [self.navigationController pushViewController:datos animated:YES];
-        [datos release];
-    }else if(indexPath.section == 2){
-        UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Cierre de Sesión" message:@"Ha cerrado sesión" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
-        [alerta show];
-        [alerta release];
-        VistaInicioSesion  *inicio = [[VistaInicioSesion alloc] initWithStyle:UITableViewStyleGrouped];
-        inicio.title = @"Iniciar Sesión";
-        
-        UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:inicio];
-         temp.navigationBar.tintColor = [UIColor colorWithRed:195/255.0 green:1/255.0 blue:20/255.0 alpha:1.0];
-        [self presentModalViewController:temp animated:YES];
-        [inicio release];
-        [temp release];
-        
-        [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"userKey"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -228,6 +182,15 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+-(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
+    
+}
+
+
+
+-(void)parser:(XMLThreadedParser*)parser didFinishParsing:(NSArray*)array{
+    
 }
 
 @end
