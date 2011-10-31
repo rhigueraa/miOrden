@@ -89,7 +89,7 @@
     [super viewWillAppear:animated];
     XMLThreadedParser *parser = [[XMLThreadedParser alloc] init];
     parser.delegate = self;
-    NSLog(@"id: %@", [currentRestaurant  valueForKey:@"id"]);
+ 
    // NSString *cadena = @"http://www.miorden.com/demo/iphone/reviewlist.php?id=1";
     
     [parser parseXMLat:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.miorden.com/demo/iphone/reviewlist.php?id=%@",[currentRestaurant valueForKey:@"id"]]] withKey:@"review"];

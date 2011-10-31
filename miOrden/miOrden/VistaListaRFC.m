@@ -41,11 +41,12 @@
 {
     [super viewDidLoad];
     self.title = @"RFC's";
-    NSDictionary *rfc1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC1",@"Nombre",@"fgh12gh1234hj",@"RFC", nil];
-    NSDictionary *rfc2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC2",@"Nombre",@"asdfgh1234hj",@"RFC", nil];
-    NSDictionary *rfc3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC3",@"Nombre",@"fgaahj",@"RFC", nil];
+//    NSDictionary *rfc1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC1",@"Nombre",@"fgh12gh1234hj",@"RFC", nil];
+//    NSDictionary *rfc2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC2",@"Nombre",@"asdfgh1234hj",@"RFC", nil];
+//    NSDictionary *rfc3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"RFC3",@"Nombre",@"fgaahj",@"RFC", nil];
 
-    self.rfc = [[NSArray alloc] initWithObjects:rfc1,rfc2,rfc3, nil];
+    self.rfc = [[NSUserDefaults standardUserDefaults]valueForKey:@"listaRFC"];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -106,10 +107,11 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[rfc objectAtIndex:indexPath.row] objectForKey:@"Nombre"];
-    cell.detailTextLabel.text = [[rfc objectAtIndex:indexPath.row] objectForKey:@"RFC"];
+    if([[NSUserDefaults standardUserDefaults]valueForKey:@"listaRFC"]){
+    cell.textLabel.text = [[rfc objectAtIndex:indexPath.row] objectForKey:@"razonKey"];
+    cell.detailTextLabel.text = [[rfc objectAtIndex:indexPath.row] objectForKey:@"rfcKey"];
     // Configure the cell...
-    
+    }
     return cell;
 }
 

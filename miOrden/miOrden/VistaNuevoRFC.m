@@ -37,6 +37,31 @@
 #pragma mark - View lifecycle
 
 -(void) guardar{
+    NSDictionary *nuevoRFC = [[NSDictionary alloc]init];
+   
+
+    [nuevoRFC setValue:[tableModel.modelKeyValues valueForKey:@"rfcKey"] forKey:@"rfcKey"];
+    [nuevoRFC setValue:[tableModel.modelKeyValues valueForKey:@"razonKey"] forKey:@"razonKey"];
+    [nuevoRFC setValue:[tableModel.modelKeyValues valueForKey:@"domicilioKey"] forKey:@"domicilioKey"];
+    
+    
+    if([[NSUserDefaults standardUserDefaults]valueForKey:@"listaRFC"]){
+    NSMutableArray *listaRFCS;
+    listaRFCS = [[NSUserDefaults standardUserDefaults]valueForKey:@"listaRFC"];
+    [listaRFCS addObject:nuevoRFC];
+    [[NSUserDefaults standardUserDefaults]setValue:listaRFCS forKey:@"listaRFC"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    }else{
+        NSMutableArray *listaRFCS = [[NSMutableArray alloc]initWithObjects:nuevoRFC, nil];
+        [[NSUserDefaults standardUserDefaults]setValue:listaRFCS forKey:@"listaRFC"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        [listaRFCS release];
+        
+    }
+    
+    [nuevoRFC release];
+    
+    
     UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Exito" message:@"RFC guardado" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
     [alerta show];
     [alerta release];
@@ -51,10 +76,14 @@
     tableModel = [[SCTableViewModel alloc] initWithTableView:self.tableView withViewController:self];
     SCTableViewSection *section = [[SCTableViewSection alloc] initWithHeaderTitle:@"Introducir los Datos"];
     
-    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Nombre" withPlaceholder:@"introduzca un nickname" withBoundKey:@"nameKey" withTextFieldTextValue:nil];
-    SCTextFieldCell *dir = [[SCTextFieldCell alloc] initWithText:@"RFC" withPlaceholder:@"introduzca el RFC" withBoundKey:@"rfcKey" withTextFieldTextValue:nil];
+    SCTextFieldCell *nombre = [[SCTextFieldCell alloc] initWithText:@"Razón Social" withPlaceholder:@"introduzca una razón social" withBoundKey:@"razonKey" withTextFieldTextValue:nil];
+    SCTextViewCell *domicilio = [[SCTextViewCell alloc] initWithText:@"Domicilio Fiscal" withBoundKey:@"domicilioKey" withTextViewTextValue:nil];
+    
+    
+    SCTextFieldCell *rfc = [[SCTextFieldCell alloc] initWithText:@"RFC" withPlaceholder:@"introduzca el RFC" withBoundKey:@"rfcKey" withTextFieldTextValue:nil];
     [section addCell:nombre];
-    [section addCell:dir];
+    [section addCell:domicilio];
+    [section addCell:rfc];
     [tableModel addSection:section];
     
 }
