@@ -85,7 +85,7 @@
         
         cadena = [cadena stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         NSLog(@"cadena: %@", cadena);
-        [parser   parseXMLat:[NSURL URLWithString:cadena ] withKey:@""];
+        [parser   parseXMLat:[NSURL URLWithString:cadena ] withKey:@"user_id"];
       
         
     }else{
@@ -264,8 +264,19 @@
     }
 }
 -(void)parser:(XMLThreadedParser*)parser didParseObject:(NSDictionary*)object{
-    
+    if (![[object valueForKey:@"text"] isEqual:@"0"]){
+        UIAlertView *alerta = [[UIAlertView alloc]initWithTitle:@"Exito" message:@"Tu cuenta ha sido registrada con éxito" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+        [alerta show];
+        [alerta release];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }else{
+        UIAlertView *alerta = [[UIAlertView alloc]initWithTitle:@"Error" message:@"No se pudo hacer el registro correctamente" delegate:self cancelButtonTitle:@"Aceptar" otherButtonTitles: nil];
+        [alerta show];
+        [alerta release];
+    }
 }
+
 
 
 
