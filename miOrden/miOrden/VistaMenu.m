@@ -145,6 +145,41 @@
 - (void)shouldAddToCart:(NSDictionary*)itemConfiguration{
     shouldAnnimate = YES;
     
+    NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
+    NSMutableArray *mutCart = [carrito mutableCopy];
+    
+    if (!mutCart) {
+        mutCart = [NSMutableArray arrayWithCapacity:10];
+    }
+    
+    NSIndexPath *indexPath = [theTable indexPathForSelectedRow];
+    NSMutableDictionary *mutItem = [[itemList objectAtIndex:indexPath.row] mutableCopy];
+    
+    [mutItem setValuesForKeysWithDictionary:itemConfiguration];
+    [mutItem setObject:[currentRestaurant valueForKey:@"id"] forKey:@"idRestaurant"];
+    
+    //NSLog(@"Item is: %@",mutItem);
+    
+    //Calculate extras cost
+    __block float totalItemPrice = 0;
+    [[itemConfiguration valueForKey:@"selectedExtras"] enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
+        [obj enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
+            float price = [[obj valueForKey:@"precio"] floatValue];
+            totalItemPrice+=price;
+        }];
+    }];
+    [mutItem setValue:[NSNumber numberWithFloat:totalItemPrice] forKey:@"extrasPrice"];
+    NSLog(@"Did save: %@",mutCart);
+    [mutCart addObject:mutItem];
+    NSLog(@"Did save: %@",mutCart);
+    
+    [[NSUserDefaults standardUserDefaults] setValue:currentRestaurant forKey:@"currentRestaurant"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[mutCart copy] forKey:@"carritoProducts"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSLog(@"Did save: %@",mutCart);
+    /*
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSArray *carrito = [[NSUserDefaults standardUserDefaults] arrayForKey:@"carritoProducts"];
         NSMutableArray *mutCart = [carrito mutableCopy];
@@ -174,6 +209,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:mutCart forKey:@"carritoProducts"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     });
+     */
 }
 
 - (void)animateView:(UIView*)view{
