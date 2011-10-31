@@ -89,7 +89,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -118,11 +118,11 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             break;
+//        case 1:
+//            cell.textLabel.text = @"Ver Perfil";
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//            break;
         case 1:
-            cell.textLabel.text = @"Ver Perfil";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            break;
-        case 2:
             cell.textLabel.text = @"Cerrar Sesión";
             
         default:
@@ -199,11 +199,11 @@
             [self.navigationController pushViewController:rfcs animated:YES];
             [rfcs release];
         }
+//    }else if(indexPath.section == 1){
+//        VistaPerfil *datos = [[VistaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
+//        [self.navigationController pushViewController:datos animated:YES];
+//        [datos release];
     }else if(indexPath.section == 1){
-        VistaPerfil *datos = [[VistaPerfil alloc] initWithStyle:UITableViewStyleGrouped];
-        [self.navigationController pushViewController:datos animated:YES];
-        [datos release];
-    }else if(indexPath.section == 2){
         UIAlertView *alerta = [[UIAlertView alloc] initWithTitle:@"Cierre de Sesión" message:@"Ha cerrado sesión" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil];
         [alerta show];
         [alerta release];
